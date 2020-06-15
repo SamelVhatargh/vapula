@@ -6,4 +6,5 @@ dependencies {
 	api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 	api "com.badlogicgames.ashley:ashley:$ashleyVersion"
 	compile "io.github.libktx:ktx-app:$ktxVersion"
+	compile "io.github.libktx:ktx-graphics:$ktxVersion"
 }
