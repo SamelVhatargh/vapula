@@ -12,12 +12,11 @@ class GameScreen(
     private val engine: Engine,
     private val viewport: Viewport,
     sprites: TextureAtlas,
-    batch: SpriteBatch
+    batch: SpriteBatch,
+    val map: Map
 ) : KtxScreen {
 
     private val mapRenderer = MapRenderer(sprites, batch)
-
-    val map = Map(16 * 2, 9 * 2)
 
 
     override fun render(delta: Float) {

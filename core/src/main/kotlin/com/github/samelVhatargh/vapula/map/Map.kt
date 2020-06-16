@@ -5,6 +5,8 @@ private const val LEFT_WALL_BIT = 0b000100000
 private const val RIGHT_WALL_BIT = 0b000001000
 private const val BOTTOM_WALL_BIT = 0b010000000
 
+private const val SINGLE_WALL_BIT = 0b111101111
+
 private const val RIGHT_TOP_CORNER_BIT = 0b001000000
 private const val RIGHT_BOTTOM_CORNER_BIT = 0b000000001
 private const val LEFT_TOP_CORNER_BIT = 0b100000000
@@ -23,10 +25,31 @@ class Map(private val width: Int, private val height: Int) {
             }
         }
 
+        for (x in 10..13) {
+            for (y in 2..5) {
+                tiles[x][y] = Tile.FLOOR
+            }
+        }
+
+        tiles[8][5] = Tile.FLOOR
+        tiles[9][5] = Tile.FLOOR
+
+        tiles[12][4] = Tile.WALL
+
+        tiles[1][2] = Tile.FLOOR
+
+        tiles[3][2] = Tile.FLOOR
+
         computeDrawTiles()
     }
 
-    private fun computeDrawTiles() {
+    fun computeDrawTiles() {
+        for (x in 0 until width) {
+            for (y in 0 until height) {
+                drawTiles[x][y] = EMPTY
+            }
+        }
+
         for (x in 0 until width) {
             for (y in 0 until height) {
                 val tile = tiles[x][y]
