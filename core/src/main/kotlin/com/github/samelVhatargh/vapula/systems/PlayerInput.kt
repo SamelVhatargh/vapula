@@ -36,8 +36,11 @@ class PlayerInput(private val player: Entity, private val map: Map) : EntitySyst
         val x = screenX / 64
         val y = 8 - (screenY / 64)
 
-        map.tiles[x][y] = if (map.tiles[x][y] == Tile.FLOOR) Tile.WALL else Tile.FLOOR
-        map.computeDrawTiles()
+        if (button == Input.Buttons.LEFT) {
+            map.tiles[x][y] = if (map.tiles[x][y] == Tile.FLOOR) Tile.WALL else Tile.FLOOR
+            map.computeDrawTiles()
+        }
+
         return true
     }
 }

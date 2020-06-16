@@ -20,8 +20,7 @@ class GameScreen(
 
 
     override fun render(delta: Float) {
-        mapRenderer.render(map)
-
+        mapRenderer.renderMap(map)
         engine.update(delta)
     }
 
