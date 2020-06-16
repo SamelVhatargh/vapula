@@ -1,12 +1,117 @@
 
 sprites.png
-size: 128,128
+size: 256,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+Corner1
+  rotate: false
+  xy: 104, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Corner2
+  rotate: false
+  xy: 138, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Corner3
+  rotate: false
+  xy: 172, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Corner4
+  rotate: false
+  xy: 70, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Tile
+  rotate: false
+  xy: 68, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+TwoSideCorner
+  rotate: false
+  xy: 204, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+TwoSideCorner1
+  rotate: false
+  xy: 36, 4
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+TwoSideCorner2
+  rotate: false
+  xy: 70, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall
+  rotate: false
+  xy: 138, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+WallDown
+  rotate: false
+  xy: 172, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+WallLeft
+  rotate: false
+  xy: 102, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+WallLeftEnd
+  rotate: false
+  xy: 2, 4
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+WallRight
+  rotate: false
+  xy: 136, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+WallRightEnd
+  rotate: false
+  xy: 170, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+WallUp
+  rotate: false
+  xy: 104, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 character
   rotate: false
-  xy: 2, 2
+  xy: 2, 38
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
