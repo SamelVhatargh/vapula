@@ -25,7 +25,7 @@ class Graphics : Component, Pool.Poolable {
      */
     fun setSpriteRegion(region: TextureRegion) {
         sprite.setRegion(region)
-        sprite.setSize(region.regionWidth.toFloat(), region.regionHeight.toFloat())
+        sprite.setSize(1f , 1f)
     }
 
     companion object {

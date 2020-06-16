@@ -9,7 +9,7 @@ fun main() {
         Vapula(),
         Lwjgl3ApplicationConfiguration().apply {
             setTitle("Vapula")
-            setWindowedMode(640, 480)
+            setWindowedMode(16 * 64, 9 * 64)
             setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png")
         }
     )
