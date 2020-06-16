@@ -45,7 +45,7 @@ class Vapula : KtxGame<KtxScreen>() {
 
         Gdx.input.inputProcessor = PlayerInput(player)
 
-        addScreen(GameScreen(engine, viewport))
+        addScreen(GameScreen(engine, viewport, sprites, batch))
         setScreen<GameScreen>()
     }
 }
