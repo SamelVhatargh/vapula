@@ -36,17 +36,17 @@ class GameMap(private val width: Int, private val height: Int) {
                 if (getNeighbor(x, y, Neighbor.WEST) == Tile.WALL) tileNumber += 8
 
                 if (tileNumber != 15) {
-                    drawTiles.add(DrawTile(position, "Wall$tileNumber"))
+                    drawTiles.add(DrawTile(position, "$WALL$tileNumber"))
                 }
 
                 if (getNeighbor(x, y, Neighbor.NORTH_WEST) == Tile.FLOOR)
-                    drawTiles.add(DrawTile(position, "WallCorner1", -1))
+                    drawTiles.add(DrawTile(position, NORTH_WEST_CORNER, -1))
                 if (getNeighbor(x, y, Neighbor.NORTH_EAST) == Tile.FLOOR)
-                    drawTiles.add(DrawTile(position, "WallCorner2", -1))
+                    drawTiles.add(DrawTile(position, NORTH_EAST_CORNER, -1))
                 if (getNeighbor(x, y, Neighbor.SOUTH_EAST) == Tile.FLOOR)
-                    drawTiles.add(DrawTile(position, "WallCorner3", -1))
+                    drawTiles.add(DrawTile(position, SOUTH_EAST_CORNER, -1))
                 if (getNeighbor(x, y, Neighbor.SOUTH_WEST) == Tile.FLOOR)
-                    drawTiles.add(DrawTile(position, "WallCorner4", -1))
+                    drawTiles.add(DrawTile(position, SOUTH_WEST_CORNER, -1))
             }
         }
         drawTiles.sortBy { it.priority }

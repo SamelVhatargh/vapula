@@ -5,6 +5,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 
 const val FLOOR = "Tile"
 const val EMPTY = ""
+const val NORTH_WEST_CORNER = "WallCorner1"
+const val NORTH_EAST_CORNER = "WallCorner2"
+const val SOUTH_EAST_CORNER = "WallCorner3"
+const val SOUTH_WEST_CORNER = "WallCorner4"
+const val WALL = "Wall"
 
 class TileSprites(private val atlas: TextureAtlas) {
 
