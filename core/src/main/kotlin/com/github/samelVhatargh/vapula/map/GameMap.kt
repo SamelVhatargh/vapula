@@ -3,6 +3,10 @@ package com.github.samelVhatargh.vapula.map
 import com.github.samelVhatargh.vapula.map.generators.MapGenerator
 import ktx.math.vec2
 
+enum class Neighbor {
+    NORTH, SOUTH, EAST, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
+}
+
 class GameMap(private val width: Int, private val height: Int) {
     private var tiles = Array(width) { Array(height) { Tile.WALL } }
 
@@ -26,53 +30,45 @@ class GameMap(private val width: Int, private val height: Int) {
                 }
 
                 var tileNumber = 0
-
-                try {
-                    if (tiles[x][y + 1] == Tile.WALL) tileNumber += 1
-                } catch (e: ArrayIndexOutOfBoundsException) {
-                    tileNumber += 1
-                }
-                try {
-                    if (tiles[x + 1][y] == Tile.WALL) tileNumber += 2
-                } catch (e: ArrayIndexOutOfBoundsException) {
-                    tileNumber += 2
-                }
-                try {
-                    if (tiles[x][y - 1] == Tile.WALL) tileNumber += 4
-                } catch (e: ArrayIndexOutOfBoundsException) {
-                    tileNumber += 4
-                }
-                try {
-                    if (tiles[x - 1][y] == Tile.WALL) tileNumber += 8
-                } catch (e: Exception) {
-                    tileNumber += 8
-                }
+                if (getNeighbor(x, y, Neighbor.NORTH) == Tile.WALL) tileNumber += 1
+                if (getNeighbor(x, y, Neighbor.EAST) == Tile.WALL) tileNumber += 2
+                if (getNeighbor(x, y, Neighbor.SOUTH) == Tile.WALL) tileNumber += 4
+                if (getNeighbor(x, y, Neighbor.WEST) == Tile.WALL) tileNumber += 8
 
                 if (tileNumber != 15) {
                     drawTiles.add(DrawTile(position, "Wall$tileNumber"))
                 }
 
-                for (i in -1..1 step 2) {
-                    for (j in -1..1 step 2) {
-                        try {
-                            if (tiles[x + i][y + j] == Tile.FLOOR) {
-                                val cornerNumber = when (i * 10 + j) {
-                                    -10 + 1 -> 1
-                                    10 + 1  -> 2
-                                    10 - 1  -> 3
-                                    -10 - 1  -> 4
-                                    else -> 1
-                                }
-                                drawTiles.add(DrawTile(position, "WallCorner$cornerNumber", -1))
-                            }
-                        } catch (e: Exception) {
-                        }
-                    }
-                }
-
+                if (getNeighbor(x, y, Neighbor.NORTH_WEST) == Tile.FLOOR)
+                    drawTiles.add(DrawTile(position, "WallCorner1", -1))
+                if (getNeighbor(x, y, Neighbor.NORTH_EAST) == Tile.FLOOR)
+                    drawTiles.add(DrawTile(position, "WallCorner2", -1))
+                if (getNeighbor(x, y, Neighbor.SOUTH_EAST) == Tile.FLOOR)
+                    drawTiles.add(DrawTile(position, "WallCorner3", -1))
+                if (getNeighbor(x, y, Neighbor.SOUTH_WEST) == Tile.FLOOR)
+                    drawTiles.add(DrawTile(position, "WallCorner4", -1))
             }
         }
         drawTiles.sortBy { it.priority }
+    }
+
+    private fun getNeighbor(x: Int, y: Int, side: Neighbor): Tile {
+        val dx = when (side) {
+            Neighbor.NORTH, Neighbor.SOUTH -> 0
+            Neighbor.EAST, Neighbor.NORTH_EAST, Neighbor.SOUTH_EAST -> 1
+            Neighbor.WEST, Neighbor.NORTH_WEST, Neighbor.SOUTH_WEST -> -1
+        }
+        val dy = when (side) {
+            Neighbor.EAST, Neighbor.WEST -> 0
+            Neighbor.NORTH, Neighbor.NORTH_EAST, Neighbor.NORTH_WEST -> 1
+            Neighbor.SOUTH, Neighbor.SOUTH_EAST, Neighbor.SOUTH_WEST -> -1
+        }
+
+        return try {
+            tiles[x + dx][y + dy]
+        } catch (e: ArrayIndexOutOfBoundsException) {
+            Tile.WALL
+        }
     }
 
     /**
