@@ -24,12 +24,7 @@ class Vapula : KtxGame<KtxScreen>() {
     private var viewport = FitViewport(16f, 9f)
     private val batch by lazy { SpriteBatch() }
 
-    private val engine by lazy {
-        PooledEngine().apply {
-            addSystem(Move())
-            addSystem(Render(batch, viewport))
-        }
-    }
+    private val engine = PooledEngine()
 
     override fun create() {
         Gdx.app.logLevel = Application.LOG_DEBUG
@@ -46,6 +41,11 @@ class Vapula : KtxGame<KtxScreen>() {
         }
         val map = GameMap(16 * 2, 9 * 2)
         map.generate(TestMapGenerator())
+
+        engine.apply {
+            addSystem(Move(map))
+            addSystem(Render(batch, viewport))
+        }
 
 
         Gdx.input.inputProcessor = PlayerInput(player, map)

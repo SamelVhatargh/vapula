@@ -80,4 +80,7 @@ class GameMap(private val width: Int, private val height: Int) {
         tiles[x][y] = if (tiles[x][y] == Tile.FLOOR) Tile.WALL else Tile.FLOOR
         computeDrawTiles()
     }
+
+
+    fun isWalkable(newX: Int, newY: Int): Boolean = tiles[newX][newY] == Tile.FLOOR
 }
