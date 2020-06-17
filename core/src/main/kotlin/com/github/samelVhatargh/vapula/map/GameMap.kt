@@ -3,7 +3,7 @@ package com.github.samelVhatargh.vapula.map
 import ktx.math.vec2
 
 class GameMap(private val width: Int, private val height: Int) {
-    val tiles = Array(width) { Array(height) { Tile.WALL } }
+    private val tiles = Array(width) { Array(height) { Tile.WALL } }
 
     val drawTiles = mutableListOf<DrawTile>()
 
@@ -33,7 +33,7 @@ class GameMap(private val width: Int, private val height: Int) {
         computeDrawTiles()
     }
 
-    fun computeDrawTiles() {
+    private fun computeDrawTiles() {
         drawTiles.clear()
 
         for (x in 0 until width) {
@@ -93,5 +93,15 @@ class GameMap(private val width: Int, private val height: Int) {
             }
         }
         drawTiles.sortBy { it.priority }
+    }
+
+    /**
+     * Менят тайл на карте.
+     *
+     * Используется для дебаггинга
+     */
+    fun switchTile(x: Int, y: Int) {
+        tiles[x][y] = if (tiles[x][y] == Tile.FLOOR) Tile.WALL else Tile.FLOOR
+        computeDrawTiles()
     }
 }

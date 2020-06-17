@@ -37,8 +37,7 @@ class PlayerInput(private val player: Entity, private val map: GameMap) : Entity
         val y = 8 - (screenY / 64)
 
         if (button == Input.Buttons.LEFT) {
-            map.tiles[x][y] = if (map.tiles[x][y] == Tile.FLOOR) Tile.WALL else Tile.FLOOR
-            map.computeDrawTiles()
+            map.switchTile(x, y)
         }
 
         return true
