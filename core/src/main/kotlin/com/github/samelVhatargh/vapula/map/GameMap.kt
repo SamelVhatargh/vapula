@@ -1,35 +1,15 @@
 package com.github.samelVhatargh.vapula.map
 
+import com.github.samelVhatargh.vapula.map.generators.MapGenerator
 import ktx.math.vec2
 
 class GameMap(private val width: Int, private val height: Int) {
-    private val tiles = Array(width) { Array(height) { Tile.WALL } }
+    private var tiles = Array(width) { Array(height) { Tile.WALL } }
 
     val drawTiles = mutableListOf<DrawTile>()
 
-    init {
-
-        for (x in 3..7) {
-            for (y in 4..6) {
-                tiles[x][y] = Tile.FLOOR
-            }
-        }
-
-        for (x in 10..13) {
-            for (y in 2..5) {
-                tiles[x][y] = Tile.FLOOR
-            }
-        }
-
-        tiles[8][5] = Tile.FLOOR
-        tiles[9][5] = Tile.FLOOR
-
-        tiles[12][4] = Tile.WALL
-
-        tiles[1][2] = Tile.FLOOR
-
-        tiles[3][2] = Tile.FLOOR
-
+    fun generate(generator: MapGenerator) {
+        tiles = generator.getTiles(width, height)
         computeDrawTiles()
     }
 
