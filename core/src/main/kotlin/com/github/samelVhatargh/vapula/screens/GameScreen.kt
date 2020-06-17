@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.samelVhatargh.vapula.map.MapRenderer
-import com.github.samelVhatargh.vapula.map.Map
+import com.github.samelVhatargh.vapula.map.GameMap
 import ktx.app.KtxScreen
 
 class GameScreen(
@@ -13,7 +13,7 @@ class GameScreen(
     private val viewport: Viewport,
     sprites: TextureAtlas,
     batch: SpriteBatch,
-    val map: Map
+    val map: GameMap
 ) : KtxScreen {
 
     private val mapRenderer = MapRenderer(sprites, batch)

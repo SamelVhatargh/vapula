@@ -2,7 +2,7 @@ package com.github.samelVhatargh.vapula.map
 
 import ktx.math.vec2
 
-class Map(private val width: Int, private val height: Int) {
+class GameMap(private val width: Int, private val height: Int) {
     val tiles = Array(width) { Array(height) { Tile.WALL } }
 
     val drawTiles = mutableListOf<DrawTile>()

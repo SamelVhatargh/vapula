@@ -4,13 +4,13 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.Input
 import com.github.samelVhatargh.vapula.components.*
-import com.github.samelVhatargh.vapula.map.Map
+import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.map.Tile
 import ktx.app.KtxInputAdapter
 import ktx.ashley.has
 import ktx.ashley.plusAssign
 
-class PlayerInput(private val player: Entity, private val map: Map) : EntitySystem(), KtxInputAdapter {
+class PlayerInput(private val player: Entity, private val map: GameMap) : EntitySystem(), KtxInputAdapter {
 
     override fun keyDown(keycode: Int): Boolean {
         if (!player.has(MoveDirection.mapper)) {

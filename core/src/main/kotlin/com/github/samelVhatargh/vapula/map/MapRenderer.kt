@@ -1,6 +1,5 @@
 package com.github.samelVhatargh.vapula.map
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import ktx.graphics.use
@@ -9,7 +8,7 @@ class MapRenderer(atlas: TextureAtlas, private val batch: SpriteBatch) {
 
     private val sprites = TileSprites(atlas)
 
-    fun renderMap(map: Map) {
+    fun renderMap(map: GameMap) {
         batch.use {
             map.drawTiles.forEach { tile ->
                 val sprite = sprites[tile.spriteName]

@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.samelVhatargh.vapula.components.Graphics
 import com.github.samelVhatargh.vapula.components.Position
-import com.github.samelVhatargh.vapula.map.Map
+import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.screens.GameScreen
 import com.github.samelVhatargh.vapula.systems.Move
 import com.github.samelVhatargh.vapula.systems.PlayerInput
@@ -43,7 +43,7 @@ class Vapula : KtxGame<KtxScreen>() {
                 setSpriteRegion(sprites.findRegion("character"))
             }
         }
-        val map = Map(16 * 2, 9 * 2)
+        val map = GameMap(16 * 2, 9 * 2)
 
 
         Gdx.input.inputProcessor = PlayerInput(player, map)
