@@ -69,10 +69,7 @@ class Map(private val width: Int, private val height: Int) {
                 }
 
                 if (tileNumber != 15) {
-                    drawTiles.add(DrawTile(position, "Tile"))
                     drawTiles.add(DrawTile(position, "Wall$tileNumber"))
-
-                    continue
                 }
 
                 for (i in -1..1 step 2) {
@@ -86,7 +83,7 @@ class Map(private val width: Int, private val height: Int) {
                                     -10 - 1  -> 4
                                     else -> 1
                                 }
-                                drawTiles.add(DrawTile(position, "WallCorner$cornerNumber"))
+                                drawTiles.add(DrawTile(position, "WallCorner$cornerNumber", -1))
                             }
                         } catch (e: Exception) {
                         }
@@ -95,5 +92,6 @@ class Map(private val width: Int, private val height: Int) {
 
             }
         }
+        drawTiles.sortBy { it.priority }
     }
 }

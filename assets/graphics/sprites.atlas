@@ -1,152 +1,152 @@
 
 sprites.png
-size: 512,256
+size: 256,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Tile
   rotate: false
-  xy: 2, 2
+  xy: 70, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall0
   rotate: false
-  xy: 2, 168
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall1
-  rotate: false
-  xy: 2, 102
-  size: 64, 64
-  orig: 64, 64
+  xy: 2, 4
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 Wall10
   rotate: false
-  xy: 2, 36
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall11
-  rotate: false
-  xy: 68, 102
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall12
-  rotate: false
-  xy: 134, 168
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall13
-  rotate: false
-  xy: 68, 36
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall14
-  rotate: false
-  xy: 134, 102
-  size: 64, 64
-  orig: 64, 64
+  xy: 2, 4
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 Wall2
   rotate: false
-  xy: 68, 168
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall3
-  rotate: false
-  xy: 266, 36
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall4
-  rotate: false
-  xy: 200, 36
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall5
-  rotate: false
-  xy: 200, 102
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall6
-  rotate: false
-  xy: 266, 168
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall7
-  rotate: false
-  xy: 332, 168
-  size: 64, 64
-  orig: 64, 64
+  xy: 2, 4
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 Wall8
   rotate: false
-  xy: 200, 168
-  size: 64, 64
-  orig: 64, 64
+  xy: 2, 4
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall1
+  rotate: false
+  xy: 68, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall11
+  rotate: false
+  xy: 102, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall12
+  rotate: false
+  xy: 136, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall13
+  rotate: false
+  xy: 170, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall14
+  rotate: false
+  xy: 204, 70
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall3
+  rotate: false
+  xy: 104, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall4
+  rotate: false
+  xy: 138, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall5
+  rotate: false
+  xy: 70, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall6
+  rotate: false
+  xy: 104, 36
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall7
+  rotate: false
+  xy: 172, 36
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 Wall9
   rotate: false
-  xy: 134, 36
-  size: 64, 64
-  orig: 64, 64
+  xy: 36, 4
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner1
   rotate: false
-  xy: 332, 102
-  size: 64, 64
-  orig: 64, 64
+  xy: 138, 2
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner2
   rotate: false
-  xy: 398, 168
-  size: 64, 64
-  orig: 64, 64
+  xy: 172, 2
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner3
   rotate: false
-  xy: 332, 36
-  size: 64, 64
-  orig: 64, 64
+  xy: 206, 36
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner4
   rotate: false
-  xy: 398, 102
-  size: 64, 64
-  orig: 64, 64
+  xy: 206, 2
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 character
   rotate: false
-  xy: 266, 102
+  xy: 2, 38
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
