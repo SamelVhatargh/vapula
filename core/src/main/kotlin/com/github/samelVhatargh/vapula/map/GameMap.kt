@@ -3,7 +3,7 @@ package com.github.samelVhatargh.vapula.map
 import com.github.samelVhatargh.vapula.map.generators.MapGenerator
 import ktx.math.vec2
 
-enum class Neighbor {
+private enum class Neighbor {
     NORTH, SOUTH, EAST, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
 }
 
