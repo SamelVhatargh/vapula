@@ -20,17 +20,16 @@ class TileSprites(private val atlas: TextureAtlas) {
             return null
         }
 
-        val sprite = sprites[name]
-        if (sprite != null) return sprite
-
+        val existingSprite = sprites[name]
+        if (existingSprite != null) return existingSprite
 
         val region = atlas.findRegion(name)
         require(region != null) { "Cant load sprite $name" }
 
-        val sprite1 = Sprite(region).apply {
+        val loadedSprite = Sprite(region).apply {
             setSize(1f, 1f)
         }
-        sprites[name] = sprite1
-        return sprite1
+        sprites[name] = loadedSprite
+        return loadedSprite
     }
 }
