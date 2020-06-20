@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.samelVhatargh.vapula.components.Graphics
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.map.GameMap
-import com.github.samelVhatargh.vapula.map.generators.TestMapGenerator
+import com.github.samelVhatargh.vapula.map.generators.DrunkardWalkDungeon
 import com.github.samelVhatargh.vapula.screens.GameScreen
 import com.github.samelVhatargh.vapula.systems.Move
 import com.github.samelVhatargh.vapula.systems.PlayerInput
@@ -40,7 +40,7 @@ class Vapula : KtxGame<KtxScreen>() {
             }
         }
         val map = GameMap(16 * 2, 9 * 2)
-        map.generate(TestMapGenerator())
+        map.generate(DrunkardWalkDungeon())
 
         engine.apply {
             addSystem(Move(map))
