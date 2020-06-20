@@ -4,4 +4,4 @@ enum class Terrain {
     FLOOR, WALL
 }
 
-data class Tile(val terrain: Terrain)
+data class Tile(val terrain: Terrain, var explored: Boolean = false)

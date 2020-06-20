@@ -98,6 +98,12 @@ class GameMap(private val width: Int, private val height: Int) {
 
 
     fun isWalkable(x: Int, y: Int): Boolean = tiles[x][y].terrain == Terrain.FLOOR
+
+    fun isExplored(position: Position): Boolean = tiles[position.x][position.y].explored
+
+    fun markAsExplored(position: Position) {
+        tiles[position.x][position.y].explored = true
+    }
 }
 
 fun createEmptyTiles(width: Int, height: Int): Array<Array<Tile>> =

@@ -3,6 +3,7 @@ package com.github.samelVhatargh.vapula.map
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.github.samelVhatargh.vapula.components.toPosition
 import ktx.graphics.use
 
 class MapRenderer(atlas: TextureAtlas, private val batch: SpriteBatch) {
@@ -18,13 +19,17 @@ class MapRenderer(atlas: TextureAtlas, private val batch: SpriteBatch) {
             map.drawTiles.forEach { tile ->
                 val sprite = sprites[tile.spriteName]
                 if (sprite != null) {
-                    sprite.setPosition(tile.position.x, tile.position.y)
-                    sprite.draw(batch)
+                    if (map.isExplored(tile.position.toPosition())) {
+                        sprite.setPosition(tile.position.x, tile.position.y)
+                        sprite.draw(batch)
+                    }
 
                     //check fov
                     if (!fov.isVisible(tile.position)) {
                         fogOfWar.setPosition(tile.position.x, tile.position.y)
                         fogOfWar.draw(batch)
+                    } else {
+                        map.markAsExplored(tile.position.toPosition())
                     }
                 }
             }

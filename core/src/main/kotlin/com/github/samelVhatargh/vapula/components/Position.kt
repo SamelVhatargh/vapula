@@ -1,6 +1,7 @@
 package com.github.samelVhatargh.vapula.components
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import ktx.ashley.mapperFor
 
@@ -21,4 +22,8 @@ class Position(var x: Int = 0, var y: Int = 0) : Component, Pool.Poolable {
     companion object {
         val mapper = mapperFor<Position>()
     }
+}
+
+fun Vector2.toPosition(): Position {
+    return Position(x.toInt(), y.toInt())
 }
