@@ -3,14 +3,16 @@ package com.github.samelVhatargh.vapula.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.map.GameMap
-import com.github.samelVhatargh.vapula.map.Tile
 import ktx.app.KtxInputAdapter
 import ktx.ashley.has
 import ktx.ashley.plusAssign
+import ktx.math.vec3
 
-class PlayerInput(private val player: Entity, private val map: GameMap) : EntitySystem(), KtxInputAdapter {
+class PlayerInput(private val player: Entity, private val map: GameMap, private val camera: Camera) : EntitySystem(),
+    KtxInputAdapter {
 
     override fun keyDown(keycode: Int): Boolean {
         if (!player.has(MoveDirection.mapper)) {
@@ -33,11 +35,10 @@ class PlayerInput(private val player: Entity, private val map: GameMap) : Entity
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-        val x = screenX / 64
-        val y = 8 - (screenY / 64)
+        val position = camera.unproject(vec3(screenX.toFloat(), screenY.toFloat()))
 
         if (button == Input.Buttons.LEFT) {
-            map.switchTile(x, y)
+            map.switchTile(position.x.toInt(), position.y.toInt())
         }
 
         return true
