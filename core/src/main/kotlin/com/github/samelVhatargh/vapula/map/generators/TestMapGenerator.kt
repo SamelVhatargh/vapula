@@ -2,6 +2,7 @@ package com.github.samelVhatargh.vapula.map.generators
 
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
+import com.github.samelVhatargh.vapula.map.createEmptyTiles
 
 /**
  * Генерирует созданную руками карту, использовавшуюся для отладки процесса рисования карты
@@ -9,7 +10,7 @@ import com.github.samelVhatargh.vapula.map.Tile
 class TestMapGenerator : MapGenerator {
 
     override fun getTiles(width: Int, height: Int): Array<Array<Tile>> {
-        val tiles = Array(width) { Array(height) { Tile(Terrain.WALL) } }
+        val tiles = createEmptyTiles(width, height)
 
         for (x in 3..7) {
             for (y in 4..6) {

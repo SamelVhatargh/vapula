@@ -9,7 +9,7 @@ private enum class Neighbor {
 }
 
 class GameMap(private val width: Int, private val height: Int) {
-    private var tiles = Array(width) { Array(height) { Tile(Terrain.WALL) } }
+    private var tiles = createEmptyTiles(width, height)
 
     val drawTiles = mutableListOf<DrawTile>()
 
@@ -99,3 +99,6 @@ class GameMap(private val width: Int, private val height: Int) {
 
     fun isWalkable(x: Int, y: Int): Boolean = tiles[x][y].terrain == Terrain.FLOOR
 }
+
+fun createEmptyTiles(width: Int, height: Int): Array<Array<Tile>> =
+    Array(width) { Array(height) { Tile(Terrain.WALL) } }

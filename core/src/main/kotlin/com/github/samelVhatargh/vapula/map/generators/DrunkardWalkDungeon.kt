@@ -2,6 +2,7 @@ package com.github.samelVhatargh.vapula.map.generators
 
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
+import com.github.samelVhatargh.vapula.map.createEmptyTiles
 
 private enum class Direction(val x: Int, val y: Int) {
     NORTH(0, 1),
@@ -13,7 +14,7 @@ private enum class Direction(val x: Int, val y: Int) {
 class DrunkardWalkDungeon : MapGenerator {
 
     override fun getTiles(width: Int, height: Int): Array<Array<Tile>> {
-        val tiles = Array(width) { Array(height) { Tile(Terrain.WALL) } }
+        val tiles = createEmptyTiles(width, height)
 
         val tilesCount = width * height
         val percentage = 0.25f
