@@ -7,10 +7,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.samelVhatargh.vapula.components.Graphics
+import com.github.samelVhatargh.vapula.components.Player
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.map.generators.DrunkardWalkDungeon
 import com.github.samelVhatargh.vapula.screens.GameScreen
+import com.github.samelVhatargh.vapula.systems.Camera
 import com.github.samelVhatargh.vapula.systems.Move
 import com.github.samelVhatargh.vapula.systems.PlayerInput
 import com.github.samelVhatargh.vapula.systems.Render
@@ -27,6 +29,7 @@ class Vapula : KtxGame<KtxScreen>() {
     private val engine = PooledEngine()
 
     override fun create() {
+        @Suppress("LibGDXLogLevel")
         Gdx.app.logLevel = Application.LOG_DEBUG
         val sprites = TextureAtlas(Gdx.files.internal("graphics/sprites.atlas"))
 
@@ -38,12 +41,14 @@ class Vapula : KtxGame<KtxScreen>() {
             with<Graphics> {
                 setSpriteRegion(sprites.findRegion("character"))
             }
+            with<Player>()
         }
         val map = GameMap(16 * 2, 9 * 2)
         map.generate(DrunkardWalkDungeon())
 
         engine.apply {
             addSystem(Move(map))
+            addSystem(Camera(viewport.camera))
             addSystem(Render(batch, viewport))
         }
 
