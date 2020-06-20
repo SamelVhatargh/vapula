@@ -4,12 +4,18 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Camera
-import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.components.MoveDirection
 import com.github.samelVhatargh.vapula.map.GameMap
 import ktx.app.KtxInputAdapter
 import ktx.ashley.has
 import ktx.ashley.plusAssign
 import ktx.math.vec3
+
+private const val DIRECTION_UP = 1f
+private const val DIRECTION_DOWN = -1f
+private const val DIRECTION_LEFT = -1f
+private const val DIRECTION_RIGHT = 1f
+private const val DIRECTION_NONE = 0f
 
 class PlayerInput(private val player: Entity, private val map: GameMap, private val camera: Camera) : EntitySystem(),
     KtxInputAdapter {
