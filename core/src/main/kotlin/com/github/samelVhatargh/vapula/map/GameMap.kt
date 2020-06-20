@@ -9,7 +9,7 @@ private enum class Neighbor {
 }
 
 class GameMap(private val width: Int, private val height: Int) {
-    private var tiles = Array(width) { Array(height) { Tile.WALL } }
+    private var tiles = Array(width) { Array(height) { Tile(Terrain.WALL) } }
 
     val drawTiles = mutableListOf<DrawTile>()
 
@@ -24,7 +24,7 @@ class GameMap(private val width: Int, private val height: Int) {
             val x = (0 until width).random()
             val y = (0 until height).random()
 
-            if (tiles[x][y] == Tile.FLOOR) return Position(x, y)
+            if (tiles[x][y].terrain == Terrain.FLOOR) return Position(x, y)
 
             i++
         }
@@ -39,28 +39,28 @@ class GameMap(private val width: Int, private val height: Int) {
             for (y in 0 until height) {
                 val tile = tiles[x][y]
                 val position = vec2(x.toFloat(), y.toFloat())
-                if (tile === Tile.FLOOR) {
+                if (tile.terrain === Terrain.FLOOR) {
                     drawTiles.add(DrawTile(position, FLOOR))
                     continue
                 }
 
                 var tileNumber = 0
-                if (getNeighbor(x, y, Neighbor.NORTH) == Tile.WALL) tileNumber += 1
-                if (getNeighbor(x, y, Neighbor.EAST) == Tile.WALL) tileNumber += 2
-                if (getNeighbor(x, y, Neighbor.SOUTH) == Tile.WALL) tileNumber += 4
-                if (getNeighbor(x, y, Neighbor.WEST) == Tile.WALL) tileNumber += 8
+                if (getNeighbor(x, y, Neighbor.NORTH).terrain == Terrain.WALL) tileNumber += 1
+                if (getNeighbor(x, y, Neighbor.EAST).terrain == Terrain.WALL) tileNumber += 2
+                if (getNeighbor(x, y, Neighbor.SOUTH).terrain == Terrain.WALL) tileNumber += 4
+                if (getNeighbor(x, y, Neighbor.WEST).terrain == Terrain.WALL) tileNumber += 8
 
                 if (tileNumber != 15) {
                     drawTiles.add(DrawTile(position, "$WALL$tileNumber"))
                 }
 
-                if (getNeighbor(x, y, Neighbor.NORTH_WEST) == Tile.FLOOR)
+                if (getNeighbor(x, y, Neighbor.NORTH_WEST).terrain == Terrain.FLOOR)
                     drawTiles.add(DrawTile(position, NORTH_WEST_CORNER, -1))
-                if (getNeighbor(x, y, Neighbor.NORTH_EAST) == Tile.FLOOR)
+                if (getNeighbor(x, y, Neighbor.NORTH_EAST).terrain == Terrain.FLOOR)
                     drawTiles.add(DrawTile(position, NORTH_EAST_CORNER, -1))
-                if (getNeighbor(x, y, Neighbor.SOUTH_EAST) == Tile.FLOOR)
+                if (getNeighbor(x, y, Neighbor.SOUTH_EAST).terrain == Terrain.FLOOR)
                     drawTiles.add(DrawTile(position, SOUTH_EAST_CORNER, -1))
-                if (getNeighbor(x, y, Neighbor.SOUTH_WEST) == Tile.FLOOR)
+                if (getNeighbor(x, y, Neighbor.SOUTH_WEST).terrain == Terrain.FLOOR)
                     drawTiles.add(DrawTile(position, SOUTH_WEST_CORNER, -1))
             }
         }
@@ -82,7 +82,7 @@ class GameMap(private val width: Int, private val height: Int) {
         return try {
             tiles[x + dx][y + dy]
         } catch (e: ArrayIndexOutOfBoundsException) {
-            Tile.WALL
+            Tile(Terrain.WALL)
         }
     }
 
@@ -92,10 +92,10 @@ class GameMap(private val width: Int, private val height: Int) {
      * Используется для дебаггинга
      */
     fun switchTile(x: Int, y: Int) {
-        tiles[x][y] = if (tiles[x][y] == Tile.FLOOR) Tile.WALL else Tile.FLOOR
+        tiles[x][y] = if (tiles[x][y].terrain == Terrain.FLOOR) Tile(Terrain.WALL) else Tile(Terrain.FLOOR)
         computeDrawTiles()
     }
 
 
-    fun isWalkable(newX: Int, newY: Int): Boolean = tiles[newX][newY] == Tile.FLOOR
+    fun isWalkable(x: Int, y: Int): Boolean = tiles[x][y].terrain == Terrain.FLOOR
 }

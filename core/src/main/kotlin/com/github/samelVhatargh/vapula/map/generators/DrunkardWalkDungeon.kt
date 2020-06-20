@@ -1,5 +1,6 @@
 package com.github.samelVhatargh.vapula.map.generators
 
+import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
 
 private enum class Direction(val x: Int, val y: Int) {
@@ -12,7 +13,7 @@ private enum class Direction(val x: Int, val y: Int) {
 class DrunkardWalkDungeon : MapGenerator {
 
     override fun getTiles(width: Int, height: Int): Array<Array<Tile>> {
-        val tiles = Array(width) { Array(height) { Tile.WALL } }
+        val tiles = Array(width) { Array(height) { Tile(Terrain.WALL) } }
 
         val tilesCount = width * height
         val percentage = 0.25f
@@ -20,22 +21,31 @@ class DrunkardWalkDungeon : MapGenerator {
         var currentTile = Pair((1 until width).random(), (1 until height).random())
         var floorTilesCount = 0
 
-        tiles[currentTile.first][currentTile.second] = Tile.FLOOR
+        tiles[currentTile.first][currentTile.second] = Tile(Terrain.FLOOR)
 
         var directions = listOf(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST)
 
         while (floorTilesCount <= tilesCount * percentage) {
             val direction = directions.random()
-            directions = listOf(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST, direction, direction, direction)
+            directions = listOf(
+                Direction.NORTH,
+                Direction.SOUTH,
+                Direction.EAST,
+                Direction.WEST,
+                direction,
+                direction,
+                direction
+            )
             val newTile = Pair(currentTile.first + direction.x, currentTile.second + direction.y)
             if (newTile.first < 1 || newTile.first >= width - 1
-                || newTile.second < 1 || newTile.second >= height - 1) continue
+                || newTile.second < 1 || newTile.second >= height - 1
+            ) continue
 
             val oldTile = tiles[newTile.first][newTile.second]
-            tiles[newTile.first][newTile.second] = Tile.FLOOR
+            tiles[newTile.first][newTile.second] = Tile(Terrain.FLOOR)
             currentTile = newTile
 
-            if (oldTile == Tile.WALL) floorTilesCount++
+            if (oldTile.terrain == Terrain.WALL) floorTilesCount++
         }
 
         return tiles
