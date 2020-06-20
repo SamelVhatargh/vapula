@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.samelVhatargh.vapula.components.Graphics
 import com.github.samelVhatargh.vapula.components.Player
 import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.FieldOfView
 import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.map.generators.DrunkardWalkDungeon
 import com.github.samelVhatargh.vapula.screens.GameScreen
@@ -45,8 +46,10 @@ class Vapula : KtxGame<KtxScreen>() {
         }
         player.add(playerPosition)
 
+        val fov = FieldOfView().apply { update(player) }
+
         engine.apply {
-            addSystem(Move(map))
+            addSystem(Move(map, fov))
             addSystem(Camera(viewport.camera))
             addSystem(Render(batch, viewport))
         }
@@ -54,7 +57,7 @@ class Vapula : KtxGame<KtxScreen>() {
 
         Gdx.input.inputProcessor = PlayerInput(player, map, viewport.camera)
 
-        addScreen(GameScreen(engine, viewport, sprites, batch, map))
+        addScreen(GameScreen(engine, viewport, sprites, batch, map, fov))
         setScreen<GameScreen>()
     }
 }

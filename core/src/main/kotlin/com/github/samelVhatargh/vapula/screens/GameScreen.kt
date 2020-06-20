@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.Viewport
+import com.github.samelVhatargh.vapula.map.FieldOfView
 import com.github.samelVhatargh.vapula.map.MapRenderer
 import com.github.samelVhatargh.vapula.map.GameMap
 import ktx.app.KtxScreen
@@ -13,14 +14,14 @@ class GameScreen(
     private val viewport: Viewport,
     sprites: TextureAtlas,
     batch: SpriteBatch,
-    val map: GameMap
+    val map: GameMap,
+    private val fov: FieldOfView
 ) : KtxScreen {
 
     private val mapRenderer = MapRenderer(sprites, batch)
 
-
     override fun render(delta: Float) {
-        mapRenderer.renderMap(map)
+        mapRenderer.renderMap(map, fov)
         engine.update(delta)
     }
 
