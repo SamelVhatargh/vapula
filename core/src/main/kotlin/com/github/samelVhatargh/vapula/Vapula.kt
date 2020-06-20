@@ -33,18 +33,17 @@ class Vapula : KtxGame<KtxScreen>() {
         Gdx.app.logLevel = Application.LOG_DEBUG
         val sprites = TextureAtlas(Gdx.files.internal("graphics/sprites.atlas"))
 
+        val map = GameMap(16 * 2, 9 * 2)
+        map.generate(DrunkardWalkDungeon())
+
+        val playerPosition = map.getRandomFloorTilePosition()
         val player = engine.entity {
-            with<Position> {
-                x = 5
-                y = 5
-            }
             with<Graphics> {
                 setSpriteRegion(sprites.findRegion("character"))
             }
             with<Player>()
         }
-        val map = GameMap(16 * 2, 9 * 2)
-        map.generate(DrunkardWalkDungeon())
+        player.add(playerPosition)
 
         engine.apply {
             addSystem(Move(map))

@@ -1,5 +1,6 @@
 package com.github.samelVhatargh.vapula.map
 
+import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.map.generators.MapGenerator
 import ktx.math.vec2
 
@@ -15,6 +16,20 @@ class GameMap(private val width: Int, private val height: Int) {
     fun generate(generator: MapGenerator) {
         tiles = generator.getTiles(width, height)
         computeDrawTiles()
+    }
+
+    fun getRandomFloorTilePosition(): Position {
+        var i = 1
+        while (i < 1000) {
+            val x = (0 until width).random()
+            val y = (0 until height).random()
+
+            if (tiles[x][y] == Tile.FLOOR) return Position(x, y)
+
+            i++
+        }
+
+        return Position(5, 5)
     }
 
     private fun computeDrawTiles() {
