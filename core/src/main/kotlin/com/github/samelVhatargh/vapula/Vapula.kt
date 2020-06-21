@@ -52,15 +52,13 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
         player.add(fov)
 
         engine.apply {
+            addSystem(PlayerInput(player, map, viewport.camera))
             addSystem(Move(map))
             addSystem(Camera(viewport.camera))
             addSystem(MapRender(spriteAtlas, batch, player, map))
             addSystem(Render(batch, viewport))
             addSystem(FieldOfViewCalculator(player, map))
         }
-
-
-        Gdx.input.inputProcessor = PlayerInput(player, map, viewport.camera)
 
         addScreen(GameScreen(engine, viewport))
         setScreen<GameScreen>()

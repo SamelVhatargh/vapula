@@ -1,7 +1,9 @@
 package com.github.samelVhatargh.vapula.systems
 
+import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.components.GameMap
@@ -22,6 +24,14 @@ class PlayerInput(private val player: Entity, map: Entity, private val camera: C
     KtxInputAdapter {
 
     private val gameMap = map[GameMap.mapper]!!
+
+    override fun addedToEngine(engine: Engine) {
+        Gdx.input.inputProcessor = this
+    }
+
+    override fun removedFromEngine(engine: Engine) {
+        Gdx.input.inputProcessor = null
+    }
 
     override fun keyDown(keycode: Int): Boolean {
         if (!player.has(MoveDirection.mapper)) {
