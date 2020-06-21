@@ -102,10 +102,10 @@ class GameMap(private val width: Int, private val height: Int) {
     fun isExplored(position: Position): Boolean = tiles[position.x][position.y].explored
 
     fun blockSight(x: Int, y: Int): Boolean {
-        try {
-            return tiles[x][y].blockSight
+        return try {
+            tiles[x][y].blockSight
         } catch (e: ArrayIndexOutOfBoundsException) {
-            return true
+            true
         }
     }
 

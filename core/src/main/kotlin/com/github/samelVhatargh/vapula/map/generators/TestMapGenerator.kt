@@ -7,6 +7,7 @@ import com.github.samelVhatargh.vapula.map.createEmptyTiles
 /**
  * Генерирует созданную руками карту, использовавшуюся для отладки процесса рисования карты
  */
+@Suppress("unused")
 class TestMapGenerator : MapGenerator {
 
     override fun getTiles(width: Int, height: Int): Array<Array<Tile>> {

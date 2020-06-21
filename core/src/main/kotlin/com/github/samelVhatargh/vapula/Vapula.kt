@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.samelVhatargh.vapula.components.Graphics
 import com.github.samelVhatargh.vapula.components.Player
-import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.map.FieldOfView
 import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.map.generators.DrunkardWalkDungeon

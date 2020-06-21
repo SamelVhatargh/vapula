@@ -12,7 +12,7 @@ import ktx.ashley.get
 import ktx.ashley.has
 import ktx.ashley.remove
 
-class Move(private val gameMap: GameMap, val fov: FieldOfView) : IteratingSystem(
+class Move(private val gameMap: GameMap, private val fov: FieldOfView) : IteratingSystem(
     allOf(MoveDirection::class, Position::class).get()
 ) {
     override fun processEntity(entity: Entity, deltaTime: Float) {

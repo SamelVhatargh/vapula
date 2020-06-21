@@ -38,7 +38,7 @@ class FieldOfView(val map: GameMap) {
         }
 
         ///Простейший ray casting алгоритм
-        edges.forEach{ edge ->
+        edges.forEach { edge ->
             val line = Bresenham2().line(origin.x, origin.y, edge.x.toInt(), edge.y.toInt())
             for (i in 0 until line.size) {
                 val point = line[i]
