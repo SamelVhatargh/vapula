@@ -11,7 +11,6 @@ import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.components.toPosition
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
-import com.github.samelVhatargh.vapula.map.TileGraphic
 import ktx.ashley.get
 import ktx.graphics.use
 import ktx.math.vec2
@@ -28,6 +27,8 @@ private const val WALL = "Wall"
 private enum class Neighbor {
     NORTH, SOUTH, EAST, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
 }
+
+private data class TileGraphic(val position: Vector2, val spriteName: String, val priority: Int = 0)
 
 class MapRender(
     private val atlas: TextureAtlas,
