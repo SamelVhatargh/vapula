@@ -9,11 +9,21 @@ import com.badlogic.gdx.math.Vector2
 import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.components.toPosition
-import com.github.samelVhatargh.vapula.map.*
+import com.github.samelVhatargh.vapula.map.Terrain
+import com.github.samelVhatargh.vapula.map.Tile
+import com.github.samelVhatargh.vapula.map.TileGraphic
 import ktx.ashley.get
 import ktx.graphics.use
 import ktx.math.vec2
 
+
+private const val FLOOR = "Tile"
+private const val EMPTY = ""
+private const val NORTH_WEST_CORNER = "WallCorner1"
+private const val NORTH_EAST_CORNER = "WallCorner2"
+private const val SOUTH_EAST_CORNER = "WallCorner3"
+private const val SOUTH_WEST_CORNER = "WallCorner4"
+private const val WALL = "Wall"
 
 private enum class Neighbor {
     NORTH, SOUTH, EAST, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
