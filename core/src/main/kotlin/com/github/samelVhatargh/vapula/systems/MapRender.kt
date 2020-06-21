@@ -49,16 +49,15 @@ class MapRender(
             tileGraphics.forEach { tile ->
                 val sprite = getSprite(tile.spriteName)
                 if (sprite != null) {
-                    if (gameMap.isExplored(tile.position.toPosition())) {
-                        sprite.setPosition(tile.position.x, tile.position.y)
-                        sprite.draw(batch)
-                    }
-
-                    //check fov
                     if (!fov.isVisible(tile.position)) {
                         if (!fogOfWar.contains(tile.position)) fogOfWar.add(tile.position)
                     } else {
                         gameMap.markAsExplored(tile.position.toPosition())
+                    }
+
+                    if (gameMap.isExplored(tile.position.toPosition())) {
+                        sprite.setPosition(tile.position.x, tile.position.y)
+                        sprite.draw(batch)
                     }
                 }
             }
