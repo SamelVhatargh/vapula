@@ -5,12 +5,15 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.math.Bresenham2
 import com.badlogic.gdx.math.Vector2
 import com.github.samelVhatargh.vapula.components.FieldOfView
+import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.components.Position
-import com.github.samelVhatargh.vapula.map.GameMap
 import ktx.ashley.get
 import ktx.math.vec2
 
-class FieldOfVieCalculator(private val player: Entity, val map: GameMap) : EntitySystem() {
+class FieldOfVieCalculator(private val player: Entity, map: Entity) : EntitySystem() {
+
+    private val gameMap = map[GameMap.mapper]!!
+
     override fun update(deltaTime: Float) {
         player[FieldOfView.mapper]?.let { fov ->
             if (!fov.shouldUpdate) return
@@ -43,7 +46,7 @@ class FieldOfVieCalculator(private val player: Entity, val map: GameMap) : Entit
                 for (i in 0 until line.size) {
                     val point = line[i]
                     fov.visibleTiles.add(vec2(point.x.toFloat(), point.y.toFloat()))
-                    if (map.blockSight(point.x, point.y)) {
+                    if (gameMap.blockSight(point.x, point.y)) {
                         break
                     }
                 }

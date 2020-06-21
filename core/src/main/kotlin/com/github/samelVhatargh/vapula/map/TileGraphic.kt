@@ -11,6 +11,6 @@ const val SOUTH_WEST_CORNER = "WallCorner4"
 const val WALL = "Wall"
 
 /**
- * Хранит информацию которую использует [MapRenderer] для рисования карты
+ * Хранит информацию для рисования карты
  */
 data class TileGraphic(val position: Vector2, val spriteName: String, val priority: Int = 0)
