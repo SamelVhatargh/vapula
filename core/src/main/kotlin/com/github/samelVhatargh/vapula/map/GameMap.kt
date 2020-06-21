@@ -11,11 +11,11 @@ private enum class Neighbor {
 class GameMap(private val width: Int, private val height: Int) {
     private var tiles = createEmptyTiles(width, height)
 
-    val drawTiles = mutableListOf<DrawTile>()
+    val tileGraphics = mutableListOf<TileGraphic>()
 
     fun generate(generator: MapGenerator) {
         tiles = generator.getTiles(width, height)
-        computeDrawTiles()
+        computeTileGraphics()
     }
 
     fun getRandomFloorTilePosition(): Position {
@@ -32,15 +32,15 @@ class GameMap(private val width: Int, private val height: Int) {
         return Position(5, 5)
     }
 
-    private fun computeDrawTiles() {
-        drawTiles.clear()
+    private fun computeTileGraphics() {
+        tileGraphics.clear()
 
         for (x in 0 until width) {
             for (y in 0 until height) {
                 val tile = tiles[x][y]
                 val position = vec2(x.toFloat(), y.toFloat())
                 if (tile.terrain === Terrain.FLOOR) {
-                    drawTiles.add(DrawTile(position, FLOOR))
+                    tileGraphics.add(TileGraphic(position, FLOOR))
                     continue
                 }
 
@@ -51,20 +51,20 @@ class GameMap(private val width: Int, private val height: Int) {
                 if (getNeighbor(x, y, Neighbor.WEST).terrain == Terrain.WALL) tileNumber += 8
 
                 if (tileNumber != 15) {
-                    drawTiles.add(DrawTile(position, "$WALL$tileNumber"))
+                    tileGraphics.add(TileGraphic(position, "$WALL$tileNumber"))
                 }
 
                 if (getNeighbor(x, y, Neighbor.NORTH_WEST).terrain == Terrain.FLOOR)
-                    drawTiles.add(DrawTile(position, NORTH_WEST_CORNER, -1))
+                    tileGraphics.add(TileGraphic(position, NORTH_WEST_CORNER, -1))
                 if (getNeighbor(x, y, Neighbor.NORTH_EAST).terrain == Terrain.FLOOR)
-                    drawTiles.add(DrawTile(position, NORTH_EAST_CORNER, -1))
+                    tileGraphics.add(TileGraphic(position, NORTH_EAST_CORNER, -1))
                 if (getNeighbor(x, y, Neighbor.SOUTH_EAST).terrain == Terrain.FLOOR)
-                    drawTiles.add(DrawTile(position, SOUTH_EAST_CORNER, -1))
+                    tileGraphics.add(TileGraphic(position, SOUTH_EAST_CORNER, -1))
                 if (getNeighbor(x, y, Neighbor.SOUTH_WEST).terrain == Terrain.FLOOR)
-                    drawTiles.add(DrawTile(position, SOUTH_WEST_CORNER, -1))
+                    tileGraphics.add(TileGraphic(position, SOUTH_WEST_CORNER, -1))
             }
         }
-        drawTiles.sortBy { it.priority }
+        tileGraphics.sortBy { it.priority }
     }
 
     private fun getNeighbor(x: Int, y: Int, side: Neighbor): Tile {
@@ -93,7 +93,7 @@ class GameMap(private val width: Int, private val height: Int) {
      */
     fun switchTile(x: Int, y: Int) {
         tiles[x][y] = if (tiles[x][y].terrain == Terrain.FLOOR) Tile(Terrain.WALL) else Tile(Terrain.FLOOR)
-        computeDrawTiles()
+        computeTileGraphics()
     }
 
 

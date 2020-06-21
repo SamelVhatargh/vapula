@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.github.samelVhatargh.vapula.components.toPosition
 import ktx.graphics.use
 
-class MapRenderer(atlas: TextureAtlas, private val batch: SpriteBatch) {
+class MapRenderer(private val atlas: TextureAtlas, private val batch: SpriteBatch) {
 
-    private val sprites = TileSprites(atlas)
+    private val spriteCache = mutableMapOf<String, Sprite>()
 
     private val fogOfWar = Sprite(atlas.findRegion("white")).apply {
         setColor(0f, 0f, 0f, 0.75f)
@@ -16,8 +16,8 @@ class MapRenderer(atlas: TextureAtlas, private val batch: SpriteBatch) {
 
     fun renderMap(map: GameMap, fov: FieldOfView) {
         batch.use {
-            map.drawTiles.forEach { tile ->
-                val sprite = sprites[tile.spriteName]
+            map.tileGraphics.forEach { tile ->
+                val sprite = getSprite(tile.spriteName)
                 if (sprite != null) {
                     if (map.isExplored(tile.position.toPosition())) {
                         sprite.setPosition(tile.position.x, tile.position.y)
@@ -36,5 +36,21 @@ class MapRenderer(atlas: TextureAtlas, private val batch: SpriteBatch) {
         }
     }
 
+    private fun getSprite(name: String): Sprite? {
+        if (name == EMPTY) {
+            return null
+        }
 
+        val cachedSprite = spriteCache[name]
+        if (cachedSprite != null) return cachedSprite
+
+        val region = atlas.findRegion(name)
+        require(region != null) { "Cant load sprite $name" }
+
+        val loadedSprite = Sprite(region).apply {
+            setSize(1f, 1f)
+        }
+        spriteCache[name] = loadedSprite
+        return loadedSprite
+    }
 }
