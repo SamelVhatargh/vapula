@@ -41,16 +41,16 @@ class MapRenderer(private val atlas: TextureAtlas, private val batch: SpriteBatc
             return null
         }
 
-        val cachedSprite = spriteCache[name]
-        if (cachedSprite != null) return cachedSprite
+        var sprite = spriteCache[name]
+        if (sprite == null) {
+            val region = atlas.findRegion(name)
+            require(region != null) { "Cant load sprite $name" }
 
-        val region = atlas.findRegion(name)
-        require(region != null) { "Cant load sprite $name" }
-
-        val loadedSprite = Sprite(region).apply {
-            setSize(1f, 1f)
+            sprite = Sprite(region).apply {
+                setSize(1f, 1f)
+            }
+            spriteCache[name] = sprite
         }
-        spriteCache[name] = loadedSprite
-        return loadedSprite
+        return sprite
     }
 }
