@@ -101,7 +101,6 @@ class MapRender(
     private fun computeTileGraphics() {
         if (!gameMap.shouldComputeTileGraphics) return
 
-        println("computing map graphics")
         gameMap.shouldComputeTileGraphics = false
         tileGraphics.clear()
 
