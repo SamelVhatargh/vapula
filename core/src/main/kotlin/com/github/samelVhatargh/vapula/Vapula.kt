@@ -8,14 +8,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.samelVhatargh.vapula.components.Graphics
 import com.github.samelVhatargh.vapula.components.Player
-import com.github.samelVhatargh.vapula.map.FieldOfView
+import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.map.generators.DrunkardWalkDungeon
 import com.github.samelVhatargh.vapula.screens.GameScreen
-import com.github.samelVhatargh.vapula.systems.Camera
-import com.github.samelVhatargh.vapula.systems.Move
-import com.github.samelVhatargh.vapula.systems.PlayerInput
-import com.github.samelVhatargh.vapula.systems.Render
+import com.github.samelVhatargh.vapula.systems.*
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.ashley.entity
@@ -36,6 +33,8 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
         val map = GameMap(16 * 2, 9 * 2)
         map.generate(DrunkardWalkDungeon())
 
+        val fov = FieldOfView()
+
         val playerPosition = map.getRandomFloorTilePosition()
         val player = engine.entity {
             with<Graphics> {
@@ -44,11 +43,11 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
             with<Player>()
         }
         player.add(playerPosition)
-
-        val fov = FieldOfView(map).apply { update(player) }
+        player.add(fov)
 
         engine.apply {
-            addSystem(Move(map, fov))
+            addSystem(Move(map))
+            addSystem(FieldOfVieCalculator(player, map))
             addSystem(Camera(viewport.camera))
             addSystem(Render(batch, viewport))
         }

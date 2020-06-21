@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.github.samelVhatargh.vapula.map.FieldOfView
+import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.map.MapRenderer
 import com.github.samelVhatargh.vapula.map.GameMap
 import ktx.app.KtxScreen
