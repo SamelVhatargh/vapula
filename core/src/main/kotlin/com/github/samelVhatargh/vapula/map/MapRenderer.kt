@@ -3,6 +3,7 @@ package com.github.samelVhatargh.vapula.map
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.badlogic.gdx.math.Vector2
 import com.github.samelVhatargh.vapula.components.toPosition
 import ktx.graphics.use
 
@@ -10,11 +11,12 @@ class MapRenderer(private val atlas: TextureAtlas, private val batch: SpriteBatc
 
     private val spriteCache = mutableMapOf<String, Sprite>()
 
-    private val fogOfWar = Sprite(atlas.findRegion("white")).apply {
+    private val fogOfWarSprite = Sprite(atlas.findRegion("white")).apply {
         setColor(0f, 0f, 0f, 0.75f)
     }
 
     fun renderMap(map: GameMap, fov: FieldOfView) {
+        val fogOfWar = mutableSetOf<Vector2>()
         batch.use {
             map.tileGraphics.forEach { tile ->
                 val sprite = getSprite(tile.spriteName)
@@ -26,12 +28,16 @@ class MapRenderer(private val atlas: TextureAtlas, private val batch: SpriteBatc
 
                     //check fov
                     if (!fov.isVisible(tile.position)) {
-                        fogOfWar.setPosition(tile.position.x, tile.position.y)
-                        fogOfWar.draw(batch)
+                        if (!fogOfWar.contains(tile.position)) fogOfWar.add(tile.position)
                     } else {
                         map.markAsExplored(tile.position.toPosition())
                     }
                 }
+            }
+
+            fogOfWar.forEach { position ->
+                fogOfWarSprite.setPosition(position.x, position.y)
+                fogOfWarSprite.draw(batch)
             }
         }
     }
