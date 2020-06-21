@@ -1,7 +1,7 @@
 package com.github.samelVhatargh.vapula
 
 import com.badlogic.ashley.core.PooledEngine
-import com.badlogic.gdx.Application
+import com.badlogic.gdx.Application.LOG_ERROR
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
@@ -21,7 +21,7 @@ import ktx.app.KtxScreen
 import ktx.ashley.entity
 import ktx.ashley.with
 
-class Vapula : KtxGame<KtxScreen>() {
+class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
 
     private var viewport = FitViewport(16f, 9f)
     private val batch by lazy { SpriteBatch() }
@@ -29,8 +29,7 @@ class Vapula : KtxGame<KtxScreen>() {
     private val engine = PooledEngine()
 
     override fun create() {
-        @Suppress("LibGDXLogLevel")
-        Gdx.app.logLevel = Application.LOG_DEBUG
+        Gdx.app.logLevel = debugLevel
         val sprites = TextureAtlas(Gdx.files.internal("graphics/sprites.atlas"))
 
         val map = GameMap(16 * 2, 9 * 2)
