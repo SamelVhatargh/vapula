@@ -25,12 +25,13 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
 
     private var viewport = FitViewport(16f, 9f)
     private val batch by lazy { SpriteBatch() }
+    private lateinit var spriteAtlas: TextureAtlas
 
     private val engine = PooledEngine()
 
     override fun create() {
         Gdx.app.logLevel = debugLevel
-        val sprites = TextureAtlas(Gdx.files.internal("graphics/sprites.atlas"))
+        spriteAtlas = TextureAtlas(Gdx.files.internal("graphics/sprites.atlas"))
 
         val map = GameMap(16 * 2, 9 * 2)
         map.generate(DrunkardWalkDungeon())
@@ -38,7 +39,7 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
         val playerPosition = map.getRandomFloorTilePosition()
         val player = engine.entity {
             with<Graphics> {
-                setSpriteRegion(sprites.findRegion("character"))
+                setSpriteRegion(spriteAtlas.findRegion("character"))
             }
             with<Player>()
         }
@@ -55,7 +56,13 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
 
         Gdx.input.inputProcessor = PlayerInput(player, map, viewport.camera)
 
-        addScreen(GameScreen(engine, viewport, sprites, batch, map, fov))
+        addScreen(GameScreen(engine, viewport, spriteAtlas, batch, map, fov))
         setScreen<GameScreen>()
+    }
+
+    override fun dispose() {
+        super.dispose()
+        batch.dispose()
+        spriteAtlas.dispose()
     }
 }
