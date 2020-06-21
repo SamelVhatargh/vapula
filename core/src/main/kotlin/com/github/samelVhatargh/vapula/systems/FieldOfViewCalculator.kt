@@ -10,7 +10,7 @@ import com.github.samelVhatargh.vapula.components.Position
 import ktx.ashley.get
 import ktx.math.vec2
 
-class FieldOfVieCalculator(private val player: Entity, map: Entity) : EntitySystem() {
+class FieldOfViewCalculator(private val player: Entity, map: Entity) : EntitySystem() {
 
     private val gameMap = map[GameMap.mapper]!!
 
