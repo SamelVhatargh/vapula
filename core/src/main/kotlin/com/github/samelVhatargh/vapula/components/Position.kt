@@ -10,6 +10,8 @@ import ktx.ashley.mapperFor
  */
 class Position(var x: Int = 0, var y: Int = 0) : Component, Pool.Poolable {
 
+    fun toVector(): Vector2 = Vector2(x.toFloat(), y.toFloat())
+
     override fun reset() {
         x = 0
         y = 0

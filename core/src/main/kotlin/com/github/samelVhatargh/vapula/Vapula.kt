@@ -46,7 +46,7 @@ class Vapula : KtxGame<KtxScreen>() {
         }
         player.add(playerPosition)
 
-        val fov = FieldOfView().apply { update(player) }
+        val fov = FieldOfView(map).apply { update(player) }
 
         engine.apply {
             addSystem(Move(map, fov))
