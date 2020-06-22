@@ -6,6 +6,7 @@ import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.components.MoveDirection
 import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.entities.OCCUPY_SPACE_FAMILY
 import ktx.ashley.allOf
 import ktx.ashley.get
 import ktx.ashley.remove
@@ -22,12 +23,18 @@ class Move(map: Entity) : IteratingSystem(
         val newX = position.x + move.direction.x.toInt()
         val newY = position.y + move.direction.y.toInt()
 
-        if (gameMap.isWalkable(newX, newY)) {
-            position.x = newX
-            position.y = newY
+        val entities = engine.getEntitiesFor(OCCUPY_SPACE_FAMILY)
+        val obstacle = entities.find {
+            val occupierPosition = it[Position.mapper]!!
+            occupierPosition.x == newX && occupierPosition.y == newY
         }
 
-        entity[FieldOfView.mapper]?.shouldUpdate = true
+        if (obstacle == null && gameMap.isWalkable(newX, newY)) {
+            position.x = newX
+            position.y = newY
+
+            entity[FieldOfView.mapper]?.shouldUpdate = true
+        }
 
         entity.remove<MoveDirection>()
     }

@@ -6,13 +6,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.samelVhatargh.vapula.components.Graphics
 import com.github.samelVhatargh.vapula.components.Position
-import ktx.ashley.allOf
+import com.github.samelVhatargh.vapula.entities.RENDERABLE_FAMILY
 import ktx.ashley.get
 import ktx.graphics.use
 
-class Render(private val batch: SpriteBatch, viewport: Viewport) : IteratingSystem(
-    allOf(Position::class, Graphics::class).get()
-) {
+class Render(private val batch: SpriteBatch, viewport: Viewport) : IteratingSystem(RENDERABLE_FAMILY) {
 
     private val camera = viewport.camera
 

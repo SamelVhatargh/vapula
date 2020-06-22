@@ -8,7 +8,7 @@ import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.components.Graphics
 import com.github.samelVhatargh.vapula.components.Position
-import ktx.ashley.allOf
+import com.github.samelVhatargh.vapula.entities.RENDERABLE_FAMILY
 import ktx.ashley.get
 import ktx.math.vec2
 
@@ -55,8 +55,7 @@ class FieldOfViewCalculator(private val player: Entity, map: Entity) : EntitySys
             }
 
             //Обновляем видимость всех сущностей
-            val family = allOf(Position::class, Graphics::class).get()
-            val entities = engine.getEntitiesFor(family)
+            val entities = engine.getEntitiesFor(RENDERABLE_FAMILY)
 
             entities.forEach { entity ->
                 val graphics = entity[Graphics.mapper]!!
