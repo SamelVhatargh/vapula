@@ -6,14 +6,14 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.FitViewport
-import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.components.GameMap
+import com.github.samelVhatargh.vapula.entities.Factory
 import com.github.samelVhatargh.vapula.map.generators.DrunkardWalkDungeon
 import com.github.samelVhatargh.vapula.screens.GameScreen
 import com.github.samelVhatargh.vapula.systems.*
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.ashley.entity
-import ktx.ashley.get
 import ktx.ashley.with
 
 class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
@@ -35,28 +35,12 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
                 tiles = DrunkardWalkDungeon().getTiles(width, height)
             }
         }
+        val entityFactory = Factory(engine, spriteAtlas, map)
 
-        val fov = FieldOfView()
-
-        val playerPosition = map[GameMap.mapper]?.getRandomFloorTilePosition()!!
-        val player = engine.entity {
-            with<Graphics> {
-                setSpriteRegion(spriteAtlas.findRegion("character"))
-            }
-            with<Player>()
-            with<OccupySpace>()
-        }
-        player.add(playerPosition)
-        player.add(fov)
-
-        val monsterPosition = map[GameMap.mapper]?.getRandomFloorTilePosition()
-        val monster = engine.entity {
-            with<Graphics> {
-                setSpriteRegion(spriteAtlas.findRegion("goblin"))
-            }
-            with<OccupySpace>()
-        }
-        monster.add(monsterPosition)
+        val player = entityFactory.createPlayer()
+        entityFactory.createGoblin()
+        entityFactory.createGoblin()
+        entityFactory.createGoblin()
 
         engine.apply {
             addSystem(PlayerInput(player, map, viewport.camera))
