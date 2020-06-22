@@ -1,145 +1,145 @@
 
 sprites.png
-size: 256,128
+size: 512,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Tile
   rotate: false
-  xy: 70, 3
+  xy: 442, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall0
   rotate: false
-  xy: 2, 5
+  xy: 68, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall10
   rotate: false
-  xy: 2, 5
+  xy: 68, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall2
   rotate: false
-  xy: 2, 5
+  xy: 68, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall8
   rotate: false
-  xy: 2, 5
+  xy: 68, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall1
   rotate: false
-  xy: 68, 71
+  xy: 102, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall11
   rotate: false
-  xy: 102, 71
+  xy: 136, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall12
   rotate: false
-  xy: 136, 71
+  xy: 170, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall13
   rotate: false
-  xy: 170, 71
+  xy: 204, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall14
   rotate: false
-  xy: 204, 71
+  xy: 238, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall3
   rotate: false
-  xy: 104, 3
+  xy: 476, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall4
   rotate: false
-  xy: 138, 37
+  xy: 374, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall5
   rotate: false
-  xy: 70, 37
+  xy: 306, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall6
   rotate: false
-  xy: 104, 37
+  xy: 340, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall7
   rotate: false
-  xy: 172, 37
+  xy: 408, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall9
   rotate: false
-  xy: 36, 5
+  xy: 272, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner1
   rotate: false
-  xy: 138, 3
+  xy: 68, 37
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner2
   rotate: false
-  xy: 172, 3
+  xy: 102, 37
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner3
   rotate: false
-  xy: 206, 37
+  xy: 136, 37
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner4
   rotate: false
-  xy: 206, 3
+  xy: 170, 37
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -149,6 +149,13 @@ character
   xy: 2, 39
   size: 64, 64
   orig: 64, 64
+  offset: 0, 0
+  index: -1
+goblin
+  rotate: false
+  xy: 2, 5
+  size: 33, 32
+  orig: 33, 32
   offset: 0, 0
   index: -1
 white

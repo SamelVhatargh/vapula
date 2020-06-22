@@ -13,7 +13,10 @@ class Graphics : Component, Pool.Poolable {
 
     val sprite = Sprite()
 
+    var visible = false
+
     override fun reset() {
+        visible = false
         sprite.texture = null
         sprite.setColor(1f, 1f, 1f, 1f)
     }

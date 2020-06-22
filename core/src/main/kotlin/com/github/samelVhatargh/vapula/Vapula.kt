@@ -51,13 +51,21 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
         player.add(playerPosition)
         player.add(fov)
 
+        val monsterPosition = map[GameMap.mapper]?.getRandomFloorTilePosition()
+        val monster = engine.entity {
+            with<Graphics> {
+                setSpriteRegion(spriteAtlas.findRegion("goblin"))
+            }
+        }
+        monster.add(monsterPosition)
+
         engine.apply {
             addSystem(PlayerInput(player, map, viewport.camera))
             addSystem(Move(map))
             addSystem(Camera(viewport.camera))
             addSystem(MapRender(spriteAtlas, batch, player, map))
-            addSystem(Render(batch, viewport))
             addSystem(FieldOfViewCalculator(player, map))
+            addSystem(Render(batch, viewport))
         }
 
         addScreen(GameScreen(engine, viewport))

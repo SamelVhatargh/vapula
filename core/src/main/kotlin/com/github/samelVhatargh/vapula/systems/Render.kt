@@ -26,6 +26,8 @@ class Render(private val batch: SpriteBatch, viewport: Viewport) : IteratingSyst
         val position = entity[Position.mapper]!!
         val graphics = entity[Graphics.mapper]!!
 
+        if (!graphics.visible) return
+
         graphics.sprite.setPosition(position.x.toFloat(), position.y.toFloat())
         graphics.sprite.draw(batch)
     }
