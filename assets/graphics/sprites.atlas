@@ -6,156 +6,156 @@ filter: Nearest,Nearest
 repeat: none
 Tile
   rotate: false
-  xy: 442, 71
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-Wall0
-  rotate: false
-  xy: 68, 71
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-Wall10
-  rotate: false
-  xy: 68, 71
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-Wall2
-  rotate: false
-  xy: 68, 71
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-Wall8
-  rotate: false
-  xy: 68, 71
+  xy: 406, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall1
   rotate: false
-  xy: 102, 71
+  xy: 134, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall11
   rotate: false
-  xy: 136, 71
+  xy: 168, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall12
   rotate: false
-  xy: 170, 71
+  xy: 70, 5
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall13
   rotate: false
-  xy: 204, 71
+  xy: 202, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall14
   rotate: false
-  xy: 238, 71
+  xy: 236, 71
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall2
+  rotate: false
+  xy: 36, 5
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall0
+  rotate: false
+  xy: 36, 5
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall10
+  rotate: false
+  xy: 36, 5
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wall8
+  rotate: false
+  xy: 36, 5
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall3
   rotate: false
-  xy: 476, 71
+  xy: 440, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall4
   rotate: false
-  xy: 374, 71
+  xy: 474, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall5
   rotate: false
-  xy: 306, 71
+  xy: 304, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall6
   rotate: false
-  xy: 340, 71
+  xy: 338, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall7
   rotate: false
-  xy: 408, 71
+  xy: 372, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall9
   rotate: false
-  xy: 272, 71
+  xy: 270, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner1
   rotate: false
-  xy: 68, 37
+  xy: 2, 5
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner2
   rotate: false
-  xy: 102, 37
+  xy: 134, 37
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner3
   rotate: false
-  xy: 136, 37
+  xy: 168, 37
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner4
   rotate: false
-  xy: 170, 37
+  xy: 202, 37
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 character
   rotate: false
-  xy: 2, 39
+  xy: 68, 39
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 goblin
   rotate: false
-  xy: 2, 5
-  size: 33, 32
-  orig: 33, 32
+  xy: 2, 39
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 white
