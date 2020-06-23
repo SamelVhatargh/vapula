@@ -44,6 +44,7 @@ class PlayerInput(
             Input.Keys.NUMPAD_9 -> move(MoveDirection.NORTH_EAST)
             Input.Keys.NUMPAD_1 -> move(MoveDirection.SOUTH_WEST)
             Input.Keys.NUMPAD_3 -> move(MoveDirection.SOUTH_EAST)
+            Input.Keys.NUMPAD_5 -> doNothing()
         }
 
         return true
@@ -52,6 +53,11 @@ class PlayerInput(
     private fun move(direction: MoveDirection) {
         engine.getSystem<Move>().execute(player, direction)
         gameState.isPlayerTurn = false
+    }
+
+    private fun doNothing() {
+        gameState.isPlayerTurn = false
+
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
