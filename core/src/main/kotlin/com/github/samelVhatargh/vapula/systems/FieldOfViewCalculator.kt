@@ -6,9 +6,7 @@ import com.badlogic.gdx.math.Bresenham2
 import com.badlogic.gdx.math.Vector2
 import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.GameMap
-import com.github.samelVhatargh.vapula.components.Graphics
 import com.github.samelVhatargh.vapula.components.Position
-import com.github.samelVhatargh.vapula.entities.RENDERABLE_FAMILY
 import ktx.ashley.get
 import ktx.math.vec2
 
@@ -51,19 +49,6 @@ class FieldOfViewCalculator(private val player: Entity, map: Entity) : EntitySys
                     if (gameMap.blockSight(point.x, point.y)) {
                         break
                     }
-                }
-            }
-
-            //Обновляем видимость всех сущностей
-            val entities = engine.getEntitiesFor(RENDERABLE_FAMILY)
-
-            entities.forEach { entity ->
-                val graphics = entity[Graphics.mapper]!!
-                val position = entity[Position.mapper]!!
-                graphics.visible = false
-
-                if (fov.isVisible(position.toVector())) {
-                    graphics.visible = true
                 }
             }
         }
