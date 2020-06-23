@@ -5,15 +5,14 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
-import com.badlogic.gdx.math.Vector2
 import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.GameMap
-import com.github.samelVhatargh.vapula.components.toPosition
+import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
+import com.github.samelVhatargh.vapula.setPosition
 import ktx.ashley.get
 import ktx.graphics.use
-import ktx.math.vec2
 
 
 private const val FLOOR = "Tile"
@@ -28,7 +27,7 @@ private enum class Neighbor {
     NORTH, SOUTH, EAST, WEST, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
 }
 
-private data class TileGraphic(val position: Vector2, val spriteName: String, val priority: Int = 0)
+private data class TileGraphic(val position: Position, val spriteName: String, val priority: Int = 0)
 
 class MapRender(
     private val atlas: TextureAtlas,
@@ -53,7 +52,7 @@ class MapRender(
     }
 
     private fun renderMap() {
-        val fogOfWar = mutableSetOf<Vector2>()
+        val fogOfWar = mutableSetOf<Position>()
         val fov = player[FieldOfView.mapper]!!
 
         batch.use {
@@ -63,18 +62,18 @@ class MapRender(
                     if (!fov.isVisible(tile.position)) {
                         if (!fogOfWar.contains(tile.position)) fogOfWar.add(tile.position)
                     } else {
-                        gameMap.markAsExplored(tile.position.toPosition())
+                        gameMap.markAsExplored(tile.position)
                     }
 
-                    if (gameMap.isExplored(tile.position.toPosition())) {
-                        sprite.setPosition(tile.position.x, tile.position.y)
+                    if (gameMap.isExplored(tile.position)) {
+                        sprite.setPosition(tile.position)
                         sprite.draw(batch)
                     }
                 }
             }
 
             fogOfWar.forEach { position ->
-                fogOfWarSprite.setPosition(position.x, position.y)
+                fogOfWarSprite.setPosition(position)
                 fogOfWarSprite.draw(batch)
             }
         }
@@ -107,7 +106,7 @@ class MapRender(
         for (x in 0 until gameMap.width) {
             for (y in 0 until gameMap.height) {
                 val tile = gameMap.tiles[x][y]
-                val position = vec2(x.toFloat(), y.toFloat())
+                val position = Position(x, y)
                 if (tile.terrain === Terrain.FLOOR) {
                     tileGraphics.add(TileGraphic(position, FLOOR))
                     continue

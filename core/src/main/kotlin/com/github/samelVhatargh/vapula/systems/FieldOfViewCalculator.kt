@@ -8,7 +8,6 @@ import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.components.Position
 import ktx.ashley.get
-import ktx.math.vec2
 
 class FieldOfViewCalculator(private val player: Entity, map: Entity) : EntitySystem() {
 
@@ -45,7 +44,7 @@ class FieldOfViewCalculator(private val player: Entity, map: Entity) : EntitySys
                 val line = Bresenham2().line(origin.x, origin.y, edge.x.toInt(), edge.y.toInt())
                 for (i in 0 until line.size) {
                     val point = line[i]
-                    fov.visibleTiles.add(vec2(point.x.toFloat(), point.y.toFloat()))
+                    fov.visibleTiles.add(Position(point.x, point.y))
                     if (gameMap.blockSight(point.x, point.y)) {
                         break
                     }

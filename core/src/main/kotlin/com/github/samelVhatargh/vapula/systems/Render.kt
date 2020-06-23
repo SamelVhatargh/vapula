@@ -25,7 +25,7 @@ class Render(private val batch: SpriteBatch, viewport: Viewport, val player: Ent
         val position = entity[Position.mapper]!!
         val fov = player[FieldOfView.mapper]!!
 
-        if (!fov.isVisible(position.toVector())) return
+        if (!fov.isVisible(position)) return
 
         val graphics = entity[Graphics.mapper]!!
 
