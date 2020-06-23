@@ -1,27 +1,34 @@
-package com.github.samelVhatargh.vapula.systems
+package com.github.samelVhatargh.vapula.systems.commands
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.ashley.core.EntitySystem
 import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.GameMap
-import com.github.samelVhatargh.vapula.components.MoveDirection
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.entities.OCCUPY_SPACE_FAMILY
 import ktx.ashley.allOf
 import ktx.ashley.get
-import ktx.ashley.remove
 
-class Move(map: Entity) : IteratingSystem(
-    allOf(MoveDirection::class, Position::class).get()
-) {
-    private val gameMap = map[GameMap.mapper]!!
+enum class MoveDirection(val x: Int, val y: Int) {
+    NORTH(0, 1),
+    EAST(1, 0),
+    WEST(-1, 0),
+    SOUTH(0, -1),
+    NORTH_EAST(1, 1),
+    NORTH_WEST(-1, 1),
+    SOUTH_EAST(1, -1),
+    SOUTH_WEST(-1, -1)
+}
 
-    override fun processEntity(entity: Entity, deltaTime: Float) {
+class Move : EntitySystem() {
+    fun execute(entity: Entity, direction: MoveDirection) {
+        val mapEntity = engine.getEntitiesFor(allOf(GameMap::class).get()).first()
+
+        val gameMap = mapEntity[GameMap.mapper]!!
         val position = entity[Position.mapper]!!
-        val move = entity[MoveDirection.mapper]!!
 
-        val newX = position.x + move.direction.x.toInt()
-        val newY = position.y + move.direction.y.toInt()
+        val newX = position.x + direction.x
+        val newY = position.y + direction.y
 
         val entities = engine.getEntitiesFor(OCCUPY_SPACE_FAMILY)
         val obstacle = entities.find {
@@ -35,7 +42,5 @@ class Move(map: Entity) : IteratingSystem(
 
             entity[FieldOfView.mapper]?.shouldUpdate = true
         }
-
-        entity.remove<MoveDirection>()
     }
 }

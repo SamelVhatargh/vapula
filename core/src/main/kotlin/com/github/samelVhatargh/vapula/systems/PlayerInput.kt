@@ -8,18 +8,12 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.GameState
 import com.github.samelVhatargh.vapula.components.GameMap
-import com.github.samelVhatargh.vapula.components.MoveDirection
+import com.github.samelVhatargh.vapula.systems.commands.Move
+import com.github.samelVhatargh.vapula.systems.commands.MoveDirection
 import ktx.app.KtxInputAdapter
 import ktx.ashley.get
-import ktx.ashley.has
-import ktx.ashley.plusAssign
+import ktx.ashley.getSystem
 import ktx.math.vec3
-
-private const val DIRECTION_UP = 1f
-private const val DIRECTION_DOWN = -1f
-private const val DIRECTION_LEFT = -1f
-private const val DIRECTION_RIGHT = 1f
-private const val DIRECTION_NONE = 0f
 
 class PlayerInput(
     private val player: Entity,
@@ -39,24 +33,25 @@ class PlayerInput(
     }
 
     override fun keyDown(keycode: Int): Boolean {
-        if (!player.has(MoveDirection.mapper)) {
-            val move = MoveDirection()
-            when (keycode) {
-                Input.Keys.UP, Input.Keys.NUMPAD_8 -> move.direction.set(DIRECTION_NONE, DIRECTION_UP)
-                Input.Keys.DOWN, Input.Keys.NUMPAD_2 -> move.direction.set(DIRECTION_NONE, DIRECTION_DOWN)
-                Input.Keys.LEFT, Input.Keys.NUMPAD_4 -> move.direction.set(DIRECTION_LEFT, DIRECTION_NONE)
-                Input.Keys.RIGHT, Input.Keys.NUMPAD_6 -> move.direction.set(DIRECTION_RIGHT, DIRECTION_NONE)
-                Input.Keys.NUMPAD_7 -> move.direction.set(DIRECTION_LEFT, DIRECTION_UP)
-                Input.Keys.NUMPAD_9 -> move.direction.set(DIRECTION_RIGHT, DIRECTION_UP)
-                Input.Keys.NUMPAD_1 -> move.direction.set(DIRECTION_LEFT, DIRECTION_DOWN)
-                Input.Keys.NUMPAD_3 -> move.direction.set(DIRECTION_RIGHT, DIRECTION_DOWN)
-            }
+        if (!gameState.isPlayerTurn) return true
 
-            player += move
-            gameState.isPlayerTurn = false
+        when (keycode) {
+            Input.Keys.UP, Input.Keys.NUMPAD_8 -> move(MoveDirection.NORTH)
+            Input.Keys.DOWN, Input.Keys.NUMPAD_2 -> move(MoveDirection.SOUTH)
+            Input.Keys.LEFT, Input.Keys.NUMPAD_4 -> move(MoveDirection.WEST)
+            Input.Keys.RIGHT, Input.Keys.NUMPAD_6 -> move(MoveDirection.EAST)
+            Input.Keys.NUMPAD_7 -> move(MoveDirection.NORTH_WEST)
+            Input.Keys.NUMPAD_9 -> move(MoveDirection.NORTH_EAST)
+            Input.Keys.NUMPAD_1 -> move(MoveDirection.SOUTH_WEST)
+            Input.Keys.NUMPAD_3 -> move(MoveDirection.SOUTH_EAST)
         }
 
         return true
+    }
+
+    private fun move(direction: MoveDirection) {
+        engine.getSystem<Move>().execute(player, direction)
+        gameState.isPlayerTurn = false
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
