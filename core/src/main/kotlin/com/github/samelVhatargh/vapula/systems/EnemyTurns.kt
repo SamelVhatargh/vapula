@@ -6,8 +6,8 @@ import com.github.samelVhatargh.vapula.GameState
 import com.github.samelVhatargh.vapula.components.Ai
 import com.github.samelVhatargh.vapula.components.Name
 import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.systems.commands.Move
-import com.github.samelVhatargh.vapula.systems.commands.MoveDirection
 import ktx.ashley.allOf
 import ktx.ashley.getSystem
 import ktx.log.logger
@@ -17,14 +17,14 @@ class EnemyTurns(private val gameState: GameState) : IteratingSystem(
 ) {
 
     private val directions = listOf(
-        MoveDirection.NORTH,
-        MoveDirection.SOUTH,
-        MoveDirection.EAST,
-        MoveDirection.WEST,
-        MoveDirection.NORTH_EAST,
-        MoveDirection.NORTH_WEST,
-        MoveDirection.SOUTH_EAST,
-        MoveDirection.SOUTH_WEST
+        Direction.NORTH,
+        Direction.SOUTH,
+        Direction.EAST,
+        Direction.WEST,
+        Direction.NORTH_EAST,
+        Direction.NORTH_WEST,
+        Direction.SOUTH_EAST,
+        Direction.SOUTH_WEST
     )
 
     companion object {

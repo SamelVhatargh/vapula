@@ -8,8 +8,8 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.GameState
 import com.github.samelVhatargh.vapula.components.GameMap
+import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.systems.commands.Move
-import com.github.samelVhatargh.vapula.systems.commands.MoveDirection
 import ktx.app.KtxInputAdapter
 import ktx.ashley.get
 import ktx.ashley.getSystem
@@ -36,21 +36,21 @@ class PlayerInput(
         if (!gameState.isPlayerTurn) return true
 
         when (keycode) {
-            Input.Keys.UP, Input.Keys.NUMPAD_8 -> move(MoveDirection.NORTH)
-            Input.Keys.DOWN, Input.Keys.NUMPAD_2 -> move(MoveDirection.SOUTH)
-            Input.Keys.LEFT, Input.Keys.NUMPAD_4 -> move(MoveDirection.WEST)
-            Input.Keys.RIGHT, Input.Keys.NUMPAD_6 -> move(MoveDirection.EAST)
-            Input.Keys.NUMPAD_7 -> move(MoveDirection.NORTH_WEST)
-            Input.Keys.NUMPAD_9 -> move(MoveDirection.NORTH_EAST)
-            Input.Keys.NUMPAD_1 -> move(MoveDirection.SOUTH_WEST)
-            Input.Keys.NUMPAD_3 -> move(MoveDirection.SOUTH_EAST)
+            Input.Keys.UP, Input.Keys.NUMPAD_8 -> move(Direction.NORTH)
+            Input.Keys.DOWN, Input.Keys.NUMPAD_2 -> move(Direction.SOUTH)
+            Input.Keys.LEFT, Input.Keys.NUMPAD_4 -> move(Direction.WEST)
+            Input.Keys.RIGHT, Input.Keys.NUMPAD_6 -> move(Direction.EAST)
+            Input.Keys.NUMPAD_7 -> move(Direction.NORTH_WEST)
+            Input.Keys.NUMPAD_9 -> move(Direction.NORTH_EAST)
+            Input.Keys.NUMPAD_1 -> move(Direction.SOUTH_WEST)
+            Input.Keys.NUMPAD_3 -> move(Direction.SOUTH_EAST)
             Input.Keys.NUMPAD_5 -> doNothing()
         }
 
         return true
     }
 
-    private fun move(direction: MoveDirection) {
+    private fun move(direction: Direction) {
         engine.getSystem<Move>().execute(player, direction)
         gameState.isPlayerTurn = false
     }

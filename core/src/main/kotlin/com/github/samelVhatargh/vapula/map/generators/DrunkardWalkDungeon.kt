@@ -1,16 +1,10 @@
 package com.github.samelVhatargh.vapula.map.generators
 
+import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
 import com.github.samelVhatargh.vapula.map.createEmptyTiles
 import kotlin.math.min
-
-private enum class Direction(val x: Int, val y: Int) {
-    NORTH(0, 1),
-    SOUTH(0, -1),
-    WEST(1, 0),
-    EAST(-1, 0)
-}
 
 class DrunkardWalkDungeon(private val percentage: Float = 0.25f) : MapGenerator {
 

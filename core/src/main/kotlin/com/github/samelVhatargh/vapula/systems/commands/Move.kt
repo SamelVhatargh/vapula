@@ -6,22 +6,13 @@ import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.entities.OCCUPY_SPACE_FAMILY
+import com.github.samelVhatargh.vapula.map.Direction
 import ktx.ashley.allOf
 import ktx.ashley.get
 
-enum class MoveDirection(val x: Int, val y: Int) {
-    NORTH(0, 1),
-    EAST(1, 0),
-    WEST(-1, 0),
-    SOUTH(0, -1),
-    NORTH_EAST(1, 1),
-    NORTH_WEST(-1, 1),
-    SOUTH_EAST(1, -1),
-    SOUTH_WEST(-1, -1)
-}
 
 class Move : EntitySystem() {
-    fun execute(entity: Entity, direction: MoveDirection) {
+    fun execute(entity: Entity, direction: Direction) {
         val mapEntity = engine.getEntitiesFor(allOf(GameMap::class).get()).first()
 
         val gameMap = mapEntity[GameMap.mapper]!!
