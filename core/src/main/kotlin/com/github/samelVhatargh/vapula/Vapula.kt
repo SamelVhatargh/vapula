@@ -42,8 +42,11 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
         entityFactory.createGoblin()
         entityFactory.createGoblin()
 
+        val gameState = GameState()
+
         engine.apply {
-            addSystem(PlayerInput(player, map, viewport.camera))
+            addSystem(EnemyTurns(gameState))
+            addSystem(PlayerInput(player, map, viewport.camera, gameState))
             addSystem(Move(map))
             addSystem(Camera(viewport.camera))
             addSystem(MapRender(spriteAtlas, batch, player, map))

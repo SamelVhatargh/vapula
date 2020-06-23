@@ -18,6 +18,9 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
             with<Player>()
             with<OccupySpace>()
             with<FieldOfView>()
+            with<Name> {
+                name = "player"
+            }
         }
 
         player.add(position)
@@ -25,12 +28,19 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
         return player
     }
 
+    private var goblinCount = 0
+
     fun createGoblin(position: Position = getRandomEmptyPosition()): Entity {
+        goblinCount++
         val monster = engine.entity {
             with<Graphics> {
                 setSpriteRegion(spriteAtlas.findRegion("goblin"))
             }
             with<OccupySpace>()
+            with<Name> {
+                name = "Goblin $goblinCount"
+            }
+            with<Ai>()
         }
         monster.add(position)
 

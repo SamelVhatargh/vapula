@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Camera
+import com.github.samelVhatargh.vapula.GameState
 import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.components.MoveDirection
 import ktx.app.KtxInputAdapter
@@ -20,8 +21,12 @@ private const val DIRECTION_LEFT = -1f
 private const val DIRECTION_RIGHT = 1f
 private const val DIRECTION_NONE = 0f
 
-class PlayerInput(private val player: Entity, map: Entity, private val camera: Camera) : EntitySystem(),
-    KtxInputAdapter {
+class PlayerInput(
+    private val player: Entity,
+    map: Entity,
+    private val camera: Camera,
+    private val gameState: GameState
+) : EntitySystem(), KtxInputAdapter {
 
     private val gameMap = map[GameMap.mapper]!!
 
@@ -48,6 +53,7 @@ class PlayerInput(private val player: Entity, map: Entity, private val camera: C
             }
 
             player += move
+            gameState.isPlayerTurn = false
         }
 
         return true
