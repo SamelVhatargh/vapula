@@ -6,21 +6,21 @@ filter: Nearest,Nearest
 repeat: none
 Tile
   rotate: false
-  xy: 406, 71
+  xy: 404, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall1
   rotate: false
-  xy: 134, 71
+  xy: 200, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall11
   rotate: false
-  xy: 168, 71
+  xy: 234, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -34,14 +34,14 @@ Wall12
   index: -1
 Wall13
   rotate: false
-  xy: 202, 71
+  xy: 268, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall14
   rotate: false
-  xy: 236, 71
+  xy: 104, 5
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -76,42 +76,42 @@ Wall8
   index: -1
 Wall3
   rotate: false
-  xy: 440, 71
+  xy: 438, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall4
   rotate: false
-  xy: 474, 71
+  xy: 472, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall5
   rotate: false
-  xy: 304, 71
+  xy: 138, 5
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall6
   rotate: false
-  xy: 338, 71
+  xy: 336, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall7
   rotate: false
-  xy: 372, 71
+  xy: 370, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall9
   rotate: false
-  xy: 270, 71
+  xy: 302, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -125,28 +125,28 @@ WallCorner1
   index: -1
 WallCorner2
   rotate: false
-  xy: 134, 37
+  xy: 200, 37
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner3
   rotate: false
-  xy: 168, 37
+  xy: 234, 37
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner4
   rotate: false
-  xy: 202, 37
+  xy: 268, 37
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 character
   rotate: false
-  xy: 68, 39
+  xy: 134, 39
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -154,6 +154,13 @@ character
 goblin
   rotate: false
   xy: 2, 39
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+goblinDead
+  rotate: false
+  xy: 68, 39
   size: 64, 64
   orig: 64, 64
   offset: 0, 0

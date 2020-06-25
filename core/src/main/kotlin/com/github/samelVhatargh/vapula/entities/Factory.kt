@@ -13,7 +13,8 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
     fun createPlayer(position: Position = getRandomEmptyPosition()): Entity {
         val player = engine.entity {
             with<Graphics> {
-                setSpriteRegion(spriteAtlas.findRegion("character"))
+                spriteName = "character"
+                setSpriteRegion(spriteAtlas.findRegion(spriteName))
             }
             with<Player>()
             with<OccupySpace>()
@@ -39,7 +40,8 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
         goblinCount++
         val monster = engine.entity {
             with<Graphics> {
-                setSpriteRegion(spriteAtlas.findRegion("goblin"))
+                spriteName = "goblin"
+                setSpriteRegion(spriteAtlas.findRegion(spriteName))
             }
             with<OccupySpace>()
             with<Name> {

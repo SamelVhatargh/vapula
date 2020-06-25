@@ -13,7 +13,10 @@ class Graphics : Component, Pool.Poolable {
 
     val sprite = Sprite()
 
+    var spriteName = ""
+
     override fun reset() {
+        spriteName = ""
         sprite.texture = null
         sprite.setColor(1f, 1f, 1f, 1f)
     }

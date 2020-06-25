@@ -54,7 +54,7 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
             addSystem(Move())
             addSystem(Attack())
             addSystem(MoveOrAttack())
-            addSystem(Kill())
+            addSystem(Kill(spriteAtlas))
             addSystem(Camera(viewport.camera))
             addSystem(MapRender(spriteAtlas, batch, player, map))
             addSystem(FieldOfViewCalculator(player, map))
