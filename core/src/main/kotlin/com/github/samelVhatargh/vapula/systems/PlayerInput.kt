@@ -7,12 +7,14 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.GameState
+import com.github.samelVhatargh.vapula.components.Dead
 import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.systems.commands.MoveOrAttack
 import ktx.app.KtxInputAdapter
 import ktx.ashley.get
 import ktx.ashley.getSystem
+import ktx.ashley.has
 import ktx.math.vec3
 
 class PlayerInput(
@@ -51,6 +53,10 @@ class PlayerInput(
     }
 
     private fun move(direction: Direction) {
+        if (player.has(Dead.mapper)) {
+            doNothing()
+            return
+        }
         engine.getSystem<MoveOrAttack>().execute(player, direction)
         gameState.isPlayerTurn = false
     }

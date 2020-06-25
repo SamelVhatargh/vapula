@@ -23,7 +23,7 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
                 name = "player"
             }
             with<Stats> {
-                maxHp = 10 + (1..10).random() * (1..10).random()
+                maxHp = 10 + (1..10).random() + (1..10).random()
                 hp = maxHp
                 damageDice = 8
             }

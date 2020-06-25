@@ -6,21 +6,21 @@ filter: Nearest,Nearest
 repeat: none
 Tile
   rotate: false
-  xy: 404, 71
+  xy: 436, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall1
   rotate: false
-  xy: 200, 71
+  xy: 266, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall11
   rotate: false
-  xy: 234, 71
+  xy: 300, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -34,7 +34,7 @@ Wall12
   index: -1
 Wall13
   rotate: false
-  xy: 268, 71
+  xy: 334, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -76,14 +76,14 @@ Wall8
   index: -1
 Wall3
   rotate: false
-  xy: 438, 71
+  xy: 206, 5
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall4
   rotate: false
-  xy: 472, 71
+  xy: 470, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -97,21 +97,21 @@ Wall5
   index: -1
 Wall6
   rotate: false
-  xy: 336, 71
+  xy: 402, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall7
   rotate: false
-  xy: 370, 71
+  xy: 172, 5
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Wall9
   rotate: false
-  xy: 302, 71
+  xy: 368, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -125,21 +125,21 @@ WallCorner1
   index: -1
 WallCorner2
   rotate: false
-  xy: 200, 37
+  xy: 266, 37
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner3
   rotate: false
-  xy: 234, 37
+  xy: 300, 37
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 WallCorner4
   rotate: false
-  xy: 268, 37
+  xy: 334, 37
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -147,6 +147,13 @@ WallCorner4
 character
   rotate: false
   xy: 134, 39
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+characterDead
+  rotate: false
+  xy: 200, 39
   size: 64, 64
   orig: 64, 64
   offset: 0, 0

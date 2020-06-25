@@ -3,15 +3,11 @@ package com.github.samelVhatargh.vapula.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.github.samelVhatargh.vapula.GameState
-import com.github.samelVhatargh.vapula.components.Ai
-import com.github.samelVhatargh.vapula.components.Dead
-import com.github.samelVhatargh.vapula.components.Name
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.map.Direction
+import com.github.samelVhatargh.vapula.systems.commands.Attack
 import com.github.samelVhatargh.vapula.systems.commands.Move
-import ktx.ashley.allOf
-import ktx.ashley.exclude
-import ktx.ashley.getSystem
+import ktx.ashley.*
 import ktx.log.logger
 
 class EnemyTurns(private val gameState: GameState) : IteratingSystem(
@@ -29,6 +25,10 @@ class EnemyTurns(private val gameState: GameState) : IteratingSystem(
         Direction.SOUTH_WEST
     )
 
+    private val player: Entity by lazy {
+        engine.getEntitiesFor(allOf(Player::class).get()).first()
+    }
+
     companion object {
         val log = logger<EnemyTurns>()
     }
@@ -40,6 +40,16 @@ class EnemyTurns(private val gameState: GameState) : IteratingSystem(
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
+        //если игрок рядом - атакуем
+        val playerPosition = player[Position.mapper]!!
+        val monsterPosition = entity[Position.mapper]!!
+
+        if (playerPosition.isNeighbourTo(monsterPosition) && !player.has(Dead.mapper)) {
+            engine.getSystem<Attack>().execute(entity, player)
+            return
+        }
+
+        //иначе бесцельно бродим
         val direction = directions.random()
 
         engine.getSystem<Move>().execute(entity, direction)

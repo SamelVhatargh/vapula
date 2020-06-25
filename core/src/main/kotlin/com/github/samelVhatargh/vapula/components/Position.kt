@@ -3,6 +3,7 @@ package com.github.samelVhatargh.vapula.components
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
 import ktx.ashley.mapperFor
+import kotlin.math.abs
 
 /**
  * Позиция сущности на карте
@@ -21,6 +22,8 @@ class Position(var x: Int = 0, var y: Int = 0) : Component, Pool.Poolable {
     companion object {
         val mapper = mapperFor<Position>()
     }
+
+    fun isNeighbourTo(position: Position): Boolean = abs(position.x - x) <= 1 && abs(position.y - y) <= 1
 
     override fun hashCode(): Int {
         var result = x
