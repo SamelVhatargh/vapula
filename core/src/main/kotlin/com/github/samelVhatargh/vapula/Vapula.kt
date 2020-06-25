@@ -12,6 +12,7 @@ import com.github.samelVhatargh.vapula.map.generators.DrunkardWalkDungeon
 import com.github.samelVhatargh.vapula.screens.GameScreen
 import com.github.samelVhatargh.vapula.systems.*
 import com.github.samelVhatargh.vapula.systems.commands.Attack
+import com.github.samelVhatargh.vapula.systems.commands.Kill
 import com.github.samelVhatargh.vapula.systems.commands.Move
 import com.github.samelVhatargh.vapula.systems.commands.MoveOrAttack
 import ktx.app.KtxGame
@@ -53,6 +54,7 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
             addSystem(Move())
             addSystem(Attack())
             addSystem(MoveOrAttack())
+            addSystem(Kill())
             addSystem(Camera(viewport.camera))
             addSystem(MapRender(spriteAtlas, batch, player, map))
             addSystem(FieldOfViewCalculator(player, map))

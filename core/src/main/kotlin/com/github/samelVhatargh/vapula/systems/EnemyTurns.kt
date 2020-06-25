@@ -4,16 +4,18 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.github.samelVhatargh.vapula.GameState
 import com.github.samelVhatargh.vapula.components.Ai
+import com.github.samelVhatargh.vapula.components.Dead
 import com.github.samelVhatargh.vapula.components.Name
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.systems.commands.Move
 import ktx.ashley.allOf
+import ktx.ashley.exclude
 import ktx.ashley.getSystem
 import ktx.log.logger
 
 class EnemyTurns(private val gameState: GameState) : IteratingSystem(
-    allOf(Ai::class, Name::class, Position::class).get()
+    allOf(Ai::class, Name::class, Position::class).exclude(Dead::class).get()
 ) {
 
     private val directions = listOf(
