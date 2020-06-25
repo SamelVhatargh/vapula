@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.github.samelVhatargh.vapula.components.Dead
 import com.github.samelVhatargh.vapula.components.Graphics
+import com.github.samelVhatargh.vapula.components.Layer
 import com.github.samelVhatargh.vapula.components.Name
 import ktx.ashley.get
 import ktx.ashley.plusAssign
@@ -16,6 +17,7 @@ class Kill(private val spriteAtlas: TextureAtlas) : EntitySystem() {
 
         entity += Dead()
         graphics.setSpriteRegion(spriteAtlas.findRegion("${graphics.spriteName}Dead"))
+        graphics.layer = Layer.CORPSE
 
         debug { "${entity[Name.mapper]?.name} is dead" }
     }

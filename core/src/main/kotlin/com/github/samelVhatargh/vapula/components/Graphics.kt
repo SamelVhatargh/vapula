@@ -6,17 +6,24 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Pool
 import ktx.ashley.mapperFor
 
+enum class Layer {
+    CORPSE, CREATURE
+}
+
 /**
  * Спрайт для отображения сущности
  */
-class Graphics : Component, Pool.Poolable {
+class Graphics : Component, Pool.Poolable, Comparable<Graphics> {
 
     val sprite = Sprite()
 
     var spriteName = ""
 
+    var layer = Layer.CREATURE
+
     override fun reset() {
         spriteName = ""
+        layer = Layer.CREATURE
         sprite.texture = null
         sprite.setColor(1f, 1f, 1f, 1f)
     }
@@ -34,4 +41,6 @@ class Graphics : Component, Pool.Poolable {
     companion object {
         val mapper = mapperFor<Graphics>()
     }
+
+    override fun compareTo(other: Graphics): Int = layer.compareTo(other.layer)
 }
