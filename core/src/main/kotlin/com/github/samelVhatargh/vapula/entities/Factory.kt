@@ -21,6 +21,11 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
             with<Name> {
                 name = "player"
             }
+            with<Stats> {
+                maxHp = 10 + (1..10).random() * (1..10).random()
+                hp = maxHp
+                damageDice = 8
+            }
         }
 
         player.add(position)
@@ -41,6 +46,11 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
                 name = "Goblin $goblinCount"
             }
             with<Ai>()
+            with<Stats>{
+                maxHp = (1..6).random() + (1..6).random()
+                hp = maxHp
+                damageDice = 6
+            }
         }
         monster.add(position)
 

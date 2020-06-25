@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.GameState
 import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.map.Direction
-import com.github.samelVhatargh.vapula.systems.commands.Move
+import com.github.samelVhatargh.vapula.systems.commands.MoveOrAttack
 import ktx.app.KtxInputAdapter
 import ktx.ashley.get
 import ktx.ashley.getSystem
@@ -51,7 +51,7 @@ class PlayerInput(
     }
 
     private fun move(direction: Direction) {
-        engine.getSystem<Move>().execute(player, direction)
+        engine.getSystem<MoveOrAttack>().execute(player, direction)
         gameState.isPlayerTurn = false
     }
 
