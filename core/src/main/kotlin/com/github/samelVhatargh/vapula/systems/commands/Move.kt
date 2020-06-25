@@ -6,6 +6,7 @@ import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.entities.OCCUPY_SPACE_FAMILY
+import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
 import ktx.ashley.allOf
 import ktx.ashley.get
@@ -21,11 +22,7 @@ class Move : EntitySystem() {
         val newX = position.x + direction.x
         val newY = position.y + direction.y
 
-        val entities = engine.getEntitiesFor(OCCUPY_SPACE_FAMILY)
-        val obstacle = entities.find {
-            val occupierPosition = it[Position.mapper]!!
-            occupierPosition.x == newX && occupierPosition.y == newY
-        }
+        val obstacle = engine.getEntityAtPosition(Position(newX, newY), OCCUPY_SPACE_FAMILY)
 
         if (obstacle == null && gameMap.isWalkable(newX, newY)) {
             position.x = newX
