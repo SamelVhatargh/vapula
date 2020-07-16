@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Application.LOG_ERROR
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.FitViewport
@@ -31,12 +32,7 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
 
     private val engine = PooledEngine()
 
-    private val console by lazy {
-        GUIConsole().apply {
-            setCommandExecutor(DebugCommandExecutor())
-            displayKeyID = Input.Keys.GRAVE
-        }
-    }
+    private lateinit var console: GUIConsole
 
     override fun create() {
         Gdx.app.logLevel = debugLevel
@@ -58,9 +54,12 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
 
         val gameState = GameState()
 
+        val inputMultiplexer = InputMultiplexer()
+        Gdx.input.inputProcessor = inputMultiplexer
+
         engine.apply {
             addSystem(EnemyTurns(gameState))
-            addSystem(PlayerInput(player, map, viewport.camera, gameState))
+            addSystem(PlayerInput(inputMultiplexer, player, gameState))
             addSystem(Move())
             addSystem(Attack())
             addSystem(MoveOrAttack())
@@ -69,6 +68,11 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
             addSystem(MapRender(spriteAtlas, batch, player, map))
             addSystem(FieldOfViewCalculator(player, map))
             addSystem(Render(batch, viewport, player))
+        }
+
+        console = GUIConsole().apply {
+            setCommandExecutor(DebugCommandExecutor(inputMultiplexer, viewport.camera, map))
+            displayKeyID = Input.Keys.GRAVE
         }
 
         addScreen(GameScreen(engine, viewport, console))
