@@ -71,7 +71,7 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
         }
 
         console = GUIConsole().apply {
-            setCommandExecutor(DebugCommandExecutor(inputMultiplexer, viewport.camera, map))
+            setCommandExecutor(DebugCommandExecutor(inputMultiplexer, viewport.camera, map, player, engine))
             displayKeyID = Input.Keys.GRAVE
         }
 

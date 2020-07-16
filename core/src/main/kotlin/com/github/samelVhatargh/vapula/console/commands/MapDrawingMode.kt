@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.console
+package com.github.samelVhatargh.vapula.console.commands
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Input
