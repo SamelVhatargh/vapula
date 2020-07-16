@@ -10,6 +10,7 @@ import com.github.samelVhatargh.vapula.console.commands.removeFog
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.annotation.ConsoleDoc
 import ktx.ashley.get
+import ktx.ashley.getSystem
 
 class DebugCommandExecutor(
     inputMultiplexer: InputMultiplexer,
@@ -21,11 +22,7 @@ class DebugCommandExecutor(
     CommandExecutor() {
 
     private val mapDrawingMode by lazy {
-        MapDrawingMode(
-            inputMultiplexer,
-            camera,
-            map
-        )
+        MapDrawingMode(inputMultiplexer, camera, map)
     }
 
     /**
@@ -36,8 +33,6 @@ class DebugCommandExecutor(
         mapDrawingMode.enabled = !mapDrawingMode.enabled
         val enabledWord = if (mapDrawingMode.enabled) "enabled" else "disabled"
         console.log("Map drawing mode $enabledWord")
-
-        console.resetInputProcessing()
     }
 
     /**
@@ -46,5 +41,16 @@ class DebugCommandExecutor(
     @ConsoleDoc(description = "Makes all tiles of map visible by player")
     fun removeFog() {
         removeFog(map[GameMap.mapper]!!, player, engine)
+    }
+
+    /**
+     * Позволяет осмотреть карту в свободном режиме
+     */
+    @ConsoleDoc(description = "Enables or disables camera movement on mouse hover over edge screen")
+    fun eye() {
+        val cameraSystem = engine.getSystem<com.github.samelVhatargh.vapula.systems.Camera>()
+        cameraSystem.moveWithMouseEnabled = !cameraSystem.moveWithMouseEnabled
+        val enabledWord = if (cameraSystem.moveWithMouseEnabled) "enabled" else "disabled"
+        console.log("Free camera mode $enabledWord")
     }
 }

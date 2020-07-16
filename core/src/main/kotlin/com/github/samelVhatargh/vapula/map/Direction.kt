@@ -8,5 +8,6 @@ enum class Direction(val x: Int, val y: Int) {
     NORTH_EAST(1, 1),
     NORTH_WEST(-1, 1),
     SOUTH_EAST(1, -1),
-    SOUTH_WEST(-1, -1)
+    SOUTH_WEST(-1, -1),
+    NONE(0, 0)
 }
