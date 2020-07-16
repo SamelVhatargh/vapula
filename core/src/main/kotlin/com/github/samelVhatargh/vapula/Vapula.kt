@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.FitViewport
@@ -26,7 +27,8 @@ import ktx.ashley.with
 
 class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() {
 
-    private var viewport = FitViewport(16f, 9f)
+    private var camera = OrthographicCamera()
+    private var viewport = FitViewport(16f, 9f, camera)
     private val batch by lazy { SpriteBatch() }
     private lateinit var spriteAtlas: TextureAtlas
 
@@ -64,7 +66,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             addSystem(Attack())
             addSystem(MoveOrAttack())
             addSystem(Kill(spriteAtlas))
-            addSystem(Camera(viewport.camera, inputMultiplexer))
+            addSystem(Camera(camera, inputMultiplexer))
             addSystem(MapRender(spriteAtlas, batch, player, map))
             addSystem(FieldOfViewCalculator(player, map))
             addSystem(Render(batch, viewport, player))

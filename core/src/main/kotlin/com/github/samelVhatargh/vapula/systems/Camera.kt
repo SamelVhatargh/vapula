@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
-import com.badlogic.gdx.graphics.Camera
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector3
 import com.github.samelVhatargh.vapula.components.Player
 import com.github.samelVhatargh.vapula.components.Position
@@ -17,11 +17,12 @@ import ktx.graphics.update
 
 private const val CAMERA_MOUSE_MOVE_SPEED = 7.5f
 private const val EDGE_SIZE = 32f
+private const val ZOOM_SPEED = 0.5f
 
 /**
  * Управление камерой
  */
-class Camera(private val camera: Camera, private val inputMultiplexer: InputMultiplexer) : EntitySystem(),
+class Camera(private val camera: OrthographicCamera, private val inputMultiplexer: InputMultiplexer) : EntitySystem(),
     KtxInputAdapter {
 
     var moveWithMouseEnabled = false
@@ -32,6 +33,7 @@ class Camera(private val camera: Camera, private val inputMultiplexer: InputMult
                 return
             }
 
+            camera.zoom = 1f
             inputMultiplexer.removeProcessor(this)
         }
 
@@ -90,6 +92,11 @@ class Camera(private val camera: Camera, private val inputMultiplexer: InputMult
             else -> Direction.NONE
         }
 
+        return true
+    }
+
+    override fun scrolled(amount: Int): Boolean {
+        camera.zoom += ZOOM_SPEED * amount
         return true
     }
 }
