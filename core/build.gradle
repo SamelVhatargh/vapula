@@ -2,18 +2,19 @@
 eclipse.project.name = appName + '-core'
 
 dependencies {
-	api "com.badlogicgames.gdx:gdx:$gdxVersion"
-	api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-	api "com.badlogicgames.ashley:ashley:$ashleyVersion"
-	compile "io.github.libktx:ktx-app:$ktxVersion"
-	compile "io.github.libktx:ktx-graphics:$ktxVersion"
-	compile "io.github.libktx:ktx-ashley:$ktxVersion"
-	compile "io.github.libktx:ktx-log:$ktxVersion"
-	compile "io.github.libktx:ktx-math:$ktxVersion"
+    api "com.badlogicgames.gdx:gdx:$gdxVersion"
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    api "com.badlogicgames.ashley:ashley:$ashleyVersion"
+    compile "io.github.libktx:ktx-app:$ktxVersion"
+    compile "io.github.libktx:ktx-graphics:$ktxVersion"
+    compile "io.github.libktx:ktx-ashley:$ktxVersion"
+    compile "io.github.libktx:ktx-log:$ktxVersion"
+    compile "io.github.libktx:ktx-math:$ktxVersion"
+    compile "com.strongjoshua:libgdx-inGameConsole:$inGameConsoleVersion"
 
-	testCompile "org.junit.jupiter:junit-jupiter:5.6.2"
+    testCompile "org.junit.jupiter:junit-jupiter:5.6.2"
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

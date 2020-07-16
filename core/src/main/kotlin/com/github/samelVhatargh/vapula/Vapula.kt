@@ -3,10 +3,12 @@ package com.github.samelVhatargh.vapula
 import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Application.LOG_ERROR
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.samelVhatargh.vapula.components.GameMap
+import com.github.samelVhatargh.vapula.console.DebugCommandExecutor
 import com.github.samelVhatargh.vapula.entities.Factory
 import com.github.samelVhatargh.vapula.map.generators.DrunkardWalkDungeon
 import com.github.samelVhatargh.vapula.screens.GameScreen
@@ -15,6 +17,7 @@ import com.github.samelVhatargh.vapula.systems.commands.Attack
 import com.github.samelVhatargh.vapula.systems.commands.Kill
 import com.github.samelVhatargh.vapula.systems.commands.Move
 import com.github.samelVhatargh.vapula.systems.commands.MoveOrAttack
+import com.strongjoshua.console.GUIConsole
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 import ktx.ashley.entity
@@ -27,6 +30,13 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
     private lateinit var spriteAtlas: TextureAtlas
 
     private val engine = PooledEngine()
+
+    private val console by lazy {
+        GUIConsole().apply {
+            setCommandExecutor(DebugCommandExecutor())
+            displayKeyID = Input.Keys.GRAVE
+        }
+    }
 
     override fun create() {
         Gdx.app.logLevel = debugLevel
@@ -61,12 +71,13 @@ class Vapula(private val debugLevel: Int = LOG_ERROR) : KtxGame<KtxScreen>() {
             addSystem(Render(batch, viewport, player))
         }
 
-        addScreen(GameScreen(engine, viewport))
+        addScreen(GameScreen(engine, viewport, console))
         setScreen<GameScreen>()
     }
 
     override fun dispose() {
         super.dispose()
+        console.dispose()
         batch.dispose()
         spriteAtlas.dispose()
     }
