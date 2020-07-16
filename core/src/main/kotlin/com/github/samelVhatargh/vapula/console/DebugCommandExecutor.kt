@@ -18,12 +18,13 @@ class DebugCommandExecutor(
     val map: Entity,
     val player: Entity,
     val engine: Engine
-) :
-    CommandExecutor() {
+) : CommandExecutor() {
 
     private val mapDrawingMode by lazy {
         MapDrawingMode(inputMultiplexer, camera, map)
     }
+
+    val validStartupCommands = arrayOf("tyriok", "removeFog", "eye")
 
     /**
      * Включает или отключает режим рисования карты

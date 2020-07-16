@@ -70,9 +70,16 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             addSystem(Render(batch, viewport, player))
         }
 
+        val commandExecutor = DebugCommandExecutor(inputMultiplexer, viewport.camera, map, player, engine)
         console = GUIConsole().apply {
-            setCommandExecutor(DebugCommandExecutor(inputMultiplexer, viewport.camera, map, player, engine))
+            setCommandExecutor(commandExecutor)
             displayKeyID = Input.Keys.GRAVE
+        }
+
+        commandExecutor.validStartupCommands.forEach { command ->
+            if (debugArguments.have(command)) {
+                console.execCommand(command)
+            }
         }
 
         addScreen(GameScreen(engine, viewport, console))
