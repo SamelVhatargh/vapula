@@ -1,7 +1,8 @@
 package com.github.samelVhatargh.vapula.systems
 
+import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Camera
@@ -12,6 +13,7 @@ import com.github.samelVhatargh.vapula.map.Direction
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
 import ktx.ashley.get
+import ktx.graphics.update
 
 private const val CAMERA_MOUSE_MOVE_SPEED = 7.5f
 private const val EDGE_SIZE = 32f
@@ -19,8 +21,7 @@ private const val EDGE_SIZE = 32f
 /**
  * Управление камерой
  */
-class Camera(private val camera: Camera, private val inputMultiplexer: InputMultiplexer) :
-    IteratingSystem(allOf(Player::class, Position::class).get()),
+class Camera(private val camera: Camera, private val inputMultiplexer: InputMultiplexer) : EntitySystem(),
     KtxInputAdapter {
 
     var moveWithMouseEnabled = false
@@ -36,11 +37,20 @@ class Camera(private val camera: Camera, private val inputMultiplexer: InputMult
 
     private var cameraMoveDirection = Direction.NONE
 
+    private lateinit var player: Entity
+
+    override fun addedToEngine(engine: Engine) {
+        super.addedToEngine(engine)
+        player = engine.getEntitiesFor(allOf(Player::class, Position::class).get()).first()
+    }
+
     override fun update(deltaTime: Float) {
-        if (moveWithMouseEnabled) {
-            moveCameraInMouseDirection(deltaTime)
-        } else {
-            super.update(deltaTime)
+        camera.update {
+            if (moveWithMouseEnabled) {
+                moveCameraInMouseDirection(deltaTime)
+            } else {
+                centerCameraOnPlayer()
+            }
         }
     }
 
@@ -51,16 +61,15 @@ class Camera(private val camera: Camera, private val inputMultiplexer: InputMult
 
         camera.position.x += cameraMoveDirection.x * deltaTime * CAMERA_MOUSE_MOVE_SPEED
         camera.position.y += cameraMoveDirection.y * deltaTime * CAMERA_MOUSE_MOVE_SPEED
-        camera.update()
     }
 
-    override fun processEntity(entity: Entity, deltaTime: Float) {
-        val position = entity[Position.mapper]!!
-
-        camera.position.set(position)
-        camera.update()
+    private fun centerCameraOnPlayer() {
+        camera.position.set(player[Position.mapper]!!)
     }
 
+    /**
+     * Обновляет [cameraMoveDirection]
+     */
     override fun mouseMoved(screenX: Int, screenY: Int): Boolean {
         val width = Gdx.graphics.width - EDGE_SIZE
         val height = Gdx.graphics.height - EDGE_SIZE
@@ -80,8 +89,6 @@ class Camera(private val camera: Camera, private val inputMultiplexer: InputMult
             screenY >= height -> Direction.SOUTH
             else -> Direction.NONE
         }
-
-        camera.update()
 
         return true
     }
