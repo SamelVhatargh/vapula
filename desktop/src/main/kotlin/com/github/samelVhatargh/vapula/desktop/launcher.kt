@@ -1,16 +1,13 @@
 package com.github.samelVhatargh.vapula.desktop
 
-import com.badlogic.gdx.Application.LOG_DEBUG
-import com.badlogic.gdx.Application.LOG_ERROR
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
 import com.github.samelVhatargh.vapula.Vapula
+import com.github.samelVhatargh.vapula.console.DebugArguments
 
 fun main(args: Array<String>) {
-    val debugLevel = if (args.contains("debug")) LOG_DEBUG else LOG_ERROR
-
     Lwjgl3Application(
-        Vapula(debugLevel),
+        Vapula(DebugArguments(args)),
         Lwjgl3ApplicationConfiguration().apply {
             setTitle("Vapula")
             setWindowedMode(16 * 64, 9 * 64)
