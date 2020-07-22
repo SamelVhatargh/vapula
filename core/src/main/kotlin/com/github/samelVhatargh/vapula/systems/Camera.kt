@@ -61,8 +61,8 @@ class Camera(private val camera: OrthographicCamera, private val inputMultiplexe
             return
         }
 
-        camera.position.x += cameraMoveDirection.x * deltaTime * CAMERA_MOUSE_MOVE_SPEED
-        camera.position.y += cameraMoveDirection.y * deltaTime * CAMERA_MOUSE_MOVE_SPEED
+        camera.position.x += cameraMoveDirection.x * deltaTime * CAMERA_MOUSE_MOVE_SPEED * camera.zoom
+        camera.position.y += cameraMoveDirection.y * deltaTime * CAMERA_MOUSE_MOVE_SPEED * camera.zoom
     }
 
     private fun centerCameraOnPlayer() {
