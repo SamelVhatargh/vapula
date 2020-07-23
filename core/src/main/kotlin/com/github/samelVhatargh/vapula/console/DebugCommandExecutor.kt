@@ -7,14 +7,16 @@ import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.console.commands.MapDrawingMode
 import com.github.samelVhatargh.vapula.console.commands.removeFog
+import com.github.samelVhatargh.vapula.systems.ShowMapCoordinates
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.annotation.ConsoleDoc
+import ktx.ashley.MissingEntitySystemException
 import ktx.ashley.get
 import ktx.ashley.getSystem
 
 class DebugCommandExecutor(
-    inputMultiplexer: InputMultiplexer,
-    camera: Camera,
+    private val inputMultiplexer: InputMultiplexer,
+    private val camera: Camera,
     val map: Entity,
     val player: Entity,
     val engine: Engine
@@ -24,7 +26,7 @@ class DebugCommandExecutor(
         MapDrawingMode(inputMultiplexer, camera, map)
     }
 
-    val validStartupCommands = arrayOf("tyriok", "removeFog", "eye")
+    val validStartupCommands = arrayOf("tyriok", "removeFog", "eye", "xy")
 
     /**
      * Включает или отключает режим рисования карты
@@ -53,5 +55,22 @@ class DebugCommandExecutor(
         cameraSystem.moveWithMouseEnabled = !cameraSystem.moveWithMouseEnabled
         val enabledWord = if (cameraSystem.moveWithMouseEnabled) "enabled" else "disabled"
         console.log("Free camera mode $enabledWord")
+    }
+
+    /**
+     * Включает или отключает режим отображение координат карты по наведению мыши
+     */
+    @ConsoleDoc(description = "Enables or disables map coordinate display")
+    fun xy() {
+        val enabledWord = try {
+            val system = engine.getSystem<ShowMapCoordinates>()
+            engine.removeSystem(system)
+            "disabled"
+        } catch (e: MissingEntitySystemException) {
+            engine.addSystem(ShowMapCoordinates(camera, inputMultiplexer))
+            "enabled"
+        }
+
+        console.log("Showing map coordinates $enabledWord")
     }
 }

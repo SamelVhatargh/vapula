@@ -92,7 +92,7 @@ class Camera(private val camera: OrthographicCamera, private val inputMultiplexe
             else -> Direction.NONE
         }
 
-        return true
+        return false
     }
 
     override fun scrolled(amount: Int): Boolean {
