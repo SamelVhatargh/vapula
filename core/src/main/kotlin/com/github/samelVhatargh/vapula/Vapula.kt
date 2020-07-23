@@ -12,7 +12,7 @@ import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.console.DebugArguments
 import com.github.samelVhatargh.vapula.console.DebugCommandExecutor
 import com.github.samelVhatargh.vapula.entities.Factory
-import com.github.samelVhatargh.vapula.map.generators.DrunkardWalkDungeon
+import com.github.samelVhatargh.vapula.map.generators.BSPDungeon
 import com.github.samelVhatargh.vapula.screens.GameScreen
 import com.github.samelVhatargh.vapula.systems.*
 import com.github.samelVhatargh.vapula.systems.commands.Attack
@@ -43,8 +43,8 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
         val map = engine.entity {
             with<GameMap> {
                 width = 16 * 2
-                height = 9 * 2
-                tiles = DrunkardWalkDungeon().getTiles(width, height)
+                height = 16 * 2
+                tiles = BSPDungeon().getTiles(width, height)
             }
         }
         val entityFactory = Factory(engine, spriteAtlas, map)

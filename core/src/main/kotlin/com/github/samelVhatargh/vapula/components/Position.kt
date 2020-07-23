@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
 import ktx.ashley.mapperFor
 import kotlin.math.abs
+import kotlin.math.sqrt
 
 /**
  * Позиция сущности на карте
@@ -24,6 +25,12 @@ class Position(var x: Int = 0, var y: Int = 0) : Component, Pool.Poolable {
     }
 
     fun isNeighbourTo(position: Position): Boolean = abs(position.x - x) <= 1 && abs(position.y - y) <= 1
+
+    fun distanceTo(target: Position): Float {
+        val dx = (target.x - x).toDouble()
+        val dy = (target.y - y).toDouble()
+        return sqrt(dx * dx + dy * dy).toFloat()
+    }
 
     override fun hashCode(): Int {
         var result = x
