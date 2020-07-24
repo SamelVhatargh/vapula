@@ -52,8 +52,17 @@ class Digger(private val tiles: Array<Array<Tile>>) {
     }
 
     fun dig(room: Room) {
-        for (x in room.position.x until (room.position.x + room.width)) {
-            for (y in room.position.y until (room.position.y + room.height)) {
+        val xRange = room.position.x until (room.position.x + room.width)
+        val yRange = room.position.y until (room.position.y + room.height)
+        for (x in xRange) {
+            for (y in yRange) {
+                val isCorner = (x == xRange.first && (y == yRange.first || y == yRange.last))
+                        || (x == xRange.last && (y == yRange.first || y == yRange.last))
+
+                if (isCorner && random.range(0..100) <= 35) {
+                    continue
+                }
+
                 tiles[x][y] = Tile(Terrain.FLOOR)
             }
         }
