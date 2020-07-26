@@ -8,11 +8,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.FitViewport
-import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.console.DebugArguments
 import com.github.samelVhatargh.vapula.console.DebugCommandExecutor
-import com.github.samelVhatargh.vapula.entities.Factory
-import com.github.samelVhatargh.vapula.map.generators.BSPDungeon
 import com.github.samelVhatargh.vapula.screens.GameScreen
 import com.github.samelVhatargh.vapula.systems.*
 import com.github.samelVhatargh.vapula.systems.commands.Attack
@@ -22,8 +19,6 @@ import com.github.samelVhatargh.vapula.systems.commands.MoveOrAttack
 import com.strongjoshua.console.GUIConsole
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
-import ktx.ashley.entity
-import ktx.ashley.with
 
 class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() {
 
@@ -40,19 +35,8 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
         Gdx.app.logLevel = debugArguments.logLevel
         spriteAtlas = TextureAtlas(Gdx.files.internal("graphics/sprites.atlas"))
 
-        val map = engine.entity {
-            with<GameMap> {
-                width = 16 * 2
-                height = 16 * 2
-                tiles = BSPDungeon().generate(width, height).tiles
-            }
-        }
-        val entityFactory = Factory(engine, spriteAtlas, map)
+        val world = World(engine, spriteAtlas)
 
-        val player = entityFactory.createPlayer()
-        entityFactory.createGoblin()
-        entityFactory.createGoblin()
-        entityFactory.createGoblin()
 
         val gameState = GameState()
 
@@ -61,18 +45,18 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
 
         engine.apply {
             addSystem(EnemyTurns(gameState))
-            addSystem(PlayerInput(inputMultiplexer, player, gameState))
+            addSystem(PlayerInput(inputMultiplexer, world.player, gameState))
             addSystem(Move())
             addSystem(Attack())
             addSystem(MoveOrAttack())
             addSystem(Kill(spriteAtlas))
             addSystem(Camera(camera, inputMultiplexer))
-            addSystem(MapRender(spriteAtlas, batch, player, map))
-            addSystem(FieldOfViewCalculator(player, map))
-            addSystem(Render(batch, viewport, player))
+            addSystem(MapRender(spriteAtlas, batch, world.player, world.gamMap))
+            addSystem(FieldOfViewCalculator(world.player, world.gamMap))
+            addSystem(Render(batch, viewport, world.player))
         }
 
-        val commandExecutor = DebugCommandExecutor(inputMultiplexer, viewport.camera, map, player, engine)
+        val commandExecutor = DebugCommandExecutor(inputMultiplexer, viewport.camera, world.gamMap, world.player, engine)
         console = GUIConsole().apply {
             setCommandExecutor(commandExecutor)
             displayKeyID = Input.Keys.GRAVE
