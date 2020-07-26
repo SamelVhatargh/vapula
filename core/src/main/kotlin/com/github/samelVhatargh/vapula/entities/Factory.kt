@@ -60,4 +60,17 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
     }
 
     private fun getRandomEmptyPosition(): Position = map[GameMap.mapper]!!.getRandomFloorTilePosition()
+
+    fun createBarrel(position: Position = getRandomEmptyPosition()): Entity {
+        val barrel = engine.entity {
+            with<Graphics> {
+                spriteName = "barrel"
+                setSpriteRegion(spriteAtlas.findRegion(spriteName))
+            }
+            with<OccupySpace>()
+        }
+        barrel.add(position)
+
+        return barrel
+    }
 }

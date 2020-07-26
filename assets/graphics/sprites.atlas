@@ -69,14 +69,14 @@ Wall2
   index: -1
 Wall3
   rotate: false
-  xy: 1256, 5
+  xy: 1322, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall4
   rotate: false
-  xy: 1322, 5
+  xy: 1388, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -97,14 +97,14 @@ Wall6
   index: -1
 Wall7
   rotate: false
-  xy: 1058, 5
+  xy: 1124, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall8
   rotate: false
-  xy: 1124, 5
+  xy: 1190, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -125,35 +125,42 @@ WallCorner1
   index: -1
 WallCorner2
   rotate: false
-  xy: 1388, 5
+  xy: 1454, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 WallCorner3
   rotate: false
-  xy: 1454, 5
+  xy: 1520, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 WallCorner4
   rotate: false
-  xy: 1520, 5
+  xy: 1586, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-character
+barrel
   rotate: false
   xy: 992, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
+character
+  rotate: false
+  xy: 1058, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 characterDead
   rotate: false
-  xy: 1190, 5
+  xy: 1256, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
