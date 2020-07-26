@@ -1,5 +1,6 @@
 package com.github.samelVhatargh.vapula.map.generators
 
+import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
 import com.github.samelVhatargh.vapula.map.createEmptyTiles
@@ -10,23 +11,30 @@ import com.github.samelVhatargh.vapula.map.createEmptyTiles
 @Suppress("unused")
 class TestMapGenerator : MapGenerator {
 
-    override fun getTiles(width: Int, height: Int): Array<Array<Tile>> {
+    override fun generate(width: Int, height: Int): Map {
         val tiles = createEmptyTiles(width, height)
 
-        for (x in 3..7) {
-            for (y in 4..6) {
+        val firstRoomXRange = 3..7
+        val firstRoomYRange = 4..6
+        for (x in firstRoomXRange) {
+            for (y in firstRoomYRange) {
+                tiles[x][y] = Tile(Terrain.FLOOR)
+            }
+        }
+        val secondRoomXRange = 10..13
+        val secondRoomYRange = 2..5
+        for (x in secondRoomXRange) {
+            for (y in secondRoomYRange) {
                 tiles[x][y] = Tile(Terrain.FLOOR)
             }
         }
 
-        for (x in 10..13) {
-            for (y in 2..5) {
-                tiles[x][y] = Tile(Terrain.FLOOR)
-            }
-        }
+        val start = Position(8, 5)
+        val end = Position(9, 5)
+        val tunnel = Tunnel(start, end, listOf(start, end))
 
-        tiles[8][5] = Tile(Terrain.FLOOR)
-        tiles[9][5] = Tile(Terrain.FLOOR)
+        tiles[start.x][start.y] = Tile(Terrain.FLOOR)
+        tiles[end.x][end.y] = Tile(Terrain.FLOOR)
 
         tiles[12][4] = Tile(Terrain.WALL)
 
@@ -34,6 +42,21 @@ class TestMapGenerator : MapGenerator {
 
         tiles[3][2] = Tile(Terrain.FLOOR)
 
-        return tiles
+        return Map(
+            tiles,
+            listOf(
+                Room(
+                    Position(firstRoomXRange.first - 1, firstRoomYRange.first - 1),
+                    firstRoomXRange.count() + 2,
+                    firstRoomYRange.count() + 2
+                ),
+                Room(
+                    Position(secondRoomXRange.first - 1, secondRoomYRange.first - 1),
+                    secondRoomXRange.count() + 2,
+                    secondRoomYRange.count() + 2
+                )
+            ),
+            listOf(tunnel)
+        )
     }
 }

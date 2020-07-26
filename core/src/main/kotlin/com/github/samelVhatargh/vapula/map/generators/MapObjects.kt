@@ -23,6 +23,10 @@ class Room(val position: Position, val width: Int, val height: Int) : MapObject 
             position.y + height / 2
         )
     }
+
+    override fun toString(): String {
+        return "p = (${position.x};${position.x}); w = $width; h = $height"
+    }
 }
 
 /**
@@ -67,5 +71,9 @@ class Tunnel(private val start: Position, private val end: Position, val tiles: 
             start.x + (end.x - start.x) / 2,
             start.y + (end.y - start.y) / 2
         )
+    }
+
+    override fun toString(): String {
+        return tiles.toString()
     }
 }

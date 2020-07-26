@@ -13,7 +13,7 @@ class BSPDungeon(
 
     private lateinit var digger: Digger
 
-    override fun getTiles(width: Int, height: Int): Array<Array<Tile>> {
+    override fun generate(width: Int, height: Int): Map {
         val tiles = createEmptyTiles(width, height)
         digger = Digger(tiles)
 
@@ -21,7 +21,7 @@ class BSPDungeon(
         splitLeaf(leaf)
         connectLeaves(tiles, leaf)
 
-        return tiles
+        return Map(tiles, leaf.getAllRooms(), leaf.getAllTunnels())
     }
 
     private fun splitLeaf(leaf: Leaf) {
@@ -142,23 +142,50 @@ private class Leaf(val x1: Int, val y1: Int, val x2: Int, val y2: Int) {
     }
 
     /**
-     * Возвращает все комнаты или тоннели, который находятся в текущей ветке
+     * Возвращает все комнаты, которые находятся в текущей ветке
+     */
+    fun getAllRooms(): Collection<Room> {
+        val rooms = mutableListOf<Room>()
+
+        if (room != null) {
+            rooms.add(room!!)
+        }
+
+
+        if (hasChildren()) {
+            rooms.addAll(firstLeaf.getAllRooms())
+            rooms.addAll(secondLeaf.getAllRooms())
+        }
+
+        return rooms
+    }
+
+    /**
+     * Возвращает все тоннели, которые находятся в текущей ветке
+     */
+    fun getAllTunnels(): Collection<Tunnel> {
+        val tunnels = mutableListOf<Tunnel>()
+
+        if (tunnel != null) {
+            tunnels.add(tunnel!!)
+        }
+
+        if (hasChildren()) {
+            tunnels.addAll(firstLeaf.getAllTunnels())
+            tunnels.addAll(secondLeaf.getAllTunnels())
+        }
+
+        return tunnels
+    }
+
+    /**
+     * Возвращает все комнаты или тоннели, которые находятся в текущей ветке
      */
     private fun getAllMapObjects(): Collection<MapObject> {
         val objects = mutableListOf<MapObject>()
 
-        if (room != null) {
-            objects.add(room!!)
-        }
-
-        if (tunnel != null) {
-            objects.add(tunnel!!)
-        }
-
-        if (hasChildren()) {
-            objects.addAll(firstLeaf.getAllMapObjects())
-            objects.addAll(secondLeaf.getAllMapObjects())
-        }
+        objects.addAll(getAllRooms())
+        objects.addAll(getAllTunnels())
 
         return objects
     }

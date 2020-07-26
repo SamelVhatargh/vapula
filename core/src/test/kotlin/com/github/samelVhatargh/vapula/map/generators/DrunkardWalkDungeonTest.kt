@@ -10,7 +10,7 @@ internal class DrunkardWalkDungeonTest {
     @Test
     fun `3x3 map should have floor tile in center`() {
         val generator = DrunkardWalkDungeon(1f)
-        val tiles = generator.getTiles(3, 3)
+        val map = generator.generate(3, 3)
 
         assertEquals(
             listOf(
@@ -18,7 +18,7 @@ internal class DrunkardWalkDungeonTest {
                 "#.#",
                 "###"
             ).toString(),
-            toString(tiles)
+            toString(map.tiles)
         )
     }
 

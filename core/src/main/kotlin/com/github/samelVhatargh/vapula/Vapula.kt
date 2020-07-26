@@ -44,7 +44,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             with<GameMap> {
                 width = 16 * 2
                 height = 16 * 2
-                tiles = BSPDungeon().getTiles(width, height)
+                tiles = BSPDungeon().generate(width, height).tiles
             }
         }
         val entityFactory = Factory(engine, spriteAtlas, map)

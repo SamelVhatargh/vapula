@@ -1,5 +1,6 @@
 package com.github.samelVhatargh.vapula.map.generators
 
+import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
@@ -8,7 +9,7 @@ import kotlin.math.min
 
 class DrunkardWalkDungeon(private val percentage: Float = 0.25f) : MapGenerator {
 
-    override fun getTiles(width: Int, height: Int): Array<Array<Tile>> {
+    override fun generate(width: Int, height: Int): Map {
         val tiles = createEmptyTiles(width, height)
 
         val tilesCount = width * height
@@ -48,6 +49,6 @@ class DrunkardWalkDungeon(private val percentage: Float = 0.25f) : MapGenerator 
             if (oldTile.terrain == Terrain.WALL) floorTilesCount++
         }
 
-        return tiles
+        return Map(tiles, listOf(Room(Position(0, 0), width, height)), listOf())
     }
 }
