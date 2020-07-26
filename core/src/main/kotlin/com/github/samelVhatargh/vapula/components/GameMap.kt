@@ -19,21 +19,6 @@ class GameMap : Component, Pool.Poolable {
 
     var shouldComputeTileGraphics = false
 
-    fun getRandomFloorTilePosition(): Position {
-        var i = 1
-        while (i < 1000) {
-            val x = (0 until width).random()
-            val y = (0 until height).random()
-
-            if (tiles[x][y].terrain == Terrain.FLOOR) return Position(x, y)
-
-            i++
-        }
-
-        return Position(5, 5)
-    }
-
-
     /**
      * Менят тайл на карте.
      *

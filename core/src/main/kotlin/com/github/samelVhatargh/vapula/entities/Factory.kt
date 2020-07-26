@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.map.Terrain
 import ktx.ashley.entity
 import ktx.ashley.get
 import ktx.ashley.with
@@ -48,7 +49,7 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
                 name = "Goblin $goblinCount"
             }
             with<Ai>()
-            with<Stats>{
+            with<Stats> {
                 maxHp = (1..6).random() + (1..6).random()
                 hp = maxHp
                 damageDice = 6
@@ -59,7 +60,28 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
         return monster
     }
 
-    private fun getRandomEmptyPosition(): Position = map[GameMap.mapper]!!.getRandomFloorTilePosition()
+    private fun getRandomEmptyPosition(): Position {
+        val map = map[GameMap.mapper]!!
+        val objects = engine.getEntitiesFor(OCCUPY_SPACE_FAMILY)
+
+        var i = 1
+        while (i < 1000) {
+            val x = (0 until map.width).random()
+            val y = (0 until map.height).random()
+
+            if (map.tiles[x][y].terrain == Terrain.FLOOR) {
+                val position = Position(x, y)
+
+                if (objects.find {
+                        it[Position.mapper]!! == position
+                    } === null) return position
+            }
+
+            i++
+        }
+
+        return Position(5, 5)
+    }
 
     fun createBarrel(position: Position = getRandomEmptyPosition()): Entity {
         val barrel = engine.entity {
