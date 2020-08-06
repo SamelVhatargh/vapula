@@ -24,6 +24,13 @@ class Room(val position: Position, val width: Int, val height: Int) : MapObject 
         )
     }
 
+    fun getRandomCorner(): Position {
+        val x = if (random.range(0..1) == 0) position.x else position.x + width - 1
+        val y = if (random.range(0..1) == 0) position.y else position.y + height - 1
+
+        return Position(x, y)
+    }
+
     override fun toString(): String {
         return "p = (${position.x};${position.x}); w = $width; h = $height"
     }

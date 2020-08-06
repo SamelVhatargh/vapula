@@ -2,6 +2,7 @@ package com.github.samelVhatargh.vapula.components
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
+import com.github.samelVhatargh.vapula.map.Direction
 import ktx.ashley.mapperFor
 import kotlin.math.abs
 import kotlin.math.sqrt
@@ -48,5 +49,9 @@ class Position(var x: Int = 0, var y: Int = 0) : Component, Pool.Poolable {
         if (y != other.y) return false
 
         return true
+    }
+
+    operator fun plus(direction: Direction): Position {
+        return Position(x + direction.x, y + direction.y)
     }
 }

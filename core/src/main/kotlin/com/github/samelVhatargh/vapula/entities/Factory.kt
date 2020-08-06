@@ -83,7 +83,11 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
         return Position(5, 5)
     }
 
-    fun createBarrel(position: Position = getRandomEmptyPosition()): Entity {
+    fun createBarrel(position: Position = getRandomEmptyPosition()): Entity? {
+        if (map[GameMap.mapper]!!.tiles[position.x][position.y].terrain == Terrain.WALL) {
+            return null
+        }
+
         val barrel = engine.entity {
             with<Graphics> {
                 spriteName = "barrel"
