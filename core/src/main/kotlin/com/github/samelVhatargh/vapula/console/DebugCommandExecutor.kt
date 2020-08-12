@@ -5,14 +5,13 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.components.GameMap
+import com.github.samelVhatargh.vapula.components.Invulnerability
 import com.github.samelVhatargh.vapula.console.commands.MapDrawingMode
 import com.github.samelVhatargh.vapula.console.commands.removeFog
 import com.github.samelVhatargh.vapula.systems.ShowMapCoordinates
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.annotation.ConsoleDoc
-import ktx.ashley.MissingEntitySystemException
-import ktx.ashley.get
-import ktx.ashley.getSystem
+import ktx.ashley.*
 
 class DebugCommandExecutor(
     private val inputMultiplexer: InputMultiplexer,
@@ -26,7 +25,7 @@ class DebugCommandExecutor(
         MapDrawingMode(inputMultiplexer, camera, map)
     }
 
-    val validStartupCommands = arrayOf("tyriok", "removeFog", "eye", "xy")
+    val validStartupCommands = arrayOf("tyriok", "removeFog", "eye", "xy", "hemonugi")
 
     /**
      * Включает или отключает режим рисования карты
@@ -72,5 +71,21 @@ class DebugCommandExecutor(
         }
 
         console.log("Showing map coordinates $enabledWord")
+    }
+
+    /**
+     * Включает или отключает режим неуязвимости
+     */
+    @ConsoleDoc(description = "Enables or disables invulnerability")
+    fun hemonugi() {
+        val enabledWord = if (player.has(Invulnerability.mapper)) {
+            player.remove<Invulnerability>()
+            "lost invulnerability"
+        } else {
+            player.addComponent<Invulnerability>(engine)
+            "becomes invulnerable"
+        }
+
+        console.log("player $enabledWord")
     }
 }
