@@ -37,7 +37,7 @@ class World(engine: Engine, spriteAtlas: TextureAtlas) {
     init {
         val rooms = map.rooms
         val tunnels = map.tunnels
-        val tunnelPositions = mutableListOf<Position>()
+        val tunnelPositions = mutableSetOf<Position>()
         tunnels.forEach {
             tunnelPositions.addAll(it.tiles)
         }
@@ -65,6 +65,23 @@ class World(engine: Engine, spriteAtlas: TextureAtlas) {
             repeat(goblinCount) {
                 entityFactory.createGoblin(room.getRandomPosition())
             }
+        }
+
+        tunnelPositions.forEach {
+            var tileNumber = 0
+            if (tunnelPositions.contains(it + Direction.NORTH)) {
+                tileNumber += 1
+            }
+            if (tunnelPositions.contains(it + Direction.EAST)) {
+                tileNumber += 2
+            }
+            if (tunnelPositions.contains(it + Direction.SOUTH)) {
+                tileNumber += 4
+            }
+            if (tunnelPositions.contains(it + Direction.WEST)) {
+                tileNumber += 8
+            }
+            entityFactory.createTunnel(it, "Railroad$tileNumber")
         }
     }
 }

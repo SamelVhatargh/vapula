@@ -1,180 +1,285 @@
 
 sprites.png
-size: 2048,128
+size: 1024,256
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-Tile
+Railroad1
   rotate: false
-  xy: 530, 5
+  xy: 398, 137
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-Wall0
+Railroad10
   rotate: false
-  xy: 794, 5
+  xy: 662, 71
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-Wall1
+Railroad11
   rotate: false
-  xy: 68, 5
+  xy: 398, 71
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-Wall10
+Railroad12
   rotate: false
-  xy: 200, 5
+  xy: 860, 137
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-Wall11
+Railroad13
   rotate: false
-  xy: 266, 5
+  xy: 2, 137
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-Wall12
+Railroad14
   rotate: false
-  xy: 332, 5
+  xy: 662, 137
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-Wall13
-  rotate: false
-  xy: 398, 5
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall14
-  rotate: false
-  xy: 464, 5
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall2
-  rotate: false
-  xy: 134, 5
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall3
-  rotate: false
-  xy: 1322, 5
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall4
-  rotate: false
-  xy: 1388, 5
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall5
-  rotate: false
-  xy: 662, 5
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-Wall6
+Railroad15
   rotate: false
   xy: 728, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-Wall7
+Railroad2
   rotate: false
-  xy: 1124, 5
+  xy: 332, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-Wall8
+Railroad3
   rotate: false
-  xy: 1190, 5
+  xy: 860, 71
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-Wall9
+Railroad4
   rotate: false
-  xy: 596, 5
+  xy: 464, 137
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-WallCorner1
+Railroad5
+  rotate: false
+  xy: 398, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Railroad6
+  rotate: false
+  xy: 464, 71
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Railroad7
+  rotate: false
+  xy: 332, 71
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Railroad8
+  rotate: false
+  xy: 266, 71
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Railroad9
+  rotate: false
+  xy: 530, 71
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Tile
+  rotate: false
+  xy: 134, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Wall0
+  rotate: false
+  xy: 2, 71
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Wall1
+  rotate: false
+  xy: 68, 137
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Wall10
+  rotate: false
+  xy: 68, 71
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Wall11
+  rotate: false
+  xy: 134, 137
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Wall12
+  rotate: false
+  xy: 68, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Wall13
+  rotate: false
+  xy: 134, 71
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Wall14
+  rotate: false
+  xy: 200, 137
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Wall2
   rotate: false
   xy: 2, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
+Wall3
+  rotate: false
+  xy: 596, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Wall4
+  rotate: false
+  xy: 530, 137
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Wall5
+  rotate: false
+  xy: 266, 137
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Wall6
+  rotate: false
+  xy: 200, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Wall7
+  rotate: false
+  xy: 530, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Wall8
+  rotate: false
+  xy: 596, 71
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Wall9
+  rotate: false
+  xy: 794, 5
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+WallCorner1
+  rotate: false
+  xy: 728, 137
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 WallCorner2
   rotate: false
-  xy: 1454, 5
+  xy: 662, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 WallCorner3
   rotate: false
-  xy: 1520, 5
+  xy: 728, 71
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 WallCorner4
   rotate: false
-  xy: 1586, 5
+  xy: 794, 137
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 barrel
   rotate: false
-  xy: 992, 5
+  xy: 464, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 character
   rotate: false
-  xy: 1058, 5
+  xy: 596, 137
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 characterDead
   rotate: false
-  xy: 1256, 5
+  xy: 200, 71
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 goblin
   rotate: false
-  xy: 860, 5
+  xy: 332, 137
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 goblinDead
   rotate: false
-  xy: 926, 5
+  xy: 266, 5
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -184,5 +289,12 @@ white
   xy: 2, 2
   size: 1, 1
   orig: 1, 1
+  offset: 0, 0
+  index: -1
+x
+  rotate: false
+  xy: 794, 71
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1

@@ -84,7 +84,11 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
     }
 
     fun createBarrel(position: Position = getRandomEmptyPosition()): Entity? {
-        if (map[GameMap.mapper]!!.tiles[position.x][position.y].terrain == Terrain.WALL) {
+        try {
+            if (map[GameMap.mapper]!!.tiles[position.x][position.y].terrain == Terrain.WALL) {
+                return null
+            }
+        } catch (e: ArrayIndexOutOfBoundsException) {
             return null
         }
 
@@ -98,5 +102,20 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
         barrel.add(position)
 
         return barrel
+    }
+
+    fun createTunnel(position: Position, sprite: String = "Railroad16") {
+        val tunnel = engine.entity {
+            with<Graphics> {
+                spriteName = sprite
+                layer = Layer.FLOOR
+                var region = spriteAtlas.findRegion(spriteName)
+                if (region === null) {
+                    region = spriteAtlas.findRegion("x")
+                }
+                setSpriteRegion(region)
+            }
+        }
+        tunnel.add(position)
     }
 }

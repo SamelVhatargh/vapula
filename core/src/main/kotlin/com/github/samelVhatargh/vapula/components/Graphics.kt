@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Pool
 import ktx.ashley.mapperFor
 
 enum class Layer {
-    CORPSE, CREATURE
+    FLOOR, CORPSE, CREATURE
 }
 
 /**
