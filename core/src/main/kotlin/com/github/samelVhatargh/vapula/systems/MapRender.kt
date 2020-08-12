@@ -1,17 +1,18 @@
 package com.github.samelVhatargh.vapula.systems
 
+import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
+import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
-import com.github.samelVhatargh.vapula.components.FieldOfView
-import com.github.samelVhatargh.vapula.components.GameMap
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
 import com.github.samelVhatargh.vapula.setPosition
+import ktx.ashley.allOf
 import ktx.ashley.get
 import ktx.graphics.use
 
@@ -42,6 +43,19 @@ class MapRender(
     private val gameMap = map[GameMap.mapper]!!
     private val tileGraphics = mutableListOf<TileGraphic>()
 
+    private lateinit var terrainObjects: ImmutableArray<Entity>
+
+    override fun addedToEngine(engine: Engine) {
+        super.addedToEngine(engine)
+        terrainObjects = engine.getEntitiesFor(
+            allOf(
+                Graphics::class,
+                Position::class,
+                VisibleIfExploredAndOutOfFieldOfView::class
+            ).get()
+        )
+    }
+
 
     override fun update(deltaTime: Float) {
         computeTileGraphics()
@@ -66,6 +80,16 @@ class MapRender(
                         sprite.setPosition(tile.position)
                         sprite.draw(batch)
                     }
+                }
+            }
+
+            terrainObjects.forEach { entity ->
+                val position = entity[Position.mapper]!!
+                if (gameMap.isExplored(position) && !fov.isVisible(position)) {
+                    val graphics = entity[Graphics.mapper]!!
+
+                    graphics.sprite.setPosition(position.x.toFloat(), position.y.toFloat())
+                    graphics.sprite.draw(batch)
                 }
             }
 

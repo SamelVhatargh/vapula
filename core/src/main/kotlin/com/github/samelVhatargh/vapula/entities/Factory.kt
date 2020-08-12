@@ -115,6 +115,7 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
                 }
                 setSpriteRegion(region)
             }
+            with<VisibleIfExploredAndOutOfFieldOfView>()
         }
         tunnel.add(position)
     }
