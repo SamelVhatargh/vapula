@@ -41,4 +41,11 @@ class DebugArguments(private val args: Array<String>) {
     private fun have(argument: String): Boolean {
         return args.contains(argument)
     }
+
+    fun getSeed(): Int? {
+        if (have("seed")) {
+            return args[args.indexOf("seed") + 1].toInt()
+        }
+        return null
+    }
 }

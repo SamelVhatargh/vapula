@@ -16,6 +16,7 @@ import com.github.samelVhatargh.vapula.systems.commands.Attack
 import com.github.samelVhatargh.vapula.systems.commands.Kill
 import com.github.samelVhatargh.vapula.systems.commands.Move
 import com.github.samelVhatargh.vapula.systems.commands.MoveOrAttack
+import com.github.samelVhatargh.vapula.utility.random
 import com.strongjoshua.console.GUIConsole
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
@@ -33,6 +34,10 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
 
     override fun create() {
         Gdx.app.logLevel = debugArguments.logLevel
+        val seed = debugArguments.getSeed()
+        if (seed !== null) {
+            random.setSeed(seed)
+        }
         spriteAtlas = TextureAtlas(Gdx.files.internal("graphics/sprites.atlas"))
 
         val world = World(engine, spriteAtlas)
