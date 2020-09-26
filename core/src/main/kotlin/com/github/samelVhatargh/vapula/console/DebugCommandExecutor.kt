@@ -26,8 +26,6 @@ class DebugCommandExecutor(
         MapDrawingMode(inputMultiplexer, camera, map)
     }
 
-    val validStartupCommands = arrayOf("tyriok", "removeFog", "eye", "xy", "hemonugi")
-
     /**
      * Включает или отключает режим рисования карты
      */
