@@ -16,9 +16,9 @@ import ktx.ashley.*
 class DebugCommandExecutor(
     private val inputMultiplexer: InputMultiplexer,
     private val camera: Camera,
-    val map: Entity,
-    val player: Entity,
-    val engine: Engine
+    private val map: Entity,
+    private val player: Entity,
+    private val engine: Engine
 ) : CommandExecutor() {
 
     private val mapDrawingMode by lazy {
