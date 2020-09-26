@@ -9,6 +9,7 @@ import com.github.samelVhatargh.vapula.components.Invulnerability
 import com.github.samelVhatargh.vapula.console.commands.MapDrawingMode
 import com.github.samelVhatargh.vapula.console.commands.removeFog
 import com.github.samelVhatargh.vapula.systems.ShowMapCoordinates
+import com.github.samelVhatargh.vapula.utility.random
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.annotation.ConsoleDoc
 import ktx.ashley.*
@@ -87,5 +88,13 @@ class DebugCommandExecutor(
         }
 
         console.log("player $enabledWord")
+    }
+
+    /**
+     * Устанавливает семя для генератора случайных чисел
+     */
+    @ConsoleDoc(description = "Set set for random number generator", paramDescriptions = ["seed value"])
+    fun seed(seed: Int) {
+        random.setSeed(seed)
     }
 }

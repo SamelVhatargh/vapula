@@ -14,7 +14,12 @@ class SeededRandom(seed: Int = Random.Default.nextInt()) {
         log.debug { "seed = $seed" }
     }
 
-    private val generator = Random(seed)
+    private var generator = Random(seed)
+
+    fun setSeed(seed: Int) {
+        generator = Random(seed)
+        log.debug { "new seed = $seed" }
+    }
 
     fun <T> collection(collection: Collection<T>): T {
         if (collection.size == 1) {
