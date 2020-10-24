@@ -16,6 +16,7 @@ import com.github.samelVhatargh.vapula.systems.commands.Attack
 import com.github.samelVhatargh.vapula.systems.commands.Kill
 import com.github.samelVhatargh.vapula.systems.commands.Move
 import com.github.samelVhatargh.vapula.systems.commands.MoveOrAttack
+import com.github.samelVhatargh.vapula.ui.createSkin
 import com.github.samelVhatargh.vapula.utility.random
 import com.strongjoshua.console.GUIConsole
 import ktx.app.KtxGame
@@ -44,6 +45,8 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
 
 
         val gameState = GameState()
+
+        createSkin()
 
         val inputMultiplexer = InputMultiplexer()
         Gdx.input.inputProcessor = inputMultiplexer
