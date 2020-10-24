@@ -17,6 +17,8 @@ class Hud {
             hp = label("HP: ") { cell ->
                 cell.width(4 * 64f - 2 * 8f).pad(8f)
             }
+
+            background("background")
         }
 
         right()
