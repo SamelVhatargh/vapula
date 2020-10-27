@@ -75,7 +75,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             console.execCommand(command)
         }
 
-        addScreen(GameScreen(engine, viewport, console))
+        addScreen(GameScreen(engine, viewport, console, inputMultiplexer))
         setScreen<GameScreen>()
     }
 

@@ -1,6 +1,7 @@
 package com.github.samelVhatargh.vapula.screens
 
 import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
@@ -14,7 +15,12 @@ import ktx.app.KtxScreen
 import ktx.ashley.allOf
 import ktx.ashley.get
 
-class GameScreen(private val engine: Engine, private val viewport: Viewport, private val console: GUIConsole) :
+class GameScreen(
+    private val engine: Engine,
+    private val viewport: Viewport,
+    private val console: GUIConsole,
+    private val inputMultiplexer: InputMultiplexer
+) :
     KtxScreen {
 
     private val stage: Stage by lazy {
@@ -26,15 +32,18 @@ class GameScreen(private val engine: Engine, private val viewport: Viewport, pri
     override fun show() {
         super.show()
         setupUI()
+        inputMultiplexer.addProcessor(stage)
         engine.notifier.addObserver(hud)
     }
 
     override fun hide() {
         engine.notifier.removeObserver(hud)
+        inputMultiplexer.removeProcessor(stage)
     }
 
     private fun setupUI() {
         stage += hud.panel
+        stage.scrollFocus = hud.messageScrollPane
         val player = engine.getEntitiesFor(allOf(Player::class, Stats::class).get()).first()
         hud.updatePlayerStats(player[Stats.mapper]!!)
     }
