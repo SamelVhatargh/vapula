@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.samelVhatargh.vapula.components.Player
 import com.github.samelVhatargh.vapula.components.Stats
-import com.github.samelVhatargh.vapula.events.EventType
 import com.github.samelVhatargh.vapula.notifier
 import com.github.samelVhatargh.vapula.ui.Hud
 import com.strongjoshua.console.GUIConsole
@@ -27,9 +26,7 @@ class GameScreen(private val engine: Engine, private val viewport: Viewport, pri
     override fun show() {
         super.show()
         setupUI()
-        engine.notifier.addObserver(EventType.ENTITY_DAMAGED, hud)
-        engine.notifier.addObserver(EventType.ENTITY_ATTACKED, hud)
-        engine.notifier.addObserver(EventType.ENTITY_DIED, hud)
+        engine.notifier.addObserver(hud)
     }
 
     override fun hide() {

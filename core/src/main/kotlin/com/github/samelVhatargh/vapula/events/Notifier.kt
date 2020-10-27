@@ -31,6 +31,15 @@ class Notifier {
     }
 
     /**
+     * Добавляет [наблюдателя][observer] на все события которые он поддерживает
+     */
+    fun addObserver(observer: Observer) {
+        observer.getSupportedTypes().forEach {
+            addObserver(it, observer)
+        }
+    }
+
+    /**
      * Удаляет [наблюдателя][observer] из получателей [события][eventType]
      */
     fun removeObserver(eventType: EventType, observer: Observer) {

@@ -64,4 +64,7 @@ class Hud : Observer {
             }
         }
     }
+
+    override fun getSupportedTypes(): Array<EventType> =
+        arrayOf(EventType.ENTITY_DAMAGED, EventType.ENTITY_DIED, EventType.ENTITY_ATTACKED)
 }
