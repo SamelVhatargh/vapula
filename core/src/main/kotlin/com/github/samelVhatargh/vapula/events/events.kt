@@ -8,7 +8,8 @@ interface Event {
 
 enum class EventType {
     ENTITY_ATTACKED,
-    ENTITY_DAMAGED
+    ENTITY_DAMAGED,
+    ENTITY_DIED
 }
 
 /**
@@ -25,4 +26,12 @@ data class EntityAttacked(val attacker: Entity, val defender: Entity, val miss: 
 data class EntityDamaged(val victim: Entity, val damage: Int) : Event {
     override val type: EventType
         get() = EventType.ENTITY_DAMAGED
+}
+
+/**
+ * Когда [сущность][victim] умирает
+ */
+data class EntityDied(val victim: Entity) : Event {
+    override val type: EventType
+        get() = EventType.ENTITY_DIED
 }

@@ -28,6 +28,8 @@ class GameScreen(private val engine: Engine, private val viewport: Viewport, pri
         super.show()
         setupUI()
         engine.notifier.addObserver(EventType.ENTITY_DAMAGED, hud)
+        engine.notifier.addObserver(EventType.ENTITY_ATTACKED, hud)
+        engine.notifier.addObserver(EventType.ENTITY_DIED, hud)
     }
 
     override fun hide() {

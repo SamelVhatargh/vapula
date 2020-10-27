@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.github.samelVhatargh.vapula.components.Dead
 import com.github.samelVhatargh.vapula.components.Graphics
 import com.github.samelVhatargh.vapula.components.Layer
-import com.github.samelVhatargh.vapula.components.Name
+import com.github.samelVhatargh.vapula.events.EntityDied
+import com.github.samelVhatargh.vapula.notifier
 import ktx.ashley.get
 import ktx.ashley.plusAssign
-import ktx.log.debug
 
 class Kill(private val spriteAtlas: TextureAtlas) : EntitySystem() {
     fun execute(entity: Entity) {
@@ -19,6 +19,6 @@ class Kill(private val spriteAtlas: TextureAtlas) : EntitySystem() {
         graphics.setSpriteRegion(spriteAtlas.findRegion("${graphics.spriteName}Dead"))
         graphics.layer = Layer.CORPSE
 
-        debug { "${entity[Name.mapper]?.name} is dead" }
+        engine.notifier.notify(EntityDied(entity))
     }
 }
