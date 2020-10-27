@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector3
 import com.github.samelVhatargh.vapula.components.Player
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.map.Direction
+import com.github.samelVhatargh.vapula.ui.HUD_WIDTH
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
 import ktx.ashley.get
@@ -66,7 +67,9 @@ class Camera(private val camera: OrthographicCamera, private val inputMultiplexe
     }
 
     private fun centerCameraOnPlayer() {
-        camera.position.set(player[Position.mapper]!!)
+        val position = player[Position.mapper]!!
+        camera.position.x = position.x.toFloat() + HUD_WIDTH / 2
+        camera.position.y = position.y.toFloat()
     }
 
     /**

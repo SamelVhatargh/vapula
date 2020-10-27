@@ -16,6 +16,8 @@ import ktx.scene2d.table
 
 private const val MAX_MESSAGE_COUNT = 100
 
+const val HUD_WIDTH = 4
+
 /**
  * Панель с различной игровой информацией в правой стороне экрана
  */
@@ -31,7 +33,7 @@ class Hud : Observer {
     val panel = scene2d.table {
         table {
             defaults().pad(8f).left().expandX()
-            right().top().cell(growY = true, width = 4 * 64f)
+            right().top().cell(growY = true, width = HUD_WIDTH * 64f)
 
             hp = label("HP: ")
             row()
