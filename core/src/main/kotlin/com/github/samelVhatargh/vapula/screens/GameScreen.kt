@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.samelVhatargh.vapula.components.Player
 import com.github.samelVhatargh.vapula.components.Stats
 import com.github.samelVhatargh.vapula.events.EventType
-import com.github.samelVhatargh.vapula.getNotifier
+import com.github.samelVhatargh.vapula.notifier
 import com.github.samelVhatargh.vapula.ui.Hud
 import com.strongjoshua.console.GUIConsole
 import ktx.actors.plusAssign
@@ -27,11 +27,11 @@ class GameScreen(private val engine: Engine, private val viewport: Viewport, pri
     override fun show() {
         super.show()
         setupUI()
-        engine.getNotifier().addObserver(EventType.ENTITY_DAMAGED, hud)
+        engine.notifier.addObserver(EventType.ENTITY_DAMAGED, hud)
     }
 
     override fun hide() {
-        engine.getNotifier().removeObserver(hud)
+        engine.notifier.removeObserver(hud)
     }
 
     private fun setupUI() {
@@ -53,6 +53,6 @@ class GameScreen(private val engine: Engine, private val viewport: Viewport, pri
 
     override fun dispose() {
         stage.dispose()
-        engine.getNotifier().removeObserver(hud)
+        engine.notifier.removeObserver(hud)
     }
 }

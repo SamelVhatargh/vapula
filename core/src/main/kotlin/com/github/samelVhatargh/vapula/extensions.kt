@@ -22,6 +22,7 @@ fun Engine.getEntityAtPosition(position: Position, family: Family): Entity? {
     }
 }
 
-val notifier = Notifier()
-
-fun Engine.getNotifier(): Notifier = notifier
+/**
+ * Уведомляющий о событиях
+ */
+val Engine.notifier: Notifier by lazy { Notifier() }
