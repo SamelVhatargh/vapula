@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.events.Notifier
 import ktx.ashley.get
 
 fun Sprite.setPosition(position: Position) {
@@ -20,3 +21,7 @@ fun Engine.getEntityAtPosition(position: Position, family: Family): Entity? {
         it[Position.mapper] == position
     }
 }
+
+val notifier = Notifier()
+
+fun Engine.getNotifier(): Notifier = notifier

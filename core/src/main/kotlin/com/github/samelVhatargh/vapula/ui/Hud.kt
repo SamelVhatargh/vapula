@@ -1,12 +1,18 @@
 package com.github.samelVhatargh.vapula.ui
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.github.samelVhatargh.vapula.components.Player
 import com.github.samelVhatargh.vapula.components.Stats
+import com.github.samelVhatargh.vapula.events.EntityDamaged
+import com.github.samelVhatargh.vapula.events.Event
+import com.github.samelVhatargh.vapula.events.Observer
+import ktx.ashley.get
+import ktx.ashley.has
 import ktx.scene2d.label
 import ktx.scene2d.scene2d
 import ktx.scene2d.table
 
-class Hud {
+class Hud : Observer {
 
     private var hp: Label
 
@@ -27,5 +33,15 @@ class Hud {
 
     fun updatePlayerStats(stats: Stats) {
         hp.setText("HP: ${stats.hp}/${stats.maxHp}")
+    }
+
+    override fun onNotify(event: Event) {
+        when (event) {
+            is EntityDamaged -> {
+                if (event.victim.has(Player.mapper) && event.victim.has(Stats.mapper)) {
+                    updatePlayerStats(event.victim[Stats.mapper]!!)
+                }
+            }
+        }
     }
 }

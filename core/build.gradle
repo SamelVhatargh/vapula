@@ -14,6 +14,7 @@ dependencies {
     compile "io.github.libktx:ktx-style:$ktxVersion"
     compile "io.github.libktx:ktx-scene2d:$ktxVersion"
     compile "io.github.libktx:ktx-actors:$ktxVersion"
+    compile "io.github.libktx:ktx-collections:$ktxVersion"
     compile "com.strongjoshua:libgdx-inGameConsole:$inGameConsoleVersion"
 
     testCompile "org.junit.jupiter:junit-jupiter:5.6.2"
