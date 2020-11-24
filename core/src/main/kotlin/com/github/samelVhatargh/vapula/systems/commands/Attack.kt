@@ -7,6 +7,7 @@ import com.github.samelVhatargh.vapula.components.Stats
 import com.github.samelVhatargh.vapula.events.EntityAttacked
 import com.github.samelVhatargh.vapula.events.EntityDamaged
 import com.github.samelVhatargh.vapula.notifier
+import com.github.samelVhatargh.vapula.utility.random
 import ktx.ashley.get
 import ktx.ashley.getSystem
 import ktx.ashley.has
@@ -16,6 +17,19 @@ class Attack : EntitySystem() {
     fun execute(attacker: Entity, defender: Entity) {
         val attackerStats = attacker[Stats.mapper]!!
         val defenderStats = defender[Stats.mapper]!!
+
+        var hitChance = 65
+        hitChance += (attackerStats.dexterity + (attackerStats.perception / 2)) * 5
+        hitChance -= (defenderStats.perception + (defenderStats.dexterity / 2)) * 5
+
+        println(hitChance)
+
+        val hit = random.chance(hitChance)
+
+        if (!hit) {
+            engine.notifier.notify(EntityAttacked(attacker, defender, true))
+            return
+        }
 
         if (defender.has(Invulnerability.mapper)) {
             engine.notifier.notify(EntityAttacked(attacker, defender, false))

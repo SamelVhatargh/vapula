@@ -72,6 +72,11 @@ class SeededRandom(seed: Int = Random.Default.nextInt()) {
 
         return dice(number, dice, modifier)
     }
+
+    /**
+     * Делает проверку с определенным [шансом][percents] успеха
+     */
+    fun chance(percents: Int): Boolean = range(1..100) <= percents
 }
 
 val random = SeededRandom()
