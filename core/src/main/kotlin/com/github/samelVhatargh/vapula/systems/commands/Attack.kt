@@ -44,7 +44,7 @@ class Attack : EntitySystem() {
         engine.notifier.notify(EntityAttacked(attacker, defender, false))
         engine.notifier.notify(EntityDamaged(defender, damage))
 
-        if (defenderStats.hp < 0) {
+        if (defenderStats.hp <= 0) {
             engine.getSystem<Kill>().execute(defender)
         }
     }
