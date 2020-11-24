@@ -2,6 +2,7 @@ package com.github.samelVhatargh.vapula.utility
 
 import ktx.log.debug
 import ktx.log.logger
+import kotlin.math.max
 import kotlin.random.Random
 
 class SeededRandom(seed: Int = Random.Default.nextInt()) {
@@ -41,6 +42,35 @@ class SeededRandom(seed: Int = Random.Default.nextInt()) {
 
     fun range(range: ClosedRange<Float>): Float {
         return generator.nextFloat() * (range.endInclusive - range.start) + range.start
+    }
+
+    fun dice(number: Int, dice: Int, modifier: Int = 0): Int {
+        var result = modifier
+        for (throwNumber in 1..number) {
+            result += range(1..dice)
+        }
+
+        return max(result, 1)
+    }
+
+    fun dice(value: String): Int {
+        val values = value.replace(" ", "").split("d", "+", "-")
+        if (values.count() < 2) {
+            return 1
+        }
+
+        val number = values[0].toInt()
+        val dice = values[1].toInt()
+        var modifier = 0
+        if (values.count() > 2) {
+            modifier = values[2].toInt()
+        }
+
+        if (value.indexOf("-") != -1) {
+            modifier = 0 - modifier
+        }
+
+        return dice(number, dice, modifier)
     }
 }
 

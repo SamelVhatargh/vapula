@@ -5,11 +5,18 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.map.Terrain
+import com.github.samelVhatargh.vapula.utility.random
 import ktx.ashley.entity
 import ktx.ashley.get
 import ktx.ashley.with
+import ktx.log.debug
+import ktx.log.logger
 
 class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas, private val map: Entity) {
+
+    companion object {
+        val log = logger<Factory>()
+    }
 
     fun createPlayer(position: Position = getRandomEmptyPosition()): Entity {
         val player = engine.entity {
@@ -23,14 +30,25 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
             with<Name> {
                 name = "player"
             }
-            with<Stats> {
-                maxHp = 10 + (1..10).random() + (1..10).random()
-                hp = maxHp
-                damageDice = 8
-            }
         }
 
         player.add(position)
+
+        val stats = Stats().apply {
+            strength = random.dice("1d6 + 3")
+            dexterity = random.dice("1d6 + 3")
+            constitution = random.dice("1d6 + 3")
+            perception = random.dice("1d6 + 3")
+            intellegence = random.dice("1d6 + 3")
+            wisdom = random.dice("1d6 + 3")
+            charisma = random.dice("1d6 + 3")
+
+            level = 1
+            damageDice = 8
+            generateHp(10, 10)
+        }
+        player.add(stats)
+        log.debug { stats.toString() }
 
         return player
     }
@@ -49,13 +67,25 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
                 name = "Goblin $goblinCount"
             }
             with<Ai>()
-            with<Stats> {
-                maxHp = (1..6).random() + (1..6).random()
-                hp = maxHp
-                damageDice = 6
-            }
         }
         monster.add(position)
+
+        val stats = Stats().apply {
+            strength = random.dice("1d2")
+            dexterity = random.dice("1d6 + 1")
+            constitution = random.dice("1d4 - 1")
+            perception = random.dice("1d4")
+            intellegence = random.dice("1d2")
+            wisdom = random.dice("1d2")
+            charisma = random.dice("1d4")
+
+            level = 1
+            damageDice = 4
+            generateHp(2)
+        }
+        monster.add(stats)
+
+        log.debug { stats.toString() }
 
         return monster
     }
