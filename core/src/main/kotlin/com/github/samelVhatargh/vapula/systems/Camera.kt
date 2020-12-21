@@ -98,8 +98,8 @@ class Camera(private val camera: OrthographicCamera, private val inputMultiplexe
         return false
     }
 
-    override fun scrolled(amount: Int): Boolean {
-        camera.zoom += ZOOM_SPEED * amount
+    override fun scrolled(amountX: Float, amountY: Float): Boolean {
+        camera.zoom += ZOOM_SPEED * amountY
         return true
     }
 }
