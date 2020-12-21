@@ -2,10 +2,11 @@ package com.github.samelVhatargh.vapula.map.generators
 
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
+import com.github.samelVhatargh.vapula.tests.MapBaseTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-internal class DrunkardWalkDungeonTest {
+internal class DrunkardWalkDungeonTest : MapBaseTest() {
 
     @Test
     fun `3x3 map should have floor tile in center`() {
@@ -13,12 +14,12 @@ internal class DrunkardWalkDungeonTest {
         val map = generator.generate(3, 3)
 
         assertEquals(
-            listOf(
+            map(
                 "###",
                 "#.#",
                 "###"
-            ).toString(),
-            toString(map.tiles)
+            ),
+            map
         )
     }
 

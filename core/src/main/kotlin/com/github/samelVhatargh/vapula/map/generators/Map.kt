@@ -17,4 +17,17 @@ data class Map(val tiles: Array<Array<Tile>>, val rooms: Collection<Room>, val t
     override fun hashCode(): Int {
         return tiles.contentDeepHashCode()
     }
+
+    override fun toString(): String {
+        var result = ""
+
+        tiles.forEach { row ->
+            row.forEach { tile ->
+                result += tile
+            }
+            result += System.lineSeparator()
+        }
+
+        return System.lineSeparator() + result + System.lineSeparator()
+    }
 }
