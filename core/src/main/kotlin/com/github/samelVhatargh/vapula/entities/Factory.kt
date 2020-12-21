@@ -96,8 +96,8 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
 
         var i = 1
         while (i < 1000) {
-            val x = (0 until map.width).random()
-            val y = (0 until map.height).random()
+            val x = random.range(0 until map.width)
+            val y = random.range(0 until map.height)
 
             if (map.tiles[x][y].terrain == Terrain.FLOOR) {
                 val position = Position(x, y)
