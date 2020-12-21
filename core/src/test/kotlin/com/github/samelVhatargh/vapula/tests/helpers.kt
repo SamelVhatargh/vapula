@@ -10,13 +10,13 @@ open class MapBaseTest {
      * Создает объект карты по переданным аргументам, каждый аргумент - ряд из карты
      */
     fun map(vararg mapDescription: String): Map {
-        val width = mapDescription.size
-        val height = mapDescription.first().length
+        val height = mapDescription.size
+        val width = mapDescription.first().length
 
         val tiles = Array(width) { Array(height) { Tile(Terrain.WALL) } }
 
-        mapDescription.forEachIndexed { x, row ->
-            row.forEachIndexed { y, char ->
+        mapDescription.forEachIndexed { y, column ->
+            column.forEachIndexed { x, char ->
                 tiles[x][y] = if (char == '#') Tile(Terrain.WALL) else Tile(Terrain.FLOOR)
             }
         }

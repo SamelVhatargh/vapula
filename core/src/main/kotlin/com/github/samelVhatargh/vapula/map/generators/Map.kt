@@ -20,10 +20,13 @@ data class Map(val tiles: Array<Array<Tile>>, val rooms: Collection<Room>, val t
 
     override fun toString(): String {
         var result = ""
+        val width = tiles.size
+        val height = tiles.first().size
 
-        tiles.forEach { row ->
-            row.forEach { tile ->
-                result += tile
+
+        for (x in 0 until width) {
+            for (y in 0 until height) {
+                result += tiles[x][y]
             }
             result += System.lineSeparator()
         }
