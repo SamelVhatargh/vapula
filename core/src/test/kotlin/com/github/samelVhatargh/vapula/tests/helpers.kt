@@ -1,5 +1,6 @@
 package com.github.samelVhatargh.vapula.tests
 
+import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
 import com.github.samelVhatargh.vapula.map.generators.Map
@@ -22,4 +23,9 @@ open class MapBaseTest {
         }
         return Map(tiles, listOf(), listOf())
     }
+
+    /**
+     * Создает объект карты из текущей карты
+     */
+    fun map(gameMap: GameMap): Map = Map(gameMap.tiles, listOf(), listOf())
 }
