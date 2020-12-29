@@ -25,9 +25,11 @@ class GameMap : Component, Pool.Poolable {
      * Используется для дебаггинга
      */
     fun switchTile(x: Int, y: Int) {
-        tiles[x][y] = if (tiles[x][y].terrain == Terrain.FLOOR) Tile(
+        val currentTile = tiles[x][y]
+        tiles[x][y] = if (currentTile.terrain == Terrain.FLOOR) Tile(
+            currentTile.position,
             Terrain.WALL
-        ) else Tile(Terrain.FLOOR)
+        ) else Tile(currentTile.position, Terrain.FLOOR)
         shouldComputeTileGraphics = true
     }
 

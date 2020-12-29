@@ -158,7 +158,7 @@ class MapRender(
         return try {
             gameMap.tiles[x + direction.x][y + direction.y]
         } catch (e: ArrayIndexOutOfBoundsException) {
-            Tile(Terrain.WALL)
+            Tile(Position(x + direction.x, y + direction.y), Terrain.WALL)
         }
     }
 }

@@ -18,14 +18,14 @@ class TestMapGenerator : MapGenerator {
         val firstRoomYRange = 4..6
         for (x in firstRoomXRange) {
             for (y in firstRoomYRange) {
-                tiles[x][y] = Tile(Terrain.FLOOR)
+                tiles[x][y] = Tile(Position(x, y), Terrain.FLOOR)
             }
         }
         val secondRoomXRange = 10..13
         val secondRoomYRange = 2..5
         for (x in secondRoomXRange) {
             for (y in secondRoomYRange) {
-                tiles[x][y] = Tile(Terrain.FLOOR)
+                tiles[x][y] = Tile(Position(x, y), Terrain.FLOOR)
             }
         }
 
@@ -33,14 +33,14 @@ class TestMapGenerator : MapGenerator {
         val end = Position(9, 5)
         val tunnel = Tunnel(start, end, listOf(start, end))
 
-        tiles[start.x][start.y] = Tile(Terrain.FLOOR)
-        tiles[end.x][end.y] = Tile(Terrain.FLOOR)
+        tiles[start.x][start.y] = Tile(start, Terrain.FLOOR)
+        tiles[end.x][end.y] = Tile(end, Terrain.FLOOR)
 
-        tiles[12][4] = Tile(Terrain.WALL)
+        tiles[12][4] = Tile(Position(12, 4), Terrain.WALL)
 
-        tiles[1][2] = Tile(Terrain.FLOOR)
+        tiles[1][2] = Tile(Position(1, 2), Terrain.FLOOR)
 
-        tiles[3][2] = Tile(Terrain.FLOOR)
+        tiles[3][2] = Tile(Position(3, 2), Terrain.FLOOR)
 
         return Map(
             tiles,

@@ -30,25 +30,26 @@ class Digger(private val tiles: Array<Array<Tile>>) {
 
         if (random.range(1..2) == 1) {
             for (x in xRange) {
-                tunnelTiles.add(Position(x, start.y))
-                tiles[x][start.y] = Tile(Terrain.FLOOR)
+                addTile(Position(x, start.y), tunnelTiles)
             }
             for (y in yRange) {
-                tunnelTiles.add(Position(end.x, y))
-                tiles[end.x][y] = Tile(Terrain.FLOOR)
+                addTile(Position(end.x, y), tunnelTiles)
             }
         } else {
             for (y in yRange) {
-                tunnelTiles.add(Position(start.x, y))
-                tiles[start.x][y] = Tile(Terrain.FLOOR)
+                addTile(Position(start.x, y), tunnelTiles)
             }
             for (x in xRange) {
-                tunnelTiles.add(Position(x, end.y))
-                tiles[x][end.y] = Tile(Terrain.FLOOR)
+                addTile(Position(x, end.y), tunnelTiles)
             }
         }
 
         return Tunnel(start, end, tunnelTiles)
+    }
+
+    private fun addTile(position: Position, tunnelTiles: MutableList<Position>) {
+        tunnelTiles.add(position)
+        tiles[position.x][position.y] = Tile(position, Terrain.FLOOR)
     }
 
     fun dig(room: Room) {
@@ -63,7 +64,7 @@ class Digger(private val tiles: Array<Array<Tile>>) {
                     continue
                 }
 
-                tiles[x][y] = Tile(Terrain.FLOOR)
+                tiles[x][y] = Tile(Position(x, y), Terrain.FLOOR)
             }
         }
     }

@@ -17,7 +17,8 @@ class DrunkardWalkDungeon(private val percentage: Float = 0.25f) : MapGenerator 
         val maxFloorCount = min((tilesCount * percentage).toInt(), tilesCount - edgesCount)
 
         var currentTile = Pair((1 until (width - 1)).random(), (1 until (height - 1)).random())
-        tiles[currentTile.first][currentTile.second] = Tile(Terrain.FLOOR)
+        tiles[currentTile.first][currentTile.second] =
+            Tile(Position(currentTile.first, currentTile.second), Terrain.FLOOR)
         var floorTilesCount = 1
 
         var directions = listOf(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST)
@@ -43,7 +44,7 @@ class DrunkardWalkDungeon(private val percentage: Float = 0.25f) : MapGenerator 
             }
 
             val oldTile = tiles[newTile.first][newTile.second]
-            tiles[newTile.first][newTile.second] = Tile(Terrain.FLOOR)
+            tiles[newTile.first][newTile.second] = Tile(Position(newTile.first, newTile.second), Terrain.FLOOR)
             currentTile = newTile
 
             if (oldTile.terrain == Terrain.WALL) floorTilesCount++
