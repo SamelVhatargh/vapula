@@ -2,6 +2,7 @@ package com.github.samelVhatargh.vapula.components
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
+import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
 import com.github.samelVhatargh.vapula.map.createEmptyTiles
@@ -48,6 +49,18 @@ class GameMap : Component, Pool.Poolable {
 
     fun markAsExplored(position: Position) {
         tiles[position.x][position.y].explored = true
+    }
+
+    fun getNeighbor(position: Position, direction: Direction): Tile {
+        return try {
+            tiles[position.x + direction.x][position.y + direction.y]
+        } catch (e: ArrayIndexOutOfBoundsException) {
+            Tile(Position(position.x + direction.x, position.y + direction.y), Terrain.WALL)
+        }
+    }
+
+    fun getNeighbor(tile: Tile, direction: Direction): Tile {
+        return getNeighbor(tile.position, direction)
     }
 
     override fun reset() {

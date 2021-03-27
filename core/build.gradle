@@ -4,6 +4,7 @@ eclipse.project.name = appName + '-core'
 dependencies {
     api "com.badlogicgames.gdx:gdx:$gdxVersion"
     api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+    api "com.badlogicgames.gdx:gdx-ai:$gdxAiVersion"
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     api "com.badlogicgames.ashley:ashley:$ashleyVersion"
     compile "io.github.libktx:ktx-app:$ktxVersion"

@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Terrain
-import com.github.samelVhatargh.vapula.map.Tile
 import com.github.samelVhatargh.vapula.setPosition
 import ktx.ashley.allOf
 import ktx.ashley.get
@@ -127,39 +126,30 @@ class MapRender(
         for (x in 0 until gameMap.width) {
             for (y in 0 until gameMap.height) {
                 val tile = gameMap.tiles[x][y]
-                val position = Position(x, y)
                 if (tile.terrain === Terrain.FLOOR) {
-                    tileGraphics.add(TileGraphic(position, FLOOR))
+                    tileGraphics.add(TileGraphic(tile.position, FLOOR))
                     continue
                 }
 
                 var tileNumber = 0
-                if (getNeighbor(x, y, Direction.NORTH).terrain == Terrain.WALL) tileNumber += 1
-                if (getNeighbor(x, y, Direction.EAST).terrain == Terrain.WALL) tileNumber += 2
-                if (getNeighbor(x, y, Direction.SOUTH).terrain == Terrain.WALL) tileNumber += 4
-                if (getNeighbor(x, y, Direction.WEST).terrain == Terrain.WALL) tileNumber += 8
+                if (gameMap.getNeighbor(tile, Direction.NORTH).terrain == Terrain.WALL) tileNumber += 1
+                if (gameMap.getNeighbor(tile, Direction.EAST).terrain == Terrain.WALL) tileNumber += 2
+                if (gameMap.getNeighbor(tile, Direction.SOUTH).terrain == Terrain.WALL) tileNumber += 4
+                if (gameMap.getNeighbor(tile, Direction.WEST).terrain == Terrain.WALL) tileNumber += 8
 
-                if (tileNumber != 15) tileGraphics.add(TileGraphic(position, "$WALL$tileNumber"))
+                if (tileNumber != 15) tileGraphics.add(TileGraphic(tile.position, "$WALL$tileNumber"))
 
-                if (getNeighbor(x, y, Direction.NORTH_WEST).terrain == Terrain.FLOOR)
-                    tileGraphics.add(TileGraphic(position, NORTH_WEST_CORNER, -1))
-                if (getNeighbor(x, y, Direction.NORTH_EAST).terrain == Terrain.FLOOR)
-                    tileGraphics.add(TileGraphic(position, NORTH_EAST_CORNER, -1))
-                if (getNeighbor(x, y, Direction.SOUTH_EAST).terrain == Terrain.FLOOR)
-                    tileGraphics.add(TileGraphic(position, SOUTH_EAST_CORNER, -1))
-                if (getNeighbor(x, y, Direction.SOUTH_WEST).terrain == Terrain.FLOOR)
-                    tileGraphics.add(TileGraphic(position, SOUTH_WEST_CORNER, -1))
+                if (gameMap.getNeighbor(tile, Direction.NORTH_WEST).terrain == Terrain.FLOOR)
+                    tileGraphics.add(TileGraphic(tile.position, NORTH_WEST_CORNER, -1))
+                if (gameMap.getNeighbor(tile, Direction.NORTH_EAST).terrain == Terrain.FLOOR)
+                    tileGraphics.add(TileGraphic(tile.position, NORTH_EAST_CORNER, -1))
+                if (gameMap.getNeighbor(tile, Direction.SOUTH_EAST).terrain == Terrain.FLOOR)
+                    tileGraphics.add(TileGraphic(tile.position, SOUTH_EAST_CORNER, -1))
+                if (gameMap.getNeighbor(tile, Direction.SOUTH_WEST).terrain == Terrain.FLOOR)
+                    tileGraphics.add(TileGraphic(tile.position, SOUTH_WEST_CORNER, -1))
             }
         }
         tileGraphics.sortBy { it.priority }
-    }
-
-    private fun getNeighbor(x: Int, y: Int, direction: Direction): Tile {
-        return try {
-            gameMap.tiles[x + direction.x][y + direction.y]
-        } catch (e: ArrayIndexOutOfBoundsException) {
-            Tile(Position(x + direction.x, y + direction.y), Terrain.WALL)
-        }
     }
 }
 
