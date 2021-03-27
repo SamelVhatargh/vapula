@@ -31,4 +31,21 @@ class Move : EntitySystem() {
             entity[FieldOfView.mapper]?.shouldUpdate = true
         }
     }
+
+    fun execute(entity: Entity, path: List<Position>) {
+        val mapEntity = engine.getEntitiesFor(allOf(GameMap::class).get()).first()
+
+        val gameMap = mapEntity[GameMap.mapper]!!
+        val currentPosition = entity[Position.mapper]!!
+        val destination = path[1]
+
+        val obstacle = engine.getEntityAtPosition(Position(destination.x, destination.y), OCCUPY_SPACE_FAMILY)
+
+        if (obstacle == null && gameMap.isWalkable(destination.x, destination.y)) {
+            currentPosition.x = destination.x
+            currentPosition.y = destination.y
+
+            entity[FieldOfView.mapper]?.shouldUpdate = true
+        }
+    }
 }

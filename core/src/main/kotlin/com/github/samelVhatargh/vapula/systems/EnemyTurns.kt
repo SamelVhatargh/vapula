@@ -5,12 +5,13 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.github.samelVhatargh.vapula.GameState
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.map.Direction
+import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.systems.commands.Attack
 import com.github.samelVhatargh.vapula.systems.commands.Move
 import ktx.ashley.*
 import ktx.log.logger
 
-class EnemyTurns(private val gameState: GameState) : IteratingSystem(
+class EnemyTurns(private val gameState: GameState, private val pathFinder: PathFinder) : IteratingSystem(
     allOf(Ai::class, Name::class, Position::class).exclude(Dead::class).get()
 ) {
 
@@ -40,7 +41,7 @@ class EnemyTurns(private val gameState: GameState) : IteratingSystem(
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        //если игрок рядом - атакуем
+        //if player is near - attack!
         val playerPosition = player[Position.mapper]!!
         val monsterPosition = entity[Position.mapper]!!
 
@@ -49,9 +50,15 @@ class EnemyTurns(private val gameState: GameState) : IteratingSystem(
             return
         }
 
-        //иначе бесцельно бродим
-        val direction = directions.random()
+        //else run to player
+        val path = pathFinder.findPath(monsterPosition, playerPosition)
+        if (path.isEmpty()) {
+            //wander
+            val direction = directions.random()
+            engine.getSystem<Move>().execute(entity, direction)
+            return
+        }
 
-        engine.getSystem<Move>().execute(entity, direction)
+        engine.getSystem<Move>().execute(entity, path)
     }
 }
