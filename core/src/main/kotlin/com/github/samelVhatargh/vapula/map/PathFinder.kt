@@ -1,5 +1,6 @@
 package com.github.samelVhatargh.vapula.map
 
+import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.ai.pfa.Connection
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath
 import com.badlogic.gdx.ai.pfa.Heuristic
@@ -9,14 +10,23 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.entities.OCCUPY_SPACE_FAMILY
+import com.github.samelVhatargh.vapula.getEntityAtPosition
 
 
 private data class Node(val position: Position, val index: Int)
 
-private class NodeConnection(val start: Node, val end: Node, val direction: Direction) : Connection<Node> {
-    override fun getCost(): Float = when (direction) {
-        Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST -> 1.414f
-        else -> 1f
+private class NodeConnection(val start: Node, val end: Node, val direction: Direction, val engine: Engine) : Connection<Node> {
+    override fun getCost(): Float {
+        val entity = engine.getEntityAtPosition(end.position, OCCUPY_SPACE_FAMILY)
+        if (entity !== null) {
+            return 10f
+        }
+
+        return when (direction) {
+            Direction.NORTH_EAST, Direction.NORTH_WEST, Direction.SOUTH_EAST, Direction.SOUTH_WEST -> 1.414f
+            else -> 1f
+        }
     }
 
     override fun getFromNode(): Node = start
@@ -34,7 +44,7 @@ private class PositionHeuristic : Heuristic<Node> {
     }
 }
 
-private class GameMapGraph(val gameMap: GameMap) : IndexedGraph<Node> {
+private class GameMapGraph(val gameMap: GameMap, val engine: Engine) : IndexedGraph<Node> {
 
     val nodes = mutableMapOf<Int, Node>()
     val indexes = mutableMapOf<Position, Int>()
@@ -61,7 +71,7 @@ private class GameMapGraph(val gameMap: GameMap) : IndexedGraph<Node> {
             if (neighbor.terrain === Terrain.FLOOR) {
                 val end = nodes[indexes[neighbor.position]]
                 if (end !== null) {
-                    connections.add(NodeConnection(start, end, direction))
+                    connections.add(NodeConnection(start, end, direction, engine))
                 }
             }
         }
@@ -74,9 +84,9 @@ private class GameMapGraph(val gameMap: GameMap) : IndexedGraph<Node> {
 }
 
 
-class PathFinder(val gameMap: GameMap) {
+class PathFinder(val gameMap: GameMap, engine: Engine) {
 
-    private val graph = GameMapGraph(gameMap)
+    private val graph = GameMapGraph(gameMap, engine)
 
     private val apiPathFinder = IndexedAStarPathFinder(graph)
 

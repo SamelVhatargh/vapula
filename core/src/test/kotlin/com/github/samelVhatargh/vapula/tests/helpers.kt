@@ -26,6 +26,23 @@ class DescribedMap(val map: Map, private val description: Array<String>) {
 
         return null
     }
+
+    /**
+     * Returns positions of every occurrences of [symbol] in [map]
+     */
+    fun getPositions(symbol: Char): List<Position> {
+        val result = mutableListOf<Position>()
+
+        description.forEachIndexed { y, column ->
+            column.forEachIndexed { x, char ->
+                if (char == symbol) {
+                    result.add(Position(x, y))
+                }
+            }
+        }
+
+        return result
+    }
 }
 
 open class MapBaseTest {
@@ -62,11 +79,17 @@ open class MapBaseTest {
      */
     protected fun path(vararg pathDescription: String): List<Position> {
         val path = mutableMapOf<Int, Position>()
+        var dec = 0
         pathDescription.forEachIndexed { y, column ->
             column.forEachIndexed { x, char ->
                 val index = char.toString().toIntOrNull()
                 if (index !== null) {
-                    path[index] = Position(x, y)
+                    if (index == 0) {
+                        dec += 10
+                    }
+
+                    path[index + dec] = Position(x, y)
+                    dec = 0
                 }
             }
         }

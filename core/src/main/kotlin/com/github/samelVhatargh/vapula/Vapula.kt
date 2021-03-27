@@ -57,7 +57,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
         val gameMap = world.gamMap[GameMap.mapper]!!
 
         engine.apply {
-            addSystem(EnemyTurns(gameState, PathFinder(gameMap)))
+            addSystem(EnemyTurns(gameState, PathFinder(gameMap, engine)))
             addSystem(PlayerInput(inputMultiplexer, world.player, gameState))
             addSystem(Move())
             addSystem(Attack())

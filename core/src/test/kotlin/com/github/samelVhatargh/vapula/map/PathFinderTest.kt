@@ -1,9 +1,13 @@
 package com.github.samelVhatargh.vapula.map
 
+import com.badlogic.ashley.core.Engine
 import com.github.samelVhatargh.vapula.components.GameMap
+import com.github.samelVhatargh.vapula.components.OccupySpace
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.tests.DescribedMap
 import com.github.samelVhatargh.vapula.tests.MapBaseTest
+import ktx.ashley.entity
+import ktx.ashley.with
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.fail
@@ -128,7 +132,7 @@ internal class PathFinderTest : MapBaseTest() {
                 ),
             ),
             Arguments.of(
-                "To east with obstacle wich blocks norh path",
+                "To east with obstacle which blocks north path",
                 describedMap(
                     "...............",
                     "...####........",
@@ -145,7 +149,7 @@ internal class PathFinderTest : MapBaseTest() {
                 ),
             ),
             Arguments.of(
-                "path to south-east with simple obstacle should bend arroun north wall",
+                "path to south-east with simple obstacle should bend around north wall",
                 describedMap(
                     "...............",
                     "...s..#........",
@@ -194,6 +198,97 @@ internal class PathFinderTest : MapBaseTest() {
                 Position(100, 100)
             ),
         )
+
+        @JvmStatic
+        fun pathFindingForMonstersDataProvider(): Stream<Arguments> = Stream.of(
+            Arguments.of(
+                "Straight line to east another monster in path",
+                describedMap(
+                    "......",
+                    ".s.me.",
+                    "......",
+                ),
+                path(
+                    "...3..",
+                    ".12.4.",
+                    "......",
+                ),
+            ),
+            Arguments.of(
+                "Straight line to east with several monsters in path",
+                describedMap(
+                    "...m..",
+                    ".s.me.",
+                    "...m..",
+                    "......",
+                ),
+                path(
+                    "...m..",
+                    ".1.m5.",
+                    "..2m4.",
+                    "...3..",
+                ),
+            ),
+            Arguments.of(
+                "Should go to last possible place if destination is surrounded",
+                describedMap(
+                    "............",
+                    "............",
+                    "......mmm...",
+                    "......me....",
+                    "...s..mmm...",
+                    "............",
+                    "............",
+                ),
+                path(
+                    "............",
+                    "............",
+                    "......mmm...",
+                    "......m98...",
+                    "...123mmm7..",
+                    "......456...",
+                    "............",
+                ),
+            ),
+            Arguments.of(
+                "Should go around through second entrance if another monster blocking first entrance and new path is less then 11 steps",
+                describedMap(
+                    "##########..",
+                    ".........#..",
+                    "....####.#..",
+                    "...sme...#..",
+                    "....####.#..",
+                    "#######.##..",
+                ),
+                path(
+                    "##########..",
+                    "....3456.#..",
+                    "...2####7#..",
+                    "...1m098.#..",
+                    "....####.#..",
+                    "#######.##..",
+                ),
+            ),
+            Arguments.of(
+                "Should not go around through second entrance if another monster blocking first entrance and second entrance path is to long",
+                describedMap(
+                    "#############..",
+                    "............#..",
+                    "....#######.#..",
+                    "...sme......#..",
+                    "....#######.#..",
+                    "##########.##..",
+                ),
+                path(
+                    "#############..",
+                    "............#..",
+                    "....#######.#..",
+                    "...123......#..",
+                    "....#######.#..",
+                    "##########.##..",
+                ),
+            ),
+        )
     }
 
     @ParameterizedTest(name = "{0}")
@@ -206,7 +301,7 @@ internal class PathFinderTest : MapBaseTest() {
             tiles = map.tiles
         }
 
-        val pathFinder = PathFinder(gameMap)
+        val pathFinder = PathFinder(gameMap, Engine())
 
         val startPosition = describedMap.getPosition('s')
         val endPosition = describedMap.getPosition('e')
@@ -236,7 +331,7 @@ internal class PathFinderTest : MapBaseTest() {
             tiles = map.tiles
         }
 
-        val pathFinder = PathFinder(gameMap)
+        val pathFinder = PathFinder(gameMap, Engine())
 
         val path = pathFinder.findPath(startPosition, endPosition)
 
@@ -257,12 +352,50 @@ internal class PathFinderTest : MapBaseTest() {
             tiles = map.tiles
         }
 
-        val pathFinder = PathFinder(gameMap)
+        val pathFinder = PathFinder(gameMap, Engine())
         val startPosition = Position(0, 0)
         val endPosition = Position(4, 1)
 
         val path = pathFinder.findPath(startPosition, endPosition)
 
         assertEquals(0, path.count())
+    }
+
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("pathFindingForMonstersDataProvider")
+    fun `path finding for monsters`(testDescription: String, describedMap: DescribedMap, expectedPath: List<Position>) {
+        val map = describedMap.map
+        val gameMap = GameMap().apply {
+            width = map.width
+            height = map.height
+            tiles = map.tiles
+        }
+
+
+        val startPosition = describedMap.getPosition('s')
+        val endPosition = describedMap.getPosition('e')
+        val monsters = describedMap.getPositions('m')
+
+        val engine = Engine()
+        monsters.forEach { position ->
+            engine.entity {
+                with<Position> {
+                    x = position.x
+                    y = position.y
+                }
+                with<OccupySpace>()
+            }
+        }
+
+
+        val pathFinder = PathFinder(gameMap, engine)
+        if (startPosition === null || endPosition === null) {
+            fail<Assertions>("start or end positions cant be found")
+            return
+        }
+
+        val path = pathFinder.findPath(startPosition, endPosition)
+
+        assertEquals(expectedPath, path)
     }
 }
