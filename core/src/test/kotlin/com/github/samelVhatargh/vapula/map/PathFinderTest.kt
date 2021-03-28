@@ -9,8 +9,7 @@ import com.github.samelVhatargh.vapula.tests.MapBaseTest
 import ktx.ashley.entity
 import ktx.ashley.with
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.fail
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -293,7 +292,7 @@ internal class PathFinderTest : MapBaseTest() {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("pathFindingDataProvider")
-    fun `path finding`(testDescription: String, describedMap: DescribedMap, expectedPath: List<Position>) {
+    fun `path finding`(testDescription: String, describedMap: DescribedMap, expectedPath: Path) {
         val map = describedMap.map
         val gameMap = GameMap().apply {
             width = map.width
@@ -335,7 +334,7 @@ internal class PathFinderTest : MapBaseTest() {
 
         val path = pathFinder.findPath(startPosition, endPosition)
 
-        assertEquals(0, path.count())
+        assertTrue(path.isEmpty())
     }
 
     @Test
@@ -358,12 +357,12 @@ internal class PathFinderTest : MapBaseTest() {
 
         val path = pathFinder.findPath(startPosition, endPosition)
 
-        assertEquals(0, path.count())
+        assertTrue(path.isEmpty())
     }
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("pathFindingForMonstersDataProvider")
-    fun `path finding for monsters`(testDescription: String, describedMap: DescribedMap, expectedPath: List<Position>) {
+    fun `path finding for monsters`(testDescription: String, describedMap: DescribedMap, expectedPath: Path) {
         val map = describedMap.map
         val gameMap = GameMap().apply {
             width = map.width

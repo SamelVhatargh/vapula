@@ -16,7 +16,8 @@ import com.github.samelVhatargh.vapula.getEntityAtPosition
 
 private data class Node(val position: Position, val index: Int)
 
-private class NodeConnection(val start: Node, val end: Node, val direction: Direction, val engine: Engine) : Connection<Node> {
+private class NodeConnection(val start: Node, val end: Node, val direction: Direction, val engine: Engine) :
+    Connection<Node> {
     override fun getCost(): Float {
         val entity = engine.getEntityAtPosition(end.position, OCCUPY_SPACE_FAMILY)
         if (entity !== null) {
@@ -90,17 +91,53 @@ class PathFinder(val gameMap: GameMap, engine: Engine) {
 
     private val apiPathFinder = IndexedAStarPathFinder(graph)
 
-    fun findPath(start: Position, end: Position): List<Position> {
+    fun findPath(start: Position, end: Position): Path {
         val path = DefaultGraphPath<Node>()
         val startNode = graph.nodes[graph.indexes[start]]
         val endNode = graph.nodes[graph.indexes[end]]
 
         if (endNode === null || startNode === null) {
-            return listOf()
+            return Path()
         }
 
         apiPathFinder.searchNodePath(startNode, endNode, PositionHeuristic(), path)
 
-        return path.nodes.map { node -> node.position }
+        return Path(path.nodes.map { node -> node.position })
+    }
+}
+
+class Path(private val positions: List<Position> = listOf()) {
+
+    fun isEmpty(): Boolean = positions.isEmpty()
+
+    fun getNextPosition(currentPosition: Position): Position {
+        var i = 0
+        positions.forEach {
+            if (it == currentPosition) {
+                if (i + 1 == positions.count()) {
+                    return positions[i]
+                }
+
+                return positions[i + 1]
+            }
+            i++
+        }
+
+        return positions[0]
+    }
+
+    override fun hashCode(): Int {
+        return positions.hashCode()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Path
+
+        if (positions != other.positions) return false
+
+        return true
     }
 }

@@ -8,6 +8,7 @@ import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.entities.OCCUPY_SPACE_FAMILY
 import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
+import com.github.samelVhatargh.vapula.map.Path
 import ktx.ashley.allOf
 import ktx.ashley.get
 
@@ -32,12 +33,12 @@ class Move : EntitySystem() {
         }
     }
 
-    fun execute(entity: Entity, path: List<Position>) {
+    fun execute(entity: Entity, path: Path) {
         val mapEntity = engine.getEntitiesFor(allOf(GameMap::class).get()).first()
 
         val gameMap = mapEntity[GameMap.mapper]!!
         val currentPosition = entity[Position.mapper]!!
-        val destination = path[1]
+        val destination = path.getNextPosition(currentPosition)
 
         val obstacle = engine.getEntityAtPosition(Position(destination.x, destination.y), OCCUPY_SPACE_FAMILY)
 

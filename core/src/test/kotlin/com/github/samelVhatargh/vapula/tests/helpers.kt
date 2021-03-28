@@ -2,6 +2,7 @@ package com.github.samelVhatargh.vapula.tests
 
 import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.Path
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
 import com.github.samelVhatargh.vapula.map.generators.Map
@@ -77,7 +78,7 @@ open class MapBaseTest {
     /**
      * Creates path from string map description
      */
-    protected fun path(vararg pathDescription: String): List<Position> {
+    protected fun path(vararg pathDescription: String): Path {
         val path = mutableMapOf<Int, Position>()
         var dec = 0
         pathDescription.forEachIndexed { y, column ->
@@ -94,6 +95,6 @@ open class MapBaseTest {
             }
         }
 
-        return path.toSortedMap().values.toList()
+        return Path(path.toSortedMap().values.toList())
     }
 }
