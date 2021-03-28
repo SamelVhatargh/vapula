@@ -22,7 +22,7 @@ class World(engine: Engine, spriteAtlas: TextureAtlas) {
 
     private val map = BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT)
 
-    val gamMap: Entity = engine.entity {
+    val gameMap: Entity = engine.entity {
         with<GameMap> {
             width = MAP_WIDTH
             height = MAP_HEIGHT
@@ -30,7 +30,7 @@ class World(engine: Engine, spriteAtlas: TextureAtlas) {
         }
     }
 
-    private val entityFactory = Factory(engine, spriteAtlas, gamMap)
+    private val entityFactory = Factory(engine, spriteAtlas, gameMap)
 
     val player = entityFactory.createPlayer()
 

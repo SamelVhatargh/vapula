@@ -54,7 +54,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
         val inputMultiplexer = InputMultiplexer()
         Gdx.input.inputProcessor = inputMultiplexer
 
-        val gameMap = world.gamMap[GameMap.mapper]!!
+        val gameMap = world.gameMap[GameMap.mapper]!!
 
         engine.apply {
             addSystem(EnemyTurns(gameState, PathFinder(gameMap, engine)))
@@ -64,13 +64,13 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             addSystem(MoveOrAttack())
             addSystem(Kill(spriteAtlas))
             addSystem(Camera(camera, inputMultiplexer))
-            addSystem(MapRender(spriteAtlas, batch, world.player, world.gamMap))
-            addSystem(FieldOfViewCalculator(world.player, world.gamMap))
+            addSystem(MapRender(spriteAtlas, batch, world.player, world.gameMap))
+            addSystem(FieldOfViewCalculator(world.player, world.gameMap))
             addSystem(Render(batch, viewport, world.player))
         }
 
         val commandExecutor =
-            DebugCommandExecutor(inputMultiplexer, viewport.camera, world.gamMap, world.player, engine)
+            DebugCommandExecutor(inputMultiplexer, viewport.camera, world.gameMap, world.player, engine)
         console = GUIConsole().apply {
             setCommandExecutor(commandExecutor)
             displayKeyID = Input.Keys.GRAVE
