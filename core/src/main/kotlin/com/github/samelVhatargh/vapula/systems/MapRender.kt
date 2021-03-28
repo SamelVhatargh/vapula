@@ -7,12 +7,12 @@ import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.Graphics
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.components.VisibleIfExploredAndOutOfFieldOfView
 import com.github.samelVhatargh.vapula.map.Direction
-import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.setPosition
 import ktx.ashley.allOf
@@ -30,13 +30,10 @@ private const val WALL = "Wall"
 
 private data class TileGraphic(val position: Position, val spriteName: String, val priority: Int = 0)
 
-class MapRender(
-    private val atlas: TextureAtlas,
-    private val batch: SpriteBatch,
-    private val player: Entity,
-    private val gameMap: GameMap
-) : EntitySystem() {
+class MapRender(private val atlas: TextureAtlas, private val batch: SpriteBatch, world: World) : EntitySystem() {
 
+    private val player = world.player
+    private val gameMap = world.gameMap
     private val spriteCache = mutableMapOf<String, Sprite>()
 
     private val fogOfWarSprite = Sprite(atlas.findRegion("white")).apply {

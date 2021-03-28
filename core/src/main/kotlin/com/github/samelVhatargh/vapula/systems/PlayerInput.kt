@@ -1,25 +1,23 @@
 package com.github.samelVhatargh.vapula.systems
 
 import com.badlogic.ashley.core.Engine
-import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
 import com.github.samelVhatargh.vapula.GameState
+import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.Dead
 import com.github.samelVhatargh.vapula.map.Direction
-import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.systems.commands.MoveOrAttack
 import ktx.app.KtxInputAdapter
 import ktx.ashley.getSystem
 import ktx.ashley.has
 
-class PlayerInput(
-    private val inputMultiplexer: InputMultiplexer,
-    private val player: Entity,
-    private val gameState: GameState,
-    private val gameMap: GameMap
-) : EntitySystem(), KtxInputAdapter {
+class PlayerInput(private val inputMultiplexer: InputMultiplexer, world: World, private val gameState: GameState) :
+    EntitySystem(), KtxInputAdapter {
+
+    private val player = world.player
+    private val gameMap = world.gameMap
 
     override fun addedToEngine(engine: Engine) {
         inputMultiplexer.addProcessor(this)

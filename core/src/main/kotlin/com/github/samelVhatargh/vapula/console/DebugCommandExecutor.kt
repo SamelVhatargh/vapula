@@ -1,13 +1,12 @@
 package com.github.samelVhatargh.vapula.console
 
 import com.badlogic.ashley.core.Engine
-import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Camera
+import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.Invulnerability
 import com.github.samelVhatargh.vapula.console.commands.MapDrawingMode
 import com.github.samelVhatargh.vapula.console.commands.removeFog
-import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.systems.ShowMapCoordinates
 import com.github.samelVhatargh.vapula.utility.random
 import com.strongjoshua.console.CommandExecutor
@@ -17,13 +16,15 @@ import ktx.ashley.*
 class DebugCommandExecutor(
     private val inputMultiplexer: InputMultiplexer,
     private val camera: Camera,
-    private val map: GameMap,
-    private val player: Entity,
+    world: World,
     private val engine: Engine
 ) : CommandExecutor() {
 
+    private val gameMap = world.gameMap
+    private val player = world.player
+
     private val mapDrawingMode by lazy {
-        MapDrawingMode(inputMultiplexer, camera, map, engine)
+        MapDrawingMode(inputMultiplexer, camera, gameMap, engine)
     }
 
     /**
@@ -41,7 +42,7 @@ class DebugCommandExecutor(
      */
     @ConsoleDoc(description = "Makes all tiles of map visible by player")
     fun removeFog() {
-        removeFog(map, player, engine)
+        removeFog(gameMap, player, engine)
     }
 
     /**
