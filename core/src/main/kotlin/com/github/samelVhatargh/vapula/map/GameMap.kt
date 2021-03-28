@@ -8,8 +8,6 @@ class GameMap(map: Map) {
     var height = map.tiles[0].count()
     var tiles = map.tiles
 
-    var shouldComputeTileGraphics = true
-
     /**
      * Менят тайл на карте.
      *
@@ -21,7 +19,6 @@ class GameMap(map: Map) {
             currentTile.position,
             Terrain.WALL
         ) else Tile(currentTile.position, Terrain.FLOOR)
-        shouldComputeTileGraphics = true
     }
 
 

@@ -47,6 +47,8 @@ class MapRender(
 
     private lateinit var terrainObjects: ImmutableArray<Entity>
 
+    var shouldComputeTileGraphics = true
+
     override fun addedToEngine(engine: Engine) {
         super.addedToEngine(engine)
         terrainObjects = engine.getEntitiesFor(
@@ -121,9 +123,9 @@ class MapRender(
     }
 
     private fun computeTileGraphics() {
-        if (!gameMap.shouldComputeTileGraphics) return
+        if (!shouldComputeTileGraphics) return
 
-        gameMap.shouldComputeTileGraphics = false
+        shouldComputeTileGraphics = false
         tileGraphics.clear()
 
         for (x in 0 until gameMap.width) {

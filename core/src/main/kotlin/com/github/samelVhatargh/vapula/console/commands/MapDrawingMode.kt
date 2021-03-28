@@ -1,10 +1,13 @@
 package com.github.samelVhatargh.vapula.console.commands
 
+import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.map.GameMap
+import com.github.samelVhatargh.vapula.systems.MapRender
 import ktx.app.KtxInputAdapter
+import ktx.ashley.getSystem
 import ktx.math.vec3
 
 /**
@@ -13,7 +16,8 @@ import ktx.math.vec3
 class MapDrawingMode(
     private val inputMultiplexer: InputMultiplexer,
     private val camera: Camera,
-    private val gameMap: GameMap
+    private val gameMap: GameMap,
+    private val engine: Engine
 ) :
     KtxInputAdapter {
 
@@ -34,6 +38,7 @@ class MapDrawingMode(
 
         if (button == Input.Buttons.LEFT) {
             gameMap.switchTile(position.x.toInt(), position.y.toInt())
+            engine.getSystem<MapRender>().shouldComputeTileGraphics = true
         }
 
         return true

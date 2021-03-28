@@ -23,7 +23,7 @@ class DebugCommandExecutor(
 ) : CommandExecutor() {
 
     private val mapDrawingMode by lazy {
-        MapDrawingMode(inputMultiplexer, camera, map)
+        MapDrawingMode(inputMultiplexer, camera, map, engine)
     }
 
     /**
