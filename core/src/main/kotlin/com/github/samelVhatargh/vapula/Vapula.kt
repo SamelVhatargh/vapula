@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.FitViewport
-import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.console.DebugArguments
 import com.github.samelVhatargh.vapula.console.DebugCommandExecutor
 import com.github.samelVhatargh.vapula.map.PathFinder
@@ -23,7 +22,6 @@ import com.github.samelVhatargh.vapula.utility.random
 import com.strongjoshua.console.GUIConsole
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
-import ktx.ashley.get
 
 class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() {
 
@@ -54,11 +52,9 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
         val inputMultiplexer = InputMultiplexer()
         Gdx.input.inputProcessor = inputMultiplexer
 
-        val gameMap = world.gameMap[GameMap.mapper]!!
-
         engine.apply {
-            addSystem(EnemyTurns(gameState, PathFinder(gameMap, engine)))
-            addSystem(PlayerInput(inputMultiplexer, world.player, gameState))
+            addSystem(EnemyTurns(gameState, PathFinder(world.gameMap, engine), world.gameMap))
+            addSystem(PlayerInput(inputMultiplexer, world.player, gameState, world.gameMap))
             addSystem(Move())
             addSystem(Attack())
             addSystem(MoveOrAttack())

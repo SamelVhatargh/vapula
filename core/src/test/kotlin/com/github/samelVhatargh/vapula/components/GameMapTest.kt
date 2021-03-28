@@ -1,5 +1,6 @@
 package com.github.samelVhatargh.vapula.components
 
+import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.tests.MapBaseTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -13,11 +14,7 @@ internal class GameMapTest : MapBaseTest() {
             "..."
         )
 
-        val gameMap = GameMap().apply {
-            width = map.width
-            height = map.height
-            tiles = map.tiles
-        }
+        val gameMap = GameMap(map)
 
         gameMap.switchTile(1, 1)
 
@@ -36,11 +33,7 @@ internal class GameMapTest : MapBaseTest() {
             "..."
         )
 
-        val gameMap = GameMap().apply {
-            width = map.width
-            height = map.height
-            tiles = map.tiles
-        }
+        val gameMap = GameMap(map)
 
         gameMap.switchTile(1, 0)
 

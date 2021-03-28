@@ -1,24 +1,14 @@
-package com.github.samelVhatargh.vapula.components
+package com.github.samelVhatargh.vapula.map
 
-import com.badlogic.ashley.core.Component
-import com.badlogic.gdx.utils.Pool
-import com.github.samelVhatargh.vapula.map.Direction
-import com.github.samelVhatargh.vapula.map.Terrain
-import com.github.samelVhatargh.vapula.map.Tile
-import com.github.samelVhatargh.vapula.map.createEmptyTiles
-import ktx.ashley.mapperFor
+import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.generators.Map
 
-class GameMap : Component, Pool.Poolable {
-    var width = 0
-    var height = 0
-    var tiles = createEmptyTiles(width, height)
-        set(value) {
-            field = value
-            shouldComputeTileGraphics = true
-        }
+class GameMap(map: Map) {
+    var width = map.tiles.count()
+    var height = map.tiles[0].count()
+    var tiles = map.tiles
 
-
-    var shouldComputeTileGraphics = false
+    var shouldComputeTileGraphics = true
 
     /**
      * Менят тайл на карте.
@@ -61,13 +51,5 @@ class GameMap : Component, Pool.Poolable {
 
     fun getNeighbor(tile: Tile, direction: Direction): Tile {
         return getNeighbor(tile.position, direction)
-    }
-
-    override fun reset() {
-        tiles = createEmptyTiles(width, height)
-    }
-
-    companion object {
-        val mapper = mapperFor<GameMap>()
     }
 }

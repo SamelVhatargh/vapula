@@ -1,7 +1,6 @@
 package com.github.samelVhatargh.vapula.map
 
 import com.badlogic.ashley.core.Engine
-import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.components.OccupySpace
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.tests.DescribedMap
@@ -294,11 +293,7 @@ internal class PathFinderTest : MapBaseTest() {
     @MethodSource("pathFindingDataProvider")
     fun `path finding`(testDescription: String, describedMap: DescribedMap, expectedPath: Path) {
         val map = describedMap.map
-        val gameMap = GameMap().apply {
-            width = map.width
-            height = map.height
-            tiles = map.tiles
-        }
+        val gameMap = GameMap(map)
 
         val pathFinder = PathFinder(gameMap, Engine())
 
@@ -324,11 +319,7 @@ internal class PathFinderTest : MapBaseTest() {
         )
 
         val map = describedMap.map
-        val gameMap = GameMap().apply {
-            width = map.width
-            height = map.height
-            tiles = map.tiles
-        }
+        val gameMap = GameMap(map)
 
         val pathFinder = PathFinder(gameMap, Engine())
 
@@ -345,11 +336,7 @@ internal class PathFinderTest : MapBaseTest() {
         )
 
         val map = describedMap.map
-        val gameMap = GameMap().apply {
-            width = map.width
-            height = map.height
-            tiles = map.tiles
-        }
+        val gameMap = GameMap(map)
 
         val pathFinder = PathFinder(gameMap, Engine())
         val startPosition = Position(0, 0)
@@ -364,11 +351,7 @@ internal class PathFinderTest : MapBaseTest() {
     @MethodSource("pathFindingForMonstersDataProvider")
     fun `path finding for monsters`(testDescription: String, describedMap: DescribedMap, expectedPath: Path) {
         val map = describedMap.map
-        val gameMap = GameMap().apply {
-            width = map.width
-            height = map.height
-            tiles = map.tiles
-        }
+        val gameMap = GameMap(map)
 
 
         val startPosition = describedMap.getPosition('s')

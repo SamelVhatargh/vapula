@@ -7,8 +7,12 @@ import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
-import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.components.FieldOfView
+import com.github.samelVhatargh.vapula.components.Graphics
+import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.components.VisibleIfExploredAndOutOfFieldOfView
 import com.github.samelVhatargh.vapula.map.Direction
+import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.setPosition
 import ktx.ashley.allOf
@@ -30,7 +34,7 @@ class MapRender(
     private val atlas: TextureAtlas,
     private val batch: SpriteBatch,
     private val player: Entity,
-    map: Entity
+    private val gameMap: GameMap
 ) : EntitySystem() {
 
     private val spriteCache = mutableMapOf<String, Sprite>()
@@ -39,7 +43,6 @@ class MapRender(
         setColor(0f, 0f, 0f, 0.75f)
     }
 
-    private val gameMap = map[GameMap.mapper]!!
     private val tileGraphics = mutableListOf<TileGraphic>()
 
     private lateinit var terrainObjects: ImmutableArray<Entity>

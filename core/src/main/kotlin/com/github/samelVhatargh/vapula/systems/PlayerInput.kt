@@ -8,6 +8,7 @@ import com.badlogic.gdx.InputMultiplexer
 import com.github.samelVhatargh.vapula.GameState
 import com.github.samelVhatargh.vapula.components.Dead
 import com.github.samelVhatargh.vapula.map.Direction
+import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.systems.commands.MoveOrAttack
 import ktx.app.KtxInputAdapter
 import ktx.ashley.getSystem
@@ -16,7 +17,8 @@ import ktx.ashley.has
 class PlayerInput(
     private val inputMultiplexer: InputMultiplexer,
     private val player: Entity,
-    private val gameState: GameState
+    private val gameState: GameState,
+    private val gameMap: GameMap
 ) : EntitySystem(), KtxInputAdapter {
 
     override fun addedToEngine(engine: Engine) {
@@ -50,7 +52,7 @@ class PlayerInput(
             doNothing()
             return
         }
-        engine.getSystem<MoveOrAttack>().execute(player, direction)
+        engine.getSystem<MoveOrAttack>().execute(player, direction, gameMap)
         gameState.isPlayerTurn = false
     }
 

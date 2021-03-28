@@ -1,21 +1,21 @@
 package com.github.samelVhatargh.vapula.console.commands
 
-import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Camera
-import com.github.samelVhatargh.vapula.components.GameMap
+import com.github.samelVhatargh.vapula.map.GameMap
 import ktx.app.KtxInputAdapter
-import ktx.ashley.get
 import ktx.math.vec3
 
 /**
  * Включает или отключает режим рисования карты
  */
-class MapDrawingMode(private val inputMultiplexer: InputMultiplexer, private val camera: Camera, map: Entity) :
+class MapDrawingMode(
+    private val inputMultiplexer: InputMultiplexer,
+    private val camera: Camera,
+    private val gameMap: GameMap
+) :
     KtxInputAdapter {
-
-    private val gameMap = map[GameMap.mapper]!!
 
     var enabled: Boolean = false
         set(value) {

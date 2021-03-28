@@ -5,15 +5,17 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.github.samelVhatargh.vapula.GameState
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.map.Direction
+import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.systems.commands.Attack
 import com.github.samelVhatargh.vapula.systems.commands.Move
 import ktx.ashley.*
 import ktx.log.logger
 
-class EnemyTurns(private val gameState: GameState, private val pathFinder: PathFinder) : IteratingSystem(
-    allOf(Ai::class, Name::class, Position::class).exclude(Dead::class).get()
-) {
+class EnemyTurns(private val gameState: GameState, private val pathFinder: PathFinder, private val gameMap: GameMap) :
+    IteratingSystem(
+        allOf(Ai::class, Name::class, Position::class).exclude(Dead::class).get()
+    ) {
 
     private val directions = listOf(
         Direction.NORTH,
@@ -62,13 +64,13 @@ class EnemyTurns(private val gameState: GameState, private val pathFinder: PathF
             return
         }
 
-        engine.getSystem<Move>().execute(entity, path)
+        engine.getSystem<Move>().execute(entity, path, gameMap)
     }
 
     private fun wander(entity: Entity) {
         //wander
         val direction = directions.random()
-        engine.getSystem<Move>().execute(entity, direction)
+        engine.getSystem<Move>().execute(entity, direction, gameMap)
         return
     }
 }

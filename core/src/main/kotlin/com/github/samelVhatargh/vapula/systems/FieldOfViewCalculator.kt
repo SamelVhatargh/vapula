@@ -5,13 +5,11 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.math.Bresenham2
 import com.badlogic.gdx.math.Vector2
 import com.github.samelVhatargh.vapula.components.FieldOfView
-import com.github.samelVhatargh.vapula.components.GameMap
 import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.GameMap
 import ktx.ashley.get
 
-class FieldOfViewCalculator(private val player: Entity, map: Entity) : EntitySystem() {
-
-    private val gameMap = map[GameMap.mapper]!!
+class FieldOfViewCalculator(private val player: Entity, private val gameMap: GameMap) : EntitySystem() {
 
     override fun update(deltaTime: Float) {
         player[FieldOfView.mapper]?.let { fov ->

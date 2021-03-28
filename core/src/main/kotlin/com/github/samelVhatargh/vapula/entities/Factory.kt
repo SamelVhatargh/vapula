@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.ashley.entity
@@ -12,7 +13,7 @@ import ktx.ashley.with
 import ktx.log.debug
 import ktx.log.logger
 
-class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas, private val map: Entity) {
+class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas, private val map: GameMap) {
 
     companion object {
         val log = logger<Factory>()
@@ -91,7 +92,6 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
     }
 
     private fun getRandomEmptyPosition(): Position {
-        val map = map[GameMap.mapper]!!
         val objects = engine.getEntitiesFor(OCCUPY_SPACE_FAMILY)
 
         var i = 1
@@ -115,7 +115,7 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
 
     fun createBarrel(position: Position = getRandomEmptyPosition()): Entity? {
         try {
-            if (map[GameMap.mapper]!!.tiles[position.x][position.y].terrain == Terrain.WALL) {
+            if (map.tiles[position.x][position.y].terrain == Terrain.WALL) {
                 return null
             }
         } catch (e: ArrayIndexOutOfBoundsException) {
