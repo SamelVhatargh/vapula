@@ -50,15 +50,25 @@ class EnemyTurns(private val gameState: GameState, private val pathFinder: PathF
             return
         }
 
+        if (player.has(Dead.mapper)) {
+            wander(entity)
+            return
+        }
+
         //else run to player
         val path = pathFinder.findPath(monsterPosition, playerPosition)
         if (path.isEmpty()) {
-            //wander
-            val direction = directions.random()
-            engine.getSystem<Move>().execute(entity, direction)
+            wander(entity)
             return
         }
 
         engine.getSystem<Move>().execute(entity, path)
+    }
+
+    private fun wander(entity: Entity) {
+        //wander
+        val direction = directions.random()
+        engine.getSystem<Move>().execute(entity, direction)
+        return
     }
 }
