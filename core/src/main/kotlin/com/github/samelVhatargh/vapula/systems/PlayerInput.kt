@@ -4,19 +4,21 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
-import com.github.samelVhatargh.vapula.GameState
 import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.Dead
+import com.github.samelVhatargh.vapula.components.Player
 import com.github.samelVhatargh.vapula.map.Direction
-import com.github.samelVhatargh.vapula.systems.commands.MoveOrAttack
+import com.github.samelVhatargh.vapula.systems.commands.AggressiveMove
+import com.github.samelVhatargh.vapula.systems.commands.DoNothing
 import ktx.app.KtxInputAdapter
-import ktx.ashley.getSystem
+import ktx.ashley.get
 import ktx.ashley.has
 
-class PlayerInput(private val inputMultiplexer: InputMultiplexer, world: World, private val gameState: GameState) :
+class PlayerInput(private val inputMultiplexer: InputMultiplexer, world: World) :
     EntitySystem(), KtxInputAdapter {
 
-    private val player = world.player
+    private val playerEntity = world.player
+    private val player = playerEntity[Player.mapper]!!
     private val gameMap = world.gameMap
 
     override fun addedToEngine(engine: Engine) {
@@ -28,7 +30,7 @@ class PlayerInput(private val inputMultiplexer: InputMultiplexer, world: World, 
     }
 
     override fun keyDown(keycode: Int): Boolean {
-        if (!gameState.isPlayerTurn) return true
+        if (player.command !== null) return true
 
         when (keycode) {
             Input.Keys.UP, Input.Keys.NUMPAD_8 -> move(Direction.NORTH)
@@ -46,15 +48,14 @@ class PlayerInput(private val inputMultiplexer: InputMultiplexer, world: World, 
     }
 
     private fun move(direction: Direction) {
-        if (player.has(Dead.mapper)) {
+        if (playerEntity.has(Dead.mapper)) {
             doNothing()
             return
         }
-        engine.getSystem<MoveOrAttack>().execute(player, direction, gameMap)
-        gameState.isPlayerTurn = false
+        player.command = AggressiveMove(engine, playerEntity, direction, gameMap)
     }
 
     private fun doNothing() {
-        gameState.isPlayerTurn = false
+        player.command = DoNothing()
     }
 }

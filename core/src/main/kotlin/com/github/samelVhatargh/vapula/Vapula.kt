@@ -13,7 +13,6 @@ import com.github.samelVhatargh.vapula.console.DebugCommandExecutor
 import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.screens.GameScreen
 import com.github.samelVhatargh.vapula.systems.*
-import com.github.samelVhatargh.vapula.systems.commands.MoveOrAttack
 import com.github.samelVhatargh.vapula.ui.createSkin
 import com.github.samelVhatargh.vapula.utility.SpriteCache
 import com.github.samelVhatargh.vapula.utility.random
@@ -41,10 +40,6 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
         spriteAtlas = TextureAtlas(Gdx.files.internal("graphics/sprites.atlas"))
 
         val world = World(engine)
-
-
-        val gameState = GameState()
-
         createSkin()
 
         val inputMultiplexer = InputMultiplexer()
@@ -52,9 +47,8 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
 
         val spriteCache = SpriteCache(spriteAtlas)
         engine.apply {
-            addSystem(EnemyTurns(gameState, PathFinder(world.gameMap, engine), world.gameMap))
-            addSystem(PlayerInput(inputMultiplexer, world, gameState))
-            addSystem(MoveOrAttack())
+            addSystem(TurnLoop(PathFinder(world.gameMap, engine), world))
+            addSystem(PlayerInput(inputMultiplexer, world))
             addSystem(Camera(camera, inputMultiplexer))
             addSystem(MapRender(spriteCache, batch, world))
             addSystem(FieldOfViewCalculator(world))
