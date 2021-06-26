@@ -18,6 +18,7 @@ import com.github.samelVhatargh.vapula.systems.commands.Kill
 import com.github.samelVhatargh.vapula.systems.commands.Move
 import com.github.samelVhatargh.vapula.systems.commands.MoveOrAttack
 import com.github.samelVhatargh.vapula.ui.createSkin
+import com.github.samelVhatargh.vapula.utility.SpriteCache
 import com.github.samelVhatargh.vapula.utility.random
 import com.strongjoshua.console.GUIConsole
 import ktx.app.KtxGame
@@ -60,7 +61,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             addSystem(MoveOrAttack())
             addSystem(Kill(spriteAtlas))
             addSystem(Camera(camera, inputMultiplexer))
-            addSystem(MapRender(spriteAtlas, batch, world))
+            addSystem(MapRender(SpriteCache(spriteAtlas), batch, world))
             addSystem(FieldOfViewCalculator(world))
             addSystem(Render(batch, viewport, world.player))
         }

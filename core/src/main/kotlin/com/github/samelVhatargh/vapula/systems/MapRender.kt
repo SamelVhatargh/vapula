@@ -4,9 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.utils.ImmutableArray
-import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.Graphics
@@ -15,6 +13,7 @@ import com.github.samelVhatargh.vapula.components.VisibleIfExploredAndOutOfField
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.setPosition
+import com.github.samelVhatargh.vapula.utility.SpriteCache
 import ktx.ashley.allOf
 import ktx.ashley.get
 import ktx.graphics.use
@@ -30,13 +29,12 @@ private const val WALL = "Wall"
 
 private data class TileGraphic(val position: Position, val spriteName: String, val priority: Int = 0)
 
-class MapRender(private val atlas: TextureAtlas, private val batch: SpriteBatch, world: World) : EntitySystem() {
+class MapRender(private val spriteCache: SpriteCache, private val batch: SpriteBatch, world: World) : EntitySystem() {
 
     private val player = world.player
     private val gameMap = world.gameMap
-    private val spriteCache = mutableMapOf<String, Sprite>()
 
-    private val fogOfWarSprite = Sprite(atlas.findRegion("white")).apply {
+    private val fogOfWarSprite = spriteCache.getSprite("white").apply {
         setColor(0f, 0f, 0f, 0.75f)
     }
 
@@ -69,8 +67,8 @@ class MapRender(private val atlas: TextureAtlas, private val batch: SpriteBatch,
 
         batch.use {
             tileGraphics.forEach { tile ->
-                val sprite = getSprite(tile.spriteName)
-                if (sprite != null) {
+                if (tile.spriteName != EMPTY) {
+                    val sprite = spriteCache.getSprite(tile.spriteName)
                     if (!fov.isVisible(tile.position)) {
                         if (!fogOfWar.contains(tile.position)) fogOfWar.add(tile.position)
                     } else {
@@ -99,24 +97,6 @@ class MapRender(private val atlas: TextureAtlas, private val batch: SpriteBatch,
                 fogOfWarSprite.draw(batch)
             }
         }
-    }
-
-    private fun getSprite(name: String): Sprite? {
-        if (name == EMPTY) {
-            return null
-        }
-
-        var sprite = spriteCache[name]
-        if (sprite == null) {
-            val region = atlas.findRegion(name)
-            require(region != null) { "Cant load sprite $name" }
-
-            sprite = Sprite(region).apply {
-                setSize(1f, 1f)
-            }
-            spriteCache[name] = sprite
-        }
-        return sprite
     }
 
     private fun computeTileGraphics() {
