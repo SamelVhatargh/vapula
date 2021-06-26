@@ -9,9 +9,13 @@ import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.notifier
 import com.github.samelVhatargh.vapula.systems.commands.Attack
-import com.github.samelVhatargh.vapula.systems.commands.Move
+import com.github.samelVhatargh.vapula.systems.commands.MoveInDirection
+import com.github.samelVhatargh.vapula.systems.commands.MoveInPath
 import com.github.samelVhatargh.vapula.systems.commands.effects.Effect
-import ktx.ashley.*
+import ktx.ashley.allOf
+import ktx.ashley.exclude
+import ktx.ashley.get
+import ktx.ashley.has
 import ktx.log.logger
 
 class EnemyTurns(private val gameState: GameState, private val pathFinder: PathFinder, private val gameMap: GameMap) :
@@ -66,14 +70,13 @@ class EnemyTurns(private val gameState: GameState, private val pathFinder: PathF
             return
         }
 
-        engine.getSystem<Move>().execute(entity, path, gameMap)
+        applyEffects(MoveInPath(engine, entity, path, gameMap).execute())
     }
 
     private fun wander(entity: Entity) {
         //wander
         val direction = directions.random()
-        engine.getSystem<Move>().execute(entity, direction, gameMap)
-        return
+        applyEffects(MoveInDirection(engine, entity, direction, gameMap).execute())
     }
 
     private fun applyEffects(effects: Array<Effect>) {
