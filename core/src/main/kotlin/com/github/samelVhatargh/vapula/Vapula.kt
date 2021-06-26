@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.samelVhatargh.vapula.console.DebugArguments
 import com.github.samelVhatargh.vapula.console.DebugCommandExecutor
-import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.screens.GameScreen
 import com.github.samelVhatargh.vapula.systems.*
 import com.github.samelVhatargh.vapula.ui.createSkin
@@ -47,7 +46,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
 
         val spriteCache = SpriteCache(spriteAtlas)
         engine.apply {
-            addSystem(TurnLoop(PathFinder(world.gameMap, engine), world))
+            addSystem(TurnLoop(AiBrain(engine, world), world.player))
             addSystem(PlayerInput(inputMultiplexer, world))
             addSystem(Camera(camera, inputMultiplexer))
             addSystem(MapRender(spriteCache, batch, world))
