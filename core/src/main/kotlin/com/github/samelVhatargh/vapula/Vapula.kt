@@ -43,7 +43,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
         }
         spriteAtlas = TextureAtlas(Gdx.files.internal("graphics/sprites.atlas"))
 
-        val world = World(engine, spriteAtlas)
+        val world = World(engine)
 
 
         val gameState = GameState()
@@ -53,17 +53,18 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
         val inputMultiplexer = InputMultiplexer()
         Gdx.input.inputProcessor = inputMultiplexer
 
+        val spriteCache = SpriteCache(spriteAtlas)
         engine.apply {
             addSystem(EnemyTurns(gameState, PathFinder(world.gameMap, engine), world.gameMap))
             addSystem(PlayerInput(inputMultiplexer, world, gameState))
             addSystem(Move())
             addSystem(Attack())
             addSystem(MoveOrAttack())
-            addSystem(Kill(spriteAtlas))
+            addSystem(Kill())
             addSystem(Camera(camera, inputMultiplexer))
-            addSystem(MapRender(SpriteCache(spriteAtlas), batch, world))
+            addSystem(MapRender(spriteCache, batch, world))
             addSystem(FieldOfViewCalculator(world))
-            addSystem(Render(batch, viewport, world.player))
+            addSystem(Render(spriteCache, batch, viewport, world.player))
         }
 
         val commandExecutor =

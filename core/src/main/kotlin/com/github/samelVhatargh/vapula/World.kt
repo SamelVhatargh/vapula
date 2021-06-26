@@ -1,7 +1,6 @@
 package com.github.samelVhatargh.vapula
 
 import com.badlogic.ashley.core.Engine
-import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.entities.Factory
 import com.github.samelVhatargh.vapula.map.Direction
@@ -15,13 +14,13 @@ private const val MAP_HEIGHT = 16 * 2
 private const val MAX_GOBLINS_PER_ROOM = 3
 private const val MAX_BARRELS_PER_ROOM = 4
 
-class World(engine: Engine, spriteAtlas: TextureAtlas) {
+class World(engine: Engine) {
 
     private val map = BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT)
 
     val gameMap = GameMap(map)
 
-    private val entityFactory = Factory(engine, spriteAtlas, gameMap)
+    private val entityFactory = Factory(engine, gameMap)
 
     val player = entityFactory.createPlayer()
 

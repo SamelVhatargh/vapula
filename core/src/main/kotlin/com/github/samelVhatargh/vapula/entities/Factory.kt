@@ -2,7 +2,6 @@ package com.github.samelVhatargh.vapula.entities
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.map.Terrain
@@ -13,7 +12,7 @@ import ktx.ashley.with
 import ktx.log.debug
 import ktx.log.logger
 
-class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas, private val map: GameMap) {
+class Factory(private val engine: Engine, private val map: GameMap) {
 
     companion object {
         val log = logger<Factory>()
@@ -23,7 +22,6 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
         val player = engine.entity {
             with<Graphics> {
                 spriteName = "character"
-                setSpriteRegion(spriteAtlas.findRegion(spriteName))
             }
             with<Player>()
             with<OccupySpace>()
@@ -61,7 +59,6 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
         val monster = engine.entity {
             with<Graphics> {
                 spriteName = "goblin"
-                setSpriteRegion(spriteAtlas.findRegion(spriteName))
             }
             with<OccupySpace>()
             with<Name> {
@@ -125,7 +122,6 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
         val barrel = engine.entity {
             with<Graphics> {
                 spriteName = "barrel"
-                setSpriteRegion(spriteAtlas.findRegion(spriteName))
             }
             with<OccupySpace>()
         }
@@ -139,11 +135,6 @@ class Factory(private val engine: Engine, private val spriteAtlas: TextureAtlas,
             with<Graphics> {
                 spriteName = sprite
                 layer = Layer.FLOOR
-                var region = spriteAtlas.findRegion(spriteName)
-                if (region === null) {
-                    region = spriteAtlas.findRegion("x")
-                }
-                setSpriteRegion(region)
             }
             with<VisibleIfExploredAndOutOfFieldOfView>()
         }

@@ -1,8 +1,6 @@
 package com.github.samelVhatargh.vapula.components
 
 import com.badlogic.ashley.core.Component
-import com.badlogic.gdx.graphics.g2d.Sprite
-import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Pool
 import ktx.ashley.mapperFor
 
@@ -15,8 +13,6 @@ enum class Layer {
  */
 class Graphics : Component, Pool.Poolable, Comparable<Graphics> {
 
-    val sprite = Sprite()
-
     var spriteName = ""
 
     var layer = Layer.CREATURE
@@ -24,18 +20,6 @@ class Graphics : Component, Pool.Poolable, Comparable<Graphics> {
     override fun reset() {
         spriteName = ""
         layer = Layer.CREATURE
-        sprite.texture = null
-        sprite.setColor(1f, 1f, 1f, 1f)
-    }
-
-    /**
-     * Устанавливает регион из атласа.
-     *
-     * Должен быть указан при инициализации компонента
-     */
-    fun setSpriteRegion(region: TextureRegion) {
-        sprite.setRegion(region)
-        sprite.setSize(1f, 1f)
     }
 
     companion object {

@@ -87,8 +87,10 @@ class MapRender(private val spriteCache: SpriteCache, private val batch: SpriteB
                 if (gameMap.isExplored(position) && !fov.isVisible(position)) {
                     val graphics = entity[Graphics.mapper]!!
 
-                    graphics.sprite.setPosition(position.x.toFloat(), position.y.toFloat())
-                    graphics.sprite.draw(batch)
+                    spriteCache.getSprite(graphics.spriteName).apply {
+                        setPosition(position.x.toFloat(), position.y.toFloat())
+                        draw(batch)
+                    }
                 }
             }
 

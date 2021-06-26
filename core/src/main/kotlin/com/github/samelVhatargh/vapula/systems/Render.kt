@@ -8,10 +8,11 @@ import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.Graphics
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.entities.RENDERABLE_FAMILY
+import com.github.samelVhatargh.vapula.utility.SpriteCache
 import ktx.ashley.get
 import ktx.graphics.use
 
-class Render(private val batch: SpriteBatch, viewport: Viewport, private val player: Entity) :
+class Render(private val spriteCache: SpriteCache, private val batch: SpriteBatch, viewport: Viewport, private val player: Entity) :
     SortedIteratingSystem(RENDERABLE_FAMILY, compareBy { entity -> entity[Graphics.mapper] }) {
 
     private val camera = viewport.camera
@@ -31,7 +32,9 @@ class Render(private val batch: SpriteBatch, viewport: Viewport, private val pla
 
         val graphics = entity[Graphics.mapper]!!
 
-        graphics.sprite.setPosition(position.x.toFloat(), position.y.toFloat())
-        graphics.sprite.draw(batch)
+        spriteCache.getSprite(graphics.spriteName).apply {
+            setPosition(position.x.toFloat(), position.y.toFloat())
+            draw(batch)
+        }
     }
 }
