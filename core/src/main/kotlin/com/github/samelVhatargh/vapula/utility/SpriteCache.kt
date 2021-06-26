@@ -2,6 +2,7 @@ package com.github.samelVhatargh.vapula.utility
 
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.github.samelVhatargh.vapula.components.Graphics
 import ktx.log.debug
 import ktx.log.logger
 
@@ -31,4 +32,6 @@ class SpriteCache(private val atlas: TextureAtlas) {
         }
         return sprite
     }
+
+    fun getSprite(graphics: Graphics) : Sprite = getSprite(graphics.spriteName)
 }

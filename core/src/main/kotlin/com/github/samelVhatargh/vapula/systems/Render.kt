@@ -30,9 +30,7 @@ class Render(private val spriteCache: SpriteCache, private val batch: SpriteBatc
 
         if (!fov.isVisible(position)) return
 
-        val graphics = entity[Graphics.mapper]!!
-
-        spriteCache.getSprite(graphics.spriteName).apply {
+        spriteCache.getSprite(entity[Graphics.mapper]!!).apply {
             setPosition(position.x.toFloat(), position.y.toFloat())
             draw(batch)
         }
