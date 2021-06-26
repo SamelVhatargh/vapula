@@ -7,8 +7,10 @@ import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.map.PathFinder
+import com.github.samelVhatargh.vapula.notifier
 import com.github.samelVhatargh.vapula.systems.commands.Attack
 import com.github.samelVhatargh.vapula.systems.commands.Move
+import com.github.samelVhatargh.vapula.systems.commands.effects.Effect
 import ktx.ashley.*
 import ktx.log.logger
 
@@ -48,7 +50,7 @@ class EnemyTurns(private val gameState: GameState, private val pathFinder: PathF
         val monsterPosition = entity[Position.mapper]!!
 
         if (playerPosition.isNeighbourTo(monsterPosition) && !player.has(Dead.mapper)) {
-            engine.getSystem<Attack>().execute(entity, player)
+            applyEffects(Attack(engine.notifier, entity, player).execute())
             return
         }
 
@@ -72,5 +74,12 @@ class EnemyTurns(private val gameState: GameState, private val pathFinder: PathF
         val direction = directions.random()
         engine.getSystem<Move>().execute(entity, direction, gameMap)
         return
+    }
+
+    private fun applyEffects(effects: Array<Effect>) {
+        effects.forEach {
+            val subEffects = it.apply()
+            applyEffects(subEffects)
+        }
     }
 }

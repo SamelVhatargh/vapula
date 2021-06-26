@@ -1,20 +1,17 @@
 package com.github.samelVhatargh.vapula.systems.commands
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.core.EntitySystem
-import com.github.samelVhatargh.vapula.components.Invulnerability
 import com.github.samelVhatargh.vapula.components.Stats
 import com.github.samelVhatargh.vapula.events.EntityAttacked
-import com.github.samelVhatargh.vapula.events.EntityDamaged
-import com.github.samelVhatargh.vapula.notifier
+import com.github.samelVhatargh.vapula.events.Notifier
+import com.github.samelVhatargh.vapula.systems.commands.effects.Damage
+import com.github.samelVhatargh.vapula.systems.commands.effects.Effect
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.ashley.get
-import ktx.ashley.getSystem
-import ktx.ashley.has
 
-class Attack : EntitySystem() {
+class Attack(private val notifier: Notifier, private val attacker: Entity, private val defender: Entity) : Command {
 
-    fun execute(attacker: Entity, defender: Entity) {
+    override fun execute(): Array<Effect> {
         val attackerStats = attacker[Stats.mapper]!!
         val defenderStats = defender[Stats.mapper]!!
 
@@ -22,30 +19,16 @@ class Attack : EntitySystem() {
         hitChance += (attackerStats.dexterity + (attackerStats.perception / 2)) * 5
         hitChance -= (defenderStats.perception + (defenderStats.dexterity / 2)) * 5
 
-        println(hitChance)
-
         val hit = random.chance(hitChance)
 
         if (!hit) {
-            engine.notifier.notify(EntityAttacked(attacker, defender, true))
-            return
-        }
-
-        if (defender.has(Invulnerability.mapper)) {
-            engine.notifier.notify(EntityAttacked(attacker, defender, false))
-            engine.notifier.notify(EntityDamaged(defender, 0))
-
-            return
+            notifier.notify(EntityAttacked(attacker, defender, true))
+            return emptyArray()
         }
 
         val damage = (1..attackerStats.damageDice).random() + (attackerStats.strength / 2)
-        defenderStats.hp -= damage
+        notifier.notify(EntityAttacked(attacker, defender, false))
 
-        engine.notifier.notify(EntityAttacked(attacker, defender, false))
-        engine.notifier.notify(EntityDamaged(defender, damage))
-
-        if (defenderStats.hp <= 0) {
-            engine.getSystem<Kill>().execute(defender)
-        }
+        return arrayOf(Damage(notifier, defender, damage))
     }
 }

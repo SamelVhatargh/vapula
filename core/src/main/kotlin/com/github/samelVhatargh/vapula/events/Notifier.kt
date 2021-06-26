@@ -1,13 +1,22 @@
 package com.github.samelVhatargh.vapula.events
 
-import ktx.collections.*
+import ktx.collections.GdxArray
+import ktx.collections.contains
 import ktx.log.info
 import ktx.log.logger
+import kotlin.collections.set
+
+interface NotifierInterface {
+    /**
+     * Уведомляет наблюдателей о наступлении [события][event]
+     */
+    fun notify(event: Event)
+}
 
 /**
  * Сообщает наблюдателям о наступлении определенных событий
  */
-class Notifier {
+class Notifier : NotifierInterface {
 
     companion object {
         val log = logger<Notifier>()
@@ -59,7 +68,7 @@ class Notifier {
     /**
      * Уведомляет наблюдателей о наступлении [события][event]
      */
-    fun notify(event: Event) {
+    override fun notify(event: Event) {
         log.info { event.type.toString() }
         observers[event.type]?.forEach { it.onNotify(event) }
     }

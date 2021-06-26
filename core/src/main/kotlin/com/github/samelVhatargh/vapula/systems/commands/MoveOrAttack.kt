@@ -8,6 +8,8 @@ import com.github.samelVhatargh.vapula.components.Stats
 import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.GameMap
+import com.github.samelVhatargh.vapula.notifier
+import com.github.samelVhatargh.vapula.systems.commands.effects.Effect
 import ktx.ashley.allOf
 import ktx.ashley.exclude
 import ktx.ashley.get
@@ -23,6 +25,14 @@ class MoveOrAttack : EntitySystem() {
             return
         }
 
-        engine.getSystem<Attack>().execute(entity, target)
+        applyEffects(Attack(engine.notifier, entity, target).execute())
+    }
+
+    // todo refactor this
+    private fun applyEffects(effects: Array<Effect>) {
+        effects.forEach {
+            val subEffects = it.apply()
+            applyEffects(subEffects)
+        }
     }
 }
