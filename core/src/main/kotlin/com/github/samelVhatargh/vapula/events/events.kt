@@ -29,6 +29,14 @@ data class EntityDamaged(val victim: Entity, val damage: Int) : Event {
 }
 
 /**
+ * When [entity][healer] heals another [entity][target] for [ammount][hp]
+ */
+data class EntityHealed(val healer: Entity, val target: Entity, val hp: Int) : Event {
+    override val type: EventType
+        get() = EventType.ENTITY_DAMAGED
+}
+
+/**
  * Когда [сущность][victim] умирает
  */
 data class EntityDied(val victim: Entity) : Event {

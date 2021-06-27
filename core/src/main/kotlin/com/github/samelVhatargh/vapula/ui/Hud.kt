@@ -83,6 +83,9 @@ class Hud : Observer {
                 }
                 logMessage("${event.victim[Name.mapper]!!.name} takes ${event.damage} damage")
             }
+            is EntityHealed -> {
+                logMessage("${event.healer[Name.mapper]!!.name} heals ${event.target[Name.mapper]!!.name} for  ${event.hp} damage")
+            }
             is EntityAttacked -> {
                 val word = if (event.miss) "misses" else "attacks"
                 logMessage("${event.attacker[Name.mapper]!!.name} $word ${event.defender[Name.mapper]!!.name}")

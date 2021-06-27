@@ -54,7 +54,16 @@ class World(engine: Engine) {
             val goblinCount = random.range(0..MAX_GOBLINS_PER_ROOM)
 
             repeat(goblinCount) {
-                val type = random.collection(listOf(GoblinType.FIGHTER, GoblinType.FIGHTER, GoblinType.ARCHER))
+                val type = random.collection(
+                    listOf(
+                        GoblinType.FIGHTER,
+                        GoblinType.FIGHTER,
+                        GoblinType.FIGHTER,
+                        GoblinType.ARCHER,
+                        GoblinType.ARCHER,
+                        GoblinType.SHAMAN,
+                    )
+                )
                 entityFactory.createGoblin(room.getRandomPosition(), type)
             }
         }

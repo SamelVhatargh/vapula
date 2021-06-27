@@ -25,7 +25,15 @@ class Stats : Component, Pool.Poolable {
             return result
         }
     var hp = 0
+        set(value) {
+            if (value > maxHp) {
+                field = maxHp
+                return
+            }
+            field = value
+        }
     var damageDice = 0
+    var healDice = 0
     var ranged = false
 
     val sightRange: Int
@@ -46,6 +54,8 @@ class Stats : Component, Pool.Poolable {
         hp = 0
         baseHp = 0
         damageDice = 0
+        healDice = 0
+        ranged = false
 
         strength = 0
         dexterity = 0
@@ -77,7 +87,7 @@ class Stats : Component, Pool.Poolable {
     override fun toString(): String {
         return "lvl: $level, hp: $hp/$maxHp, dmg: $damageDice, sight: $sightRange, str: $strength, dex: $dexterity," +
                 " per: $perception, con: $constitution, int: $intellegence, wis: $wisdom, cha: $charisma," +
-                " hpArray: ${hpArray.contentToString()}, ranged: $ranged"
+                " hpArray: ${hpArray.contentToString()}, ranged: $ranged, healDice: $healDice"
     }
 
     companion object {

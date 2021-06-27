@@ -14,7 +14,7 @@ import ktx.log.logger
 
 
 enum class GoblinType(val role: String) {
-    FIGHTER(""), ARCHER("Archer")
+    FIGHTER(""), ARCHER("Archer"), SHAMAN("Shaman")
 }
 
 class Factory(private val engine: Engine, private val map: GameMap) {
@@ -85,13 +85,14 @@ class Factory(private val engine: Engine, private val map: GameMap) {
 
             level = 1
             damageDice = 4
-            ranged = type === GoblinType.ARCHER
+            healDice = if (type === GoblinType.SHAMAN) 4 else 0
+            ranged = type !== GoblinType.FIGHTER
 
             generateHp(2)
         }
         monster.add(stats)
 
-        log.debug { stats.toString() }
+        log.debug { "${monster[Name.mapper]!!.name} - $stats" }
 
         return monster
     }

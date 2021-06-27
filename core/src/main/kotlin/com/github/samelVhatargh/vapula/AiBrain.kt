@@ -6,10 +6,9 @@ import com.badlogic.gdx.math.Bresenham2
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.PathFinder
-import com.github.samelVhatargh.vapula.systems.commands.Attack
-import com.github.samelVhatargh.vapula.systems.commands.Command
-import com.github.samelVhatargh.vapula.systems.commands.MoveInDirection
-import com.github.samelVhatargh.vapula.systems.commands.MoveInPath
+import com.github.samelVhatargh.vapula.systems.commands.*
+import ktx.ashley.allOf
+import ktx.ashley.exclude
 import ktx.ashley.get
 import ktx.ashley.has
 
@@ -38,6 +37,10 @@ class AiBrain(private val engine: Engine, world: World) {
         val monsterStats = entity[Stats.mapper]!!
         val ai = entity[Ai.mapper]!!
 
+        if (entity.has(Dead.mapper)) {
+            return DoNothing()
+        }
+
         if (player.has(Dead.mapper)) {
             return wander(entity)
         }
@@ -47,6 +50,20 @@ class AiBrain(private val engine: Engine, world: World) {
         if (playerIsInLingOfSight) {
             ai.lastKnownPlayerPosition = playerPosition
             ai.state = State.PURSUE
+        }
+
+        // try to heal if possible and needed
+        if (monsterStats.healDice > 0) {
+            // find all injured hostiles
+            val allMonsters = allOf(Stats::class, Ai::class, Position::class).exclude(Player::class, Dead::class).get()
+            val injuredMonster = engine.getEntitiesFor(allMonsters).find {
+                it[Stats.mapper]!!.hp > 0 && it[Stats.mapper]!!.hp < it[Stats.mapper]!!.maxHp
+                        && isInLineOfSight(entity, it[Position.mapper]!!)
+            }
+
+            if (injuredMonster !== null) {
+                return Heal(engine.notifier, entity, injuredMonster)
+            }
         }
 
         // if player is near - attack!
