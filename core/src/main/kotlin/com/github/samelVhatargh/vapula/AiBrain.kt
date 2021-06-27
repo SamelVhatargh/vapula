@@ -2,8 +2,10 @@ package com.github.samelVhatargh.vapula
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.math.Bresenham2
 import com.github.samelVhatargh.vapula.components.Dead
 import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.components.Stats
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.systems.commands.Attack
@@ -45,14 +47,41 @@ class AiBrain(private val engine: Engine, world: World) {
             return Attack(engine.notifier, entity, player)
         }
 
-        //else run to player
-        val path = pathFinder.findPath(monsterPosition, playerPosition)
-        if (path.isEmpty()) {
-            return wander(entity)
+        //Run to player is he is visible
+        if (isInLineOfSight(entity, player)) {
+            val path = pathFinder.findPath(monsterPosition, playerPosition)
+            if (path.isEmpty()) {
+                return wander(entity)
+            }
+
+            return MoveInPath(engine, entity, path, gameMap)
         }
 
-        return MoveInPath(engine, entity, path, gameMap)
+        return wander(entity)
     }
 
     private fun wander(entity: Entity): Command = MoveInDirection(engine, entity, directions.random(), gameMap)
+
+    /**
+     * Check if Entity can see another Entity
+     */
+    private fun isInLineOfSight(entity: Entity, target: Entity): Boolean {
+        val start = entity[Position.mapper]!!
+        val end = target[Position.mapper]!!
+        val sightRange = entity[Stats.mapper]!!.sightRange
+
+        val line = Bresenham2().line(start.x, start.y, end.x, end.y)
+        if (line.size > sightRange) {
+            return false
+        }
+
+        for (i in 0 until line.size) {
+            val point = line[i]
+            if (gameMap.blockSight(point.x, point.y)) {
+                return false
+            }
+        }
+
+        return true
+    }
 }
