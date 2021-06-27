@@ -35,14 +35,27 @@ class AiBrain(private val engine: Engine, world: World) {
     fun getCommand(entity: Entity): Command {
         val playerPosition = player[Position.mapper]!!
         val monsterPosition = entity[Position.mapper]!!
+        val monsterStats = entity[Stats.mapper]!!
         val ai = entity[Ai.mapper]!!
 
         if (player.has(Dead.mapper)) {
             return wander(entity)
         }
 
-        //if player is near - attack!
+        // start pursuing if player us visible
+        val playerIsInLingOfSight = isInLineOfSight(entity, playerPosition)
+        if (playerIsInLingOfSight) {
+            ai.lastKnownPlayerPosition = playerPosition
+            ai.state = State.PURSUE
+        }
+
+        // if player is near - attack!
         if (playerPosition.isNeighbourTo(monsterPosition)) {
+            return Attack(engine.notifier, entity, player)
+        }
+
+        // if can shoot and in line of sight - attack!
+        if (playerIsInLingOfSight && monsterStats.ranged) {
             return Attack(engine.notifier, entity, player)
         }
 
@@ -52,9 +65,7 @@ class AiBrain(private val engine: Engine, world: World) {
             ai.lastKnownPlayerPosition = null
         }
 
-        if (isInLineOfSight(entity, playerPosition)) {  // run to player if he is visible
-            ai.lastKnownPlayerPosition = playerPosition
-            ai.state = State.PURSUE
+        if (playerIsInLingOfSight) {  // run to player if he is visible
             return moveToPlayer(monsterPosition, playerPosition, entity)
         } else if (ai.state === State.PURSUE && lastKnownPlayerPosition !== null) { // or run to where he was last seen
             return moveToPlayer(monsterPosition, lastKnownPlayerPosition, entity)

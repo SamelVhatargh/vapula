@@ -26,6 +26,7 @@ class Stats : Component, Pool.Poolable {
         }
     var hp = 0
     var damageDice = 0
+    var ranged = false
 
     val sightRange: Int
         get() = floor(perception / 3.5).toInt() + 3
@@ -76,7 +77,7 @@ class Stats : Component, Pool.Poolable {
     override fun toString(): String {
         return "lvl: $level, hp: $hp/$maxHp, dmg: $damageDice, sight: $sightRange, str: $strength, dex: $dexterity," +
                 " per: $perception, con: $constitution, int: $intellegence, wis: $wisdom, cha: $charisma," +
-                " hpArray: ${hpArray.contentToString()}"
+                " hpArray: ${hpArray.contentToString()}, ranged: $ranged"
     }
 
     companion object {

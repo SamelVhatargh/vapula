@@ -12,6 +12,11 @@ import ktx.ashley.with
 import ktx.log.debug
 import ktx.log.logger
 
+
+enum class GoblinType(val role: String) {
+    FIGHTER(""), ARCHER("Archer")
+}
+
 class Factory(private val engine: Engine, private val map: GameMap) {
 
     companion object {
@@ -54,15 +59,15 @@ class Factory(private val engine: Engine, private val map: GameMap) {
 
     private var goblinCount = 0
 
-    fun createGoblin(position: Position = getRandomEmptyPosition()): Entity {
+    fun createGoblin(position: Position = getRandomEmptyPosition(), type: GoblinType = GoblinType.FIGHTER): Entity {
         goblinCount++
         val monster = engine.entity {
             with<Graphics> {
-                spriteName = "goblin"
+                spriteName = "goblin${type.role}"
             }
             with<OccupySpace>()
             with<Name> {
-                name = "Goblin $goblinCount"
+                name = "Goblin ${type.role} $goblinCount"
             }
             with<Ai>()
         }
@@ -77,8 +82,11 @@ class Factory(private val engine: Engine, private val map: GameMap) {
             wisdom = random.dice("1d2")
             charisma = random.dice("1d4")
 
+
             level = 1
             damageDice = 4
+            ranged = type === GoblinType.ARCHER
+
             generateHp(2)
         }
         monster.add(stats)

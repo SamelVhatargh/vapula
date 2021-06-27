@@ -3,6 +3,7 @@ package com.github.samelVhatargh.vapula
 import com.badlogic.ashley.core.Engine
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.entities.Factory
+import com.github.samelVhatargh.vapula.entities.GoblinType
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.map.generators.BSPDungeon
@@ -53,7 +54,8 @@ class World(engine: Engine) {
             val goblinCount = random.range(0..MAX_GOBLINS_PER_ROOM)
 
             repeat(goblinCount) {
-                entityFactory.createGoblin(room.getRandomPosition())
+                val type = random.collection(listOf(GoblinType.FIGHTER, GoblinType.FIGHTER, GoblinType.ARCHER))
+                entityFactory.createGoblin(room.getRandomPosition(), type)
             }
         }
 
