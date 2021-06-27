@@ -33,16 +33,16 @@ class AiBrain(private val engine: Engine, world: World) {
     )
 
     fun getCommand(entity: Entity): Command {
-        //if player is near - attack!
         val playerPosition = player[Position.mapper]!!
         val monsterPosition = entity[Position.mapper]!!
 
-        if (playerPosition.isNeighbourTo(monsterPosition) && !player.has(Dead.mapper)) {
-            return Attack(engine.notifier, entity, player)
-        }
-
         if (player.has(Dead.mapper)) {
             return wander(entity)
+        }
+
+        //if player is near - attack!
+        if (playerPosition.isNeighbourTo(monsterPosition)) {
+            return Attack(engine.notifier, entity, player)
         }
 
         //else run to player
