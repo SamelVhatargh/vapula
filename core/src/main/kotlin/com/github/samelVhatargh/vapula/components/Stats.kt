@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.ashley.mapperFor
+import kotlin.math.floor
 import kotlin.math.min
 
 const val MAX_LEVEL = 10
@@ -25,6 +26,9 @@ class Stats : Component, Pool.Poolable {
         }
     var hp = 0
     var damageDice = 0
+
+    val sightRange: Int
+        get() = floor(perception / 3.5).toInt() + 3
 
     var strength = 0
     var dexterity = 0
@@ -70,7 +74,7 @@ class Stats : Component, Pool.Poolable {
     }
 
     override fun toString(): String {
-        return "lvl: $level, hp: $hp/$maxHp, dmg: $damageDice, str: $strength, dex: $dexterity," +
+        return "lvl: $level, hp: $hp/$maxHp, dmg: $damageDice, sight: $sightRange, str: $strength, dex: $dexterity," +
                 " per: $perception, con: $constitution, int: $intellegence, wis: $wisdom, cha: $charisma," +
                 " hpArray: ${hpArray.contentToString()}"
     }
