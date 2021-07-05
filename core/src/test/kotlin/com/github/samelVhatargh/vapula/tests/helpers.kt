@@ -1,8 +1,8 @@
 package com.github.samelVhatargh.vapula.tests
 
 import com.github.samelVhatargh.vapula.components.Position
-import com.github.samelVhatargh.vapula.map.GameMap
 import com.github.samelVhatargh.vapula.map.Path
+import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
 import com.github.samelVhatargh.vapula.map.generators.Map
@@ -69,7 +69,7 @@ open class MapBaseTest {
     /**
      * Создает объект карты из текущей карты
      */
-    fun map(gameMap: GameMap): Map = Map(gameMap.tiles, listOf(), listOf())
+    fun map(storey: Storey): Map = Map(storey.tiles, listOf(), listOf())
 
     fun describedMap(vararg mapDescription: String): DescribedMap {
         return DescribedMap(map(*mapDescription), arrayOf(*mapDescription))

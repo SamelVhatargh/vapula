@@ -32,7 +32,7 @@ private data class TileGraphic(val position: Position, val spriteName: String, v
 class MapRender(private val spriteCache: SpriteCache, private val batch: SpriteBatch, world: World) : EntitySystem() {
 
     private val player = world.player
-    private val gameMap = world.gameMap
+    private val storey = world.storey
 
     private val fogOfWarSprite = spriteCache.getSprite("white").apply {
         setColor(0f, 0f, 0f, 0.75f)
@@ -72,10 +72,10 @@ class MapRender(private val spriteCache: SpriteCache, private val batch: SpriteB
                     if (!fov.isVisible(tile.position)) {
                         if (!fogOfWar.contains(tile.position)) fogOfWar.add(tile.position)
                     } else {
-                        gameMap.markAsExplored(tile.position)
+                        storey.markAsExplored(tile.position)
                     }
 
-                    if (gameMap.isExplored(tile.position)) {
+                    if (storey.isExplored(tile.position)) {
                         sprite.setPosition(tile.position)
                         sprite.draw(batch)
                     }
@@ -84,7 +84,7 @@ class MapRender(private val spriteCache: SpriteCache, private val batch: SpriteB
 
             terrainObjects.forEach { entity ->
                 val position = entity[Position.mapper]!!
-                if (gameMap.isExplored(position) && !fov.isVisible(position)) {
+                if (storey.isExplored(position) && !fov.isVisible(position)) {
                     spriteCache.getSprite(entity[Graphics.mapper]!!).apply {
                         setPosition(position.x.toFloat(), position.y.toFloat())
                         draw(batch)
@@ -105,29 +105,29 @@ class MapRender(private val spriteCache: SpriteCache, private val batch: SpriteB
         shouldComputeTileGraphics = false
         tileGraphics.clear()
 
-        for (x in 0 until gameMap.width) {
-            for (y in 0 until gameMap.height) {
-                val tile = gameMap.tiles[x][y]
+        for (x in 0 until storey.width) {
+            for (y in 0 until storey.height) {
+                val tile = storey.tiles[x][y]
                 if (tile.terrain === Terrain.FLOOR) {
                     tileGraphics.add(TileGraphic(tile.position, FLOOR))
                     continue
                 }
 
                 var tileNumber = 0
-                if (gameMap.getNeighbor(tile, Direction.NORTH).terrain == Terrain.WALL) tileNumber += 1
-                if (gameMap.getNeighbor(tile, Direction.EAST).terrain == Terrain.WALL) tileNumber += 2
-                if (gameMap.getNeighbor(tile, Direction.SOUTH).terrain == Terrain.WALL) tileNumber += 4
-                if (gameMap.getNeighbor(tile, Direction.WEST).terrain == Terrain.WALL) tileNumber += 8
+                if (storey.getNeighbor(tile, Direction.NORTH).terrain == Terrain.WALL) tileNumber += 1
+                if (storey.getNeighbor(tile, Direction.EAST).terrain == Terrain.WALL) tileNumber += 2
+                if (storey.getNeighbor(tile, Direction.SOUTH).terrain == Terrain.WALL) tileNumber += 4
+                if (storey.getNeighbor(tile, Direction.WEST).terrain == Terrain.WALL) tileNumber += 8
 
                 if (tileNumber != 15) tileGraphics.add(TileGraphic(tile.position, "$WALL$tileNumber"))
 
-                if (gameMap.getNeighbor(tile, Direction.NORTH_WEST).terrain == Terrain.FLOOR)
+                if (storey.getNeighbor(tile, Direction.NORTH_WEST).terrain == Terrain.FLOOR)
                     tileGraphics.add(TileGraphic(tile.position, NORTH_WEST_CORNER, -1))
-                if (gameMap.getNeighbor(tile, Direction.NORTH_EAST).terrain == Terrain.FLOOR)
+                if (storey.getNeighbor(tile, Direction.NORTH_EAST).terrain == Terrain.FLOOR)
                     tileGraphics.add(TileGraphic(tile.position, NORTH_EAST_CORNER, -1))
-                if (gameMap.getNeighbor(tile, Direction.SOUTH_EAST).terrain == Terrain.FLOOR)
+                if (storey.getNeighbor(tile, Direction.SOUTH_EAST).terrain == Terrain.FLOOR)
                     tileGraphics.add(TileGraphic(tile.position, SOUTH_EAST_CORNER, -1))
-                if (gameMap.getNeighbor(tile, Direction.SOUTH_WEST).terrain == Terrain.FLOOR)
+                if (storey.getNeighbor(tile, Direction.SOUTH_WEST).terrain == Terrain.FLOOR)
                     tileGraphics.add(TileGraphic(tile.position, SOUTH_WEST_CORNER, -1))
             }
         }

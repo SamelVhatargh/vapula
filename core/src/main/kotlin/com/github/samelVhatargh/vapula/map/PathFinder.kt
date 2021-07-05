@@ -44,14 +44,14 @@ private class PositionHeuristic : Heuristic<Node> {
     }
 }
 
-private class GameMapGraph(val gameMap: GameMap, val engine: Engine) : IndexedGraph<Node> {
+private class StoreyGraph(val storey: Storey, val engine: Engine) : IndexedGraph<Node> {
 
     val nodes = mutableMapOf<Int, Node>()
     val indexes = mutableMapOf<Position, Int>()
 
     init {
         var i = 0
-        gameMap.tiles.flatten().forEach { tile ->
+        storey.tiles.flatten().forEach { tile ->
             val position = tile.position
             val node = Node(position, i)
             nodes[i] = node
@@ -67,7 +67,7 @@ private class GameMapGraph(val gameMap: GameMap, val engine: Engine) : IndexedGr
             return connections
         }
         Direction.values().filter { it != Direction.NONE }.forEach { direction ->
-            val neighbor = gameMap.getNeighbor(startNode.position, direction)
+            val neighbor = storey.getNeighbor(startNode.position, direction)
             if (neighbor.terrain === Terrain.FLOOR) {
                 val end = nodes[indexes[neighbor.position]]
                 if (end !== null) {
@@ -84,9 +84,9 @@ private class GameMapGraph(val gameMap: GameMap, val engine: Engine) : IndexedGr
 }
 
 
-class PathFinder(val gameMap: GameMap, engine: Engine) {
+class PathFinder(val storey: Storey, engine: Engine) {
 
-    private val graph = GameMapGraph(gameMap, engine)
+    private val graph = StoreyGraph(storey, engine)
 
     private val apiPathFinder = IndexedAStarPathFinder(graph)
 

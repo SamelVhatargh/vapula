@@ -3,7 +3,7 @@ package com.github.samelVhatargh.vapula.entities
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.components.*
-import com.github.samelVhatargh.vapula.map.GameMap
+import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.ashley.entity
@@ -17,7 +17,7 @@ enum class GoblinType(val role: String) {
     FIGHTER(""), ARCHER("Archer"), SHAMAN("Shaman")
 }
 
-class Factory(private val engine: Engine, private val map: GameMap) {
+class Factory(private val engine: Engine, private val storey: Storey) {
 
     companion object {
         val log = logger<Factory>()
@@ -102,10 +102,10 @@ class Factory(private val engine: Engine, private val map: GameMap) {
 
         var i = 1
         while (i < 1000) {
-            val x = random.range(0 until map.width)
-            val y = random.range(0 until map.height)
+            val x = random.range(0 until storey.width)
+            val y = random.range(0 until storey.height)
 
-            if (map.tiles[x][y].terrain == Terrain.FLOOR) {
+            if (storey.tiles[x][y].terrain == Terrain.FLOOR) {
                 val position = Position(x, y)
 
                 if (objects.find {
@@ -121,7 +121,7 @@ class Factory(private val engine: Engine, private val map: GameMap) {
 
     fun createBarrel(position: Position = getRandomEmptyPosition()): Entity? {
         try {
-            if (map.tiles[position.x][position.y].terrain == Terrain.WALL) {
+            if (storey.tiles[position.x][position.y].terrain == Terrain.WALL) {
                 return null
             }
         } catch (e: ArrayIndexOutOfBoundsException) {

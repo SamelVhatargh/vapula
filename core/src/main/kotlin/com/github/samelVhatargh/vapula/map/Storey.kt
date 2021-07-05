@@ -3,7 +3,10 @@ package com.github.samelVhatargh.vapula.map
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.map.generators.Map
 
-class GameMap(map: Map) {
+/**
+ * Represents a dungeon level
+ */
+class Storey(map: Map) {
     var width = map.tiles.count()
     var height = map.tiles[0].count()
     var tiles = map.tiles

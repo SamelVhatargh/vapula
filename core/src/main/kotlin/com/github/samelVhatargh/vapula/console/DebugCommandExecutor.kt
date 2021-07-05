@@ -20,11 +20,11 @@ class DebugCommandExecutor(
     private val engine: Engine
 ) : CommandExecutor() {
 
-    private val gameMap = world.gameMap
+    private val storey = world.storey
     private val player = world.player
 
     private val mapDrawingMode by lazy {
-        MapDrawingMode(inputMultiplexer, camera, gameMap, engine)
+        MapDrawingMode(inputMultiplexer, camera, storey, engine)
     }
 
     /**
@@ -42,7 +42,7 @@ class DebugCommandExecutor(
      */
     @ConsoleDoc(description = "Makes all tiles of map visible by player")
     fun removeFog() {
-        removeFog(gameMap, player, engine)
+        removeFog(storey, player, engine)
     }
 
     /**

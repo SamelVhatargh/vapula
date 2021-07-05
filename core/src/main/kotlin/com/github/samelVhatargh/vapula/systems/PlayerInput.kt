@@ -19,7 +19,7 @@ class PlayerInput(private val inputMultiplexer: InputMultiplexer, world: World) 
 
     private val playerEntity = world.player
     private val player = playerEntity[Player.mapper]!!
-    private val gameMap = world.gameMap
+    private val storey = world.storey
 
     override fun addedToEngine(engine: Engine) {
         inputMultiplexer.addProcessor(this)
@@ -52,7 +52,7 @@ class PlayerInput(private val inputMultiplexer: InputMultiplexer, world: World) 
             doNothing()
             return
         }
-        player.command = AggressiveMove(engine, playerEntity, direction, gameMap)
+        player.command = AggressiveMove(engine, playerEntity, direction, storey)
     }
 
     private fun doNothing() {

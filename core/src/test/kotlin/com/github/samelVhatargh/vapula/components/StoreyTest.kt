@@ -1,11 +1,11 @@
 package com.github.samelVhatargh.vapula.components
 
-import com.github.samelVhatargh.vapula.map.GameMap
+import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.tests.MapBaseTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-internal class GameMapTest : MapBaseTest() {
+internal class StoreyTest : MapBaseTest() {
 
     @Test
     fun `switchTile should change floor tile to wall tile`() {
@@ -14,15 +14,15 @@ internal class GameMapTest : MapBaseTest() {
             "..."
         )
 
-        val gameMap = GameMap(map)
+        val storey = Storey(map)
 
-        gameMap.switchTile(1, 1)
+        storey.switchTile(1, 1)
 
         Assertions.assertEquals(
             map(
                 "...",
                 ".#."
-            ), map(gameMap)
+            ), map(storey)
         )
     }
 
@@ -33,15 +33,15 @@ internal class GameMapTest : MapBaseTest() {
             "..."
         )
 
-        val gameMap = GameMap(map)
+        val storey = Storey(map)
 
-        gameMap.switchTile(1, 0)
+        storey.switchTile(1, 0)
 
         Assertions.assertEquals(
             map(
                 "...",
                 "..."
-            ), map(gameMap)
+            ), map(storey)
         )
     }
 }

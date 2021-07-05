@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Camera
-import com.github.samelVhatargh.vapula.map.GameMap
+import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.systems.MapRender
 import ktx.app.KtxInputAdapter
 import ktx.ashley.getSystem
@@ -16,7 +16,7 @@ import ktx.math.vec3
 class MapDrawingMode(
     private val inputMultiplexer: InputMultiplexer,
     private val camera: Camera,
-    private val gameMap: GameMap,
+    private val storey: Storey,
     private val engine: Engine
 ) :
     KtxInputAdapter {
@@ -37,7 +37,7 @@ class MapDrawingMode(
         val position = camera.unproject(vec3(screenX.toFloat(), screenY.toFloat()))
 
         if (button == Input.Buttons.LEFT) {
-            gameMap.switchTile(position.x.toInt(), position.y.toInt())
+            storey.switchTile(position.x.toInt(), position.y.toInt())
             engine.getSystem<MapRender>().shouldComputeTileGraphics = true
         }
 

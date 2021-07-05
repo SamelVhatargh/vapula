@@ -293,9 +293,9 @@ internal class PathFinderTest : MapBaseTest() {
     @MethodSource("pathFindingDataProvider")
     fun `path finding`(testDescription: String, describedMap: DescribedMap, expectedPath: Path) {
         val map = describedMap.map
-        val gameMap = GameMap(map)
+        val storey = Storey(map)
 
-        val pathFinder = PathFinder(gameMap, Engine())
+        val pathFinder = PathFinder(storey, Engine())
 
         val startPosition = describedMap.getPosition('s')
         val endPosition = describedMap.getPosition('e')
@@ -319,9 +319,9 @@ internal class PathFinderTest : MapBaseTest() {
         )
 
         val map = describedMap.map
-        val gameMap = GameMap(map)
+        val storey = Storey(map)
 
-        val pathFinder = PathFinder(gameMap, Engine())
+        val pathFinder = PathFinder(storey, Engine())
 
         val path = pathFinder.findPath(startPosition, endPosition)
 
@@ -336,9 +336,9 @@ internal class PathFinderTest : MapBaseTest() {
         )
 
         val map = describedMap.map
-        val gameMap = GameMap(map)
+        val storey = Storey(map)
 
-        val pathFinder = PathFinder(gameMap, Engine())
+        val pathFinder = PathFinder(storey, Engine())
         val startPosition = Position(0, 0)
         val endPosition = Position(4, 1)
 
@@ -351,7 +351,7 @@ internal class PathFinderTest : MapBaseTest() {
     @MethodSource("pathFindingForMonstersDataProvider")
     fun `path finding for monsters`(testDescription: String, describedMap: DescribedMap, expectedPath: Path) {
         val map = describedMap.map
-        val gameMap = GameMap(map)
+        val storey = Storey(map)
 
 
         val startPosition = describedMap.getPosition('s')
@@ -370,7 +370,7 @@ internal class PathFinderTest : MapBaseTest() {
         }
 
 
-        val pathFinder = PathFinder(gameMap, engine)
+        val pathFinder = PathFinder(storey, engine)
         if (startPosition === null || endPosition === null) {
             fail<Assertions>("start or end positions cant be found")
             return

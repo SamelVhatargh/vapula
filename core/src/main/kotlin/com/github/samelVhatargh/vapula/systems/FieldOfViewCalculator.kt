@@ -11,7 +11,7 @@ import ktx.ashley.get
 
 class FieldOfViewCalculator(world: World) : EntitySystem() {
     private val player = world.player
-    private val gameMap = world.gameMap
+    private val storey = world.storey
 
     override fun update(deltaTime: Float) {
         player[FieldOfView.mapper]?.let { fov ->
@@ -45,7 +45,7 @@ class FieldOfViewCalculator(world: World) : EntitySystem() {
                 for (i in 0 until line.size) {
                     val point = line[i]
                     fov.visibleTiles.add(Position(point.x, point.y))
-                    if (gameMap.blockSight(point.x, point.y)) {
+                    if (storey.blockSight(point.x, point.y)) {
                         break
                     }
                 }

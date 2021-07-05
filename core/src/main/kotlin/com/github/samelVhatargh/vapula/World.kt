@@ -5,7 +5,7 @@ import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.entities.Factory
 import com.github.samelVhatargh.vapula.entities.GoblinType
 import com.github.samelVhatargh.vapula.map.Direction
-import com.github.samelVhatargh.vapula.map.GameMap
+import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.map.generators.BSPDungeon
 import com.github.samelVhatargh.vapula.utility.random
 
@@ -19,9 +19,9 @@ class World(engine: Engine) {
 
     private val map = BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT)
 
-    val gameMap = GameMap(map)
+    val storey = Storey(map)
 
-    private val entityFactory = Factory(engine, gameMap)
+    private val entityFactory = Factory(engine, storey)
 
     val player = entityFactory.createPlayer()
 
