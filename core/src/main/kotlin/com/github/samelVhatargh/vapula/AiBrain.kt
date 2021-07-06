@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Bresenham2
 import com.github.samelVhatargh.vapula.components.*
-import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.systems.commands.*
 import ktx.ashley.allOf
@@ -21,17 +20,6 @@ class AiBrain(private val engine: Engine, private val world: World) {
         PathFinder(world.stories[z], engine)
     }
 
-    private val directions = listOf(
-        Direction.NORTH,
-        Direction.SOUTH,
-        Direction.EAST,
-        Direction.WEST,
-        Direction.NORTH_EAST,
-        Direction.NORTH_WEST,
-        Direction.SOUTH_EAST,
-        Direction.SOUTH_WEST
-    )
-
     fun getCommand(entity: Entity): Command {
         val playerPosition = player[Position.mapper]!!
         val monsterPosition = entity[Position.mapper]!!
@@ -43,7 +31,7 @@ class AiBrain(private val engine: Engine, private val world: World) {
         }
 
         if (player.has(Dead.mapper)) {
-            return wander(entity)
+            return Wander(engine, entity, world)
         }
 
         // start pursuing if player us visible
@@ -89,25 +77,20 @@ class AiBrain(private val engine: Engine, private val world: World) {
             return moveToPlayer(monsterPosition, lastKnownPlayerPosition, entity)
         }
 
-        return wander(entity)
+        return Wander(engine, entity, world)
     }
 
     private fun moveToPlayer(monsterPosition: Position, playerPosition: Position, entity: Entity): Command {
         if (monsterPosition.z != playerPosition.z) {
-            return wander(entity)
+            return Wander(engine, entity, world)
         }
 
         val path = pathFinders[monsterPosition.z].findPath(monsterPosition, playerPosition)
         if (path.isEmpty()) {
-            return wander(entity)
+            return Wander(engine, entity, world)
         }
 
         return MoveInPath(engine, entity, path, world.storey)
-    }
-
-    private fun wander(entity: Entity): Command {
-        val z = entity[Position.mapper]!!.z
-        return MoveInDirection(engine, entity, directions.random(), world.stories[z])
     }
 
     /**
