@@ -42,7 +42,7 @@ class MoveInDirection(
         val newX = position.x + direction.x
         val newY = position.y + direction.y
 
-        return changePosition(engine, storey, entity, Position(newX, newY))
+        return changePosition(engine, storey, entity, Position(newX, newY, position.z))
     }
 }
 

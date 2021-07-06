@@ -23,7 +23,7 @@ class World(private val engine: Engine) {
     private val maps =
         arrayOf(BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT), BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT))
 
-    private val stories = Array(maps.size) { z -> Storey(maps[z], z) }
+    val stories = Array(maps.size) { z -> Storey(maps[z], z) }
     var storey = stories[0]
 
     private val entityFactory = Factory(engine, storey)

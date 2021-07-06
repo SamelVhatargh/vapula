@@ -17,7 +17,9 @@ import ktx.ashley.has
  */
 class AiBrain(private val engine: Engine, private val world: World) {
     private val player = world.player
-    private val pathFinder = PathFinder(world.storey, engine)
+    private val pathFinders = Array(world.stories.size) { z ->
+        PathFinder(world.stories[z], engine)
+    }
 
     private val directions = listOf(
         Direction.NORTH,
@@ -91,7 +93,11 @@ class AiBrain(private val engine: Engine, private val world: World) {
     }
 
     private fun moveToPlayer(monsterPosition: Position, playerPosition: Position, entity: Entity): Command {
-        val path = pathFinder.findPath(monsterPosition, playerPosition)
+        if (monsterPosition.z != playerPosition.z) {
+            return wander(entity)
+        }
+
+        val path = pathFinders[monsterPosition.z].findPath(monsterPosition, playerPosition)
         if (path.isEmpty()) {
             return wander(entity)
         }
@@ -99,7 +105,10 @@ class AiBrain(private val engine: Engine, private val world: World) {
         return MoveInPath(engine, entity, path, world.storey)
     }
 
-    private fun wander(entity: Entity): Command = MoveInDirection(engine, entity, directions.random(), world.storey)
+    private fun wander(entity: Entity): Command {
+        val z = entity[Position.mapper]!!.z
+        return MoveInDirection(engine, entity, directions.random(), world.stories[z])
+    }
 
     /**
      * Check if Entity can see another Entity
@@ -107,6 +116,10 @@ class AiBrain(private val engine: Engine, private val world: World) {
     private fun isInLineOfSight(entity: Entity, targetPosition: Position): Boolean {
         val start = entity[Position.mapper]!!
         val sightRange = entity[Stats.mapper]!!.sightRange
+
+        if (start.z != targetPosition.z) {
+            return false
+        }
 
         val line = Bresenham2().line(start.x, start.y, targetPosition.x, targetPosition.y)
         if (line.size > sightRange) {
