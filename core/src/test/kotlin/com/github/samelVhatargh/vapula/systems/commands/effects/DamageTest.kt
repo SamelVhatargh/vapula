@@ -3,12 +3,16 @@ package com.github.samelVhatargh.vapula.systems.commands.effects
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
+import com.github.samelVhatargh.vapula.components.Dead
+import com.github.samelVhatargh.vapula.components.Graphics
 import com.github.samelVhatargh.vapula.components.Invulnerability
 import com.github.samelVhatargh.vapula.components.Stats
+import com.github.samelVhatargh.vapula.systems.commands.Damage
 import com.github.samelVhatargh.vapula.tests.GdxTestApplication
 import com.github.samelVhatargh.vapula.tests.TestNotifier
 import ktx.ashley.entity
 import ktx.ashley.get
+import ktx.ashley.has
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -22,7 +26,7 @@ internal class DamageTest {
         val damage = 5
         val damageCommand = Damage(TestNotifier(), entity, damage)
 
-        damageCommand.apply()
+        damageCommand.execute()
 
         Assertions.assertEquals(startingHp - damage, entity[Stats.mapper]!!.hp)
     }
@@ -36,13 +40,13 @@ internal class DamageTest {
         val damage = 50
         val damageCommand = Damage(TestNotifier(), entity, damage)
 
-        damageCommand.apply()
+        damageCommand.execute()
 
         Assertions.assertEquals(startingHp, entity[Stats.mapper]!!.hp)
     }
 
     @Test
-    fun `should return kill effect if hp reaches zero`() {
+    fun `should kill entity if hp reaches zero`() {
         val startingHp = 10
         val entity = createEntity(startingHp)
 
@@ -50,9 +54,9 @@ internal class DamageTest {
         val damage = 50
         val damageCommand = Damage(notifier, entity, damage)
 
-        val effects = damageCommand.apply()
+        damageCommand.execute()
 
-        Assertions.assertTrue(effects[0] is Kill)
+        Assertions.assertTrue(entity.has(Dead.mapper))
     }
 
     private fun createEntity(startingHp: Int): Entity {
@@ -61,7 +65,10 @@ internal class DamageTest {
             generateHp(startingHp)
         }
 
-        val entity = Engine().entity().add(stats)
+        val entity = Engine().entity().apply {
+            add(stats)
+            add(Graphics())
+        }
 
         return entity
     }

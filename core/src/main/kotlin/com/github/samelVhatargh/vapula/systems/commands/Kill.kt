@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.systems.commands.effects
+package com.github.samelVhatargh.vapula.systems.commands
 
 import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.components.Dead
@@ -12,8 +12,8 @@ import ktx.ashley.plusAssign
 /**
  * Kills entity
  */
-class Kill(private val notifier: NotifierInterface, private val entity: Entity) : Effect {
-    override fun apply(): Array<Effect> {
+class Kill(private val notifier: NotifierInterface, private val entity: Entity) : Command {
+    override fun execute() {
         val graphics = entity[Graphics.mapper]!!
 
         entity += Dead()
@@ -21,7 +21,5 @@ class Kill(private val notifier: NotifierInterface, private val entity: Entity) 
         graphics.layer = Layer.CORPSE
 
         notifier.notify(EntityDied(entity))
-
-        return emptyArray()
     }
 }

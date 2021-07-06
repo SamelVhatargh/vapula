@@ -6,11 +6,10 @@ import com.github.samelVhatargh.vapula.components.OccupySpace
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Storey
-import com.github.samelVhatargh.vapula.systems.commands.effects.ChangePosition
-import com.github.samelVhatargh.vapula.systems.commands.effects.Effect
 import com.github.samelVhatargh.vapula.tests.DescribedMap
 import com.github.samelVhatargh.vapula.tests.MapBaseTest
 import ktx.ashley.entity
+import ktx.ashley.get
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -18,10 +17,10 @@ import org.junit.jupiter.api.Test
 class TestBaseMove(
     private val engine: Engine,
     private val storey: Storey,
-    private val entity: Entity,
+    val entity: Entity,
     private val newPosition: Position
 ) : BaseMove() {
-    override fun execute(): Array<Effect> {
+    override fun execute() {
         return changePosition(engine, storey, entity, newPosition)
     }
 }
@@ -41,9 +40,8 @@ internal class BaseMoveTest : MapBaseTest() {
         )
         val move = getMoveToEastCommand(describedMap)
 
-        val effects = move.execute()
-        Assertions.assertTrue(effects.isNotEmpty())
-        Assertions.assertTrue(effects[0]::class == ChangePosition::class)
+        move.execute()
+        Assertions.assertEquals(describedMap.getPosition('e')!! + Direction.EAST, move.entity[Position.mapper]!!)
     }
 
     @Test
@@ -57,7 +55,7 @@ internal class BaseMoveTest : MapBaseTest() {
         )
         val move = getMoveToEastCommand(describedMap)
 
-        Assertions.assertTrue(move.execute().isEmpty())
+        Assertions.assertEquals(describedMap.getPosition('e')!!, move.entity[Position.mapper]!!)
     }
 
     @Test
@@ -75,7 +73,7 @@ internal class BaseMoveTest : MapBaseTest() {
         }
         val move = getMoveToEastCommand(describedMap)
 
-        Assertions.assertTrue(move.execute().isEmpty())
+        Assertions.assertEquals(describedMap.getPosition('e')!!, move.entity[Position.mapper]!!)
     }
 
     private fun getMoveToEastCommand(describedMap: DescribedMap): TestBaseMove {
