@@ -46,12 +46,12 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
 
         val spriteCache = SpriteCache(spriteAtlas)
         engine.apply {
-            addSystem(TurnLoop(AiBrain(engine, world), world.player))
             addSystem(PlayerInput(inputMultiplexer, world))
             addSystem(Camera(camera, inputMultiplexer))
             addSystem(MapRender(spriteCache, batch, world))
             addSystem(FieldOfViewCalculator(world))
             addSystem(Render(spriteCache, batch, viewport, world))
+            addSystem(TurnLoop(AiBrain(engine, world), world.player))
         }
 
         val commandExecutor =

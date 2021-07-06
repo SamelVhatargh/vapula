@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector3
+import com.github.samelVhatargh.vapula.components.Animation
 import com.github.samelVhatargh.vapula.components.Player
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.map.Direction
@@ -68,8 +69,17 @@ class Camera(private val camera: OrthographicCamera, private val inputMultiplexe
 
     private fun centerCameraOnPlayer() {
         val position = player[Position.mapper]!!
-        camera.position.x = position.x.toFloat() + HUD_WIDTH / 2
-        camera.position.y = position.y.toFloat()
+        var x = position.x.toFloat()
+        var y = position.y.toFloat()
+
+        val animation = player[Animation.mapper]
+        if (animation != null) {
+            x = animation.vector.x
+            y = animation.vector.y
+        }
+
+        camera.position.x = x + HUD_WIDTH / 2
+        camera.position.y = y
     }
 
     /**
