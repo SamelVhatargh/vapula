@@ -53,6 +53,7 @@ private class StoreyGraph(val storey: Storey, val engine: Engine) : IndexedGraph
         var i = 0
         storey.tiles.flatten().forEach { tile ->
             val position = tile.position
+            position.z = storey.z
             val node = Node(position, i)
             nodes[i] = node
             indexes[position] = i
