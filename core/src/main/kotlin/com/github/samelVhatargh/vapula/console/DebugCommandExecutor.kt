@@ -41,7 +41,7 @@ class DebugCommandExecutor(
      */
     @ConsoleDoc(description = "Makes all tiles of map visible by player")
     fun removeFog() {
-        removeFog(world.storey, player, engine)
+        removeFog(player, engine)
     }
 
     /**

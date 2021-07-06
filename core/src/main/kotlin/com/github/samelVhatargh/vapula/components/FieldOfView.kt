@@ -11,10 +11,11 @@ class FieldOfView : Component, Pool.Poolable {
 
     val visibleTiles = mutableListOf<Position>()
 
+    var seeEverything = false
     var shouldUpdate = true
 
     fun isVisible(position: Position): Boolean {
-        return visibleTiles.contains(position)
+        return seeEverything || visibleTiles.contains(position)
     }
 
     companion object {
@@ -23,6 +24,7 @@ class FieldOfView : Component, Pool.Poolable {
 
     override fun reset() {
         shouldUpdate = false
+        seeEverything = false
         visibleTiles.clear()
     }
 }
