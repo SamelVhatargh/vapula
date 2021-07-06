@@ -6,7 +6,7 @@ import com.github.samelVhatargh.vapula.map.generators.Map
 /**
  * Represents a dungeon level
  */
-class Storey(map: Map) {
+class Storey(map: Map, val z: Int = 0) {
     var width = map.tiles.count()
     var height = map.tiles[0].count()
     var tiles = map.tiles

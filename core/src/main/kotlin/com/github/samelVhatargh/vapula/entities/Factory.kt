@@ -17,7 +17,7 @@ enum class GoblinType(val role: String) {
     FIGHTER(""), ARCHER("Archer"), SHAMAN("Shaman")
 }
 
-class Factory(private val engine: Engine, private val storey: Storey) {
+class Factory(private val engine: Engine, var storey: Storey) {
 
     companion object {
         val log = logger<Factory>()
@@ -36,6 +36,7 @@ class Factory(private val engine: Engine, private val storey: Storey) {
             }
         }
 
+        position.z = storey.z
         player.add(position)
 
         val stats = Stats().apply {
@@ -71,6 +72,7 @@ class Factory(private val engine: Engine, private val storey: Storey) {
             }
             with<Ai>()
         }
+        position.z = storey.z
         monster.add(position)
 
         val stats = Stats().apply {
@@ -106,7 +108,7 @@ class Factory(private val engine: Engine, private val storey: Storey) {
             val y = random.range(0 until storey.height)
 
             if (storey.tiles[x][y].terrain == Terrain.FLOOR) {
-                val position = Position(x, y)
+                val position = Position(x, y, storey.z)
 
                 if (objects.find {
                         it[Position.mapper]!! == position
@@ -134,6 +136,7 @@ class Factory(private val engine: Engine, private val storey: Storey) {
             }
             with<OccupySpace>()
         }
+        position.z = storey.z
         barrel.add(position)
 
         return barrel
@@ -147,6 +150,7 @@ class Factory(private val engine: Engine, private val storey: Storey) {
             }
             with<VisibleIfExploredAndOutOfFieldOfView>()
         }
+        position.z = storey.z
         tunnel.add(position)
     }
 }

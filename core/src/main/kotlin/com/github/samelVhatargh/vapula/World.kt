@@ -7,6 +7,7 @@ import com.github.samelVhatargh.vapula.entities.GoblinType
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.map.generators.BSPDungeon
+import com.github.samelVhatargh.vapula.map.generators.Map
 import com.github.samelVhatargh.vapula.utility.random
 
 private const val MAP_WIDTH = 16 * 2
@@ -17,20 +18,33 @@ private const val MAX_BARRELS_PER_ROOM = 4
 
 class World(engine: Engine) {
 
-    private val map = BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT)
+    private val maps =
+        arrayOf(BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT), BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT))
 
-    val storey = Storey(map)
+    val storey = Storey(maps[0], 0)
 
     private val entityFactory = Factory(engine, storey)
 
     val player = entityFactory.createPlayer()
 
     init {
+        for (z in maps.indices) {
+            val map = maps[z]
+            if (z > 0) {
+                entityFactory.storey = Storey(map, z)
+            }
+            fillMap(map, z)
+        }
+    }
+
+    private fun fillMap(map: Map, z: Int) {
         val rooms = map.rooms
         val tunnels = map.tunnels
         val tunnelPositions = mutableSetOf<Position>()
         tunnels.forEach {
-            tunnelPositions.addAll(it.tiles)
+            tunnelPositions.addAll(it.tiles.map { position ->
+                Position(position.x, position.y, z)
+            })
         }
 
         rooms.forEach { room ->

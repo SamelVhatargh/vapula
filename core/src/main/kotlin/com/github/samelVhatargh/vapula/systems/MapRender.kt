@@ -84,7 +84,7 @@ class MapRender(private val spriteCache: SpriteCache, private val batch: SpriteB
 
             terrainObjects.forEach { entity ->
                 val position = entity[Position.mapper]!!
-                if (storey.isExplored(position) && !fov.isVisible(position)) {
+                if (position.z == storey.z && storey.isExplored(position) && !fov.isVisible(position)) {
                     spriteCache.getSprite(entity[Graphics.mapper]!!).apply {
                         setPosition(position.x.toFloat(), position.y.toFloat())
                         draw(batch)

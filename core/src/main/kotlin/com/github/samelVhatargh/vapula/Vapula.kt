@@ -51,7 +51,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             addSystem(Camera(camera, inputMultiplexer))
             addSystem(MapRender(spriteCache, batch, world))
             addSystem(FieldOfViewCalculator(world))
-            addSystem(Render(spriteCache, batch, viewport, world.player))
+            addSystem(Render(spriteCache, batch, viewport, world))
         }
 
         val commandExecutor =

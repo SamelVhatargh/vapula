@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.Viewport
+import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.Graphics
 import com.github.samelVhatargh.vapula.components.Position
@@ -12,9 +13,16 @@ import com.github.samelVhatargh.vapula.utility.SpriteCache
 import ktx.ashley.get
 import ktx.graphics.use
 
-class Render(private val spriteCache: SpriteCache, private val batch: SpriteBatch, viewport: Viewport, private val player: Entity) :
+class Render(
+    private val spriteCache: SpriteCache,
+    private val batch: SpriteBatch,
+    viewport: Viewport,
+    world: World
+) :
     SortedIteratingSystem(RENDERABLE_FAMILY, compareBy { entity -> entity[Graphics.mapper] }) {
 
+    private val player = world.player
+    private val storey = world.storey
     private val camera = viewport.camera
 
     override fun update(deltaTime: Float) {
@@ -26,6 +34,10 @@ class Render(private val spriteCache: SpriteCache, private val batch: SpriteBatc
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val position = entity[Position.mapper]!!
+        if (position.z != storey.z) {
+            return
+        }
+
         val fov = player[FieldOfView.mapper]!!
 
         if (!fov.isVisible(position)) return
