@@ -64,7 +64,7 @@ class AggressiveMove(
 ) : BaseMove() {
     override fun execute() {
         val entityPosition = entity[Position.mapper]!!
-        val targetPosition = Position(entityPosition.x + direction.x, entityPosition.y + direction.y)
+        val targetPosition = Position(entityPosition.x + direction.x, entityPosition.y + direction.y, entityPosition.z)
         val target = engine.getEntityAtPosition(targetPosition, allOf(Stats::class).exclude(Dead::class).get())
             ?: return MoveInDirection(engine, entity, direction, storey).execute()
 
