@@ -13,6 +13,7 @@ class ChangePosition(private val entity: Entity, private val newPosition: Positi
         val position = entity[Position.mapper]!!
         position.x = newPosition.x
         position.y = newPosition.y
+        position.z = newPosition.z
         entity[FieldOfView.mapper]?.shouldUpdate = true
     }
 }

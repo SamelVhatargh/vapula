@@ -164,5 +164,6 @@ class Factory(private val engine: Engine, var storey: Storey) {
         }
         position.z = storey.z
         stairs.add(position)
+        stairs.add(if (up) GoUp() else GoDown())
     }
 }

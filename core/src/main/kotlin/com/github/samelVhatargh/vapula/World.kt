@@ -10,6 +10,7 @@ import com.github.samelVhatargh.vapula.map.generators.BSPDungeon
 import com.github.samelVhatargh.vapula.map.generators.Map
 import com.github.samelVhatargh.vapula.systems.MapRender
 import com.github.samelVhatargh.vapula.utility.random
+import ktx.ashley.get
 import ktx.ashley.getSystem
 
 private const val MAP_WIDTH = 16 * 2
