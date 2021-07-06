@@ -43,7 +43,7 @@ class FieldOfViewCalculator(private val world: World) : EntitySystem() {
                 val line = Bresenham2().line(origin.x, origin.y, edge.x.toInt(), edge.y.toInt())
                 for (i in 0 until line.size) {
                     val point = line[i]
-                    fov.visibleTiles.add(Position(point.x, point.y))
+                    fov.visibleTiles.add(Position(point.x, point.y, world.storey.z))
                     if (world.storey.blockSight(point.x, point.y)) {
                         break
                     }
