@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.entities.Factory
 import com.github.samelVhatargh.vapula.entities.GoblinType
+import com.github.samelVhatargh.vapula.entities.OCCUPY_SPACE_FAMILY
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.map.generators.BSPDungeon
@@ -69,7 +70,9 @@ class World(private val engine: Engine) {
             var barrelPosition = room.getRandomCorner()
 
             repeat(barrelCount) {
-                if (!tunnelPositions.contains(barrelPosition)) {
+                if (!tunnelPositions.contains(barrelPosition)
+                    && engine.getEntityAtPosition(barrelPosition, OCCUPY_SPACE_FAMILY) == null
+                ) {
                     entityFactory.createBarrel(barrelPosition)
                     barrelPosition += random.collection(
                         listOf(
