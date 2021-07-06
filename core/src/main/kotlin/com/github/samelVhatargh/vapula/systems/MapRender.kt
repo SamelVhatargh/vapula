@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.Graphics
@@ -29,10 +30,16 @@ private const val WALL = "Wall"
 
 private data class TileGraphic(val position: Position, val spriteName: String, val priority: Int = 0)
 
-class MapRender(private val spriteCache: SpriteCache, private val batch: SpriteBatch, private val world: World) :
+class MapRender(
+    private val spriteCache: SpriteCache,
+    private val batch: SpriteBatch,
+    viewport: Viewport,
+    private val world: World
+) :
     EntitySystem() {
 
     private val player = world.player
+    private val camera = viewport.camera
 
     private val fogOfWarSprite = spriteCache.getSprite("white").apply {
         setColor(0f, 0f, 0f, 0.75f)
@@ -65,7 +72,7 @@ class MapRender(private val spriteCache: SpriteCache, private val batch: SpriteB
         val fogOfWar = mutableSetOf<Position>()
         val fov = player[FieldOfView.mapper]!!
 
-        batch.use {
+        batch.use(camera.combined) {
             tileGraphics.forEach { tile ->
                 if (tile.spriteName != EMPTY) {
                     val sprite = spriteCache.getSprite(tile.spriteName)
