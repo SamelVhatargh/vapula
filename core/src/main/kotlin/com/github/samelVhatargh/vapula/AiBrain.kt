@@ -15,10 +15,9 @@ import ktx.ashley.has
 /**
  * Decides what a monster will do
  */
-class AiBrain(private val engine: Engine, world: World) {
+class AiBrain(private val engine: Engine, private val world: World) {
     private val player = world.player
-    private val storey = world.storey
-    private val pathFinder = PathFinder(storey, engine)
+    private val pathFinder = PathFinder(world.storey, engine)
 
     private val directions = listOf(
         Direction.NORTH,
@@ -97,10 +96,10 @@ class AiBrain(private val engine: Engine, world: World) {
             return wander(entity)
         }
 
-        return MoveInPath(engine, entity, path, storey)
+        return MoveInPath(engine, entity, path, world.storey)
     }
 
-    private fun wander(entity: Entity): Command = MoveInDirection(engine, entity, directions.random(), storey)
+    private fun wander(entity: Entity): Command = MoveInDirection(engine, entity, directions.random(), world.storey)
 
     /**
      * Check if Entity can see another Entity
@@ -116,7 +115,7 @@ class AiBrain(private val engine: Engine, world: World) {
 
         for (i in 0 until line.size) {
             val point = line[i]
-            if (storey.blockSight(point.x, point.y)) {
+            if (world.storey.blockSight(point.x, point.y)) {
                 return false
             }
         }

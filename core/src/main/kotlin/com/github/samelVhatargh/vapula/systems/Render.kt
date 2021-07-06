@@ -17,12 +17,11 @@ class Render(
     private val spriteCache: SpriteCache,
     private val batch: SpriteBatch,
     viewport: Viewport,
-    world: World
+    private val world: World
 ) :
     SortedIteratingSystem(RENDERABLE_FAMILY, compareBy { entity -> entity[Graphics.mapper] }) {
 
     private val player = world.player
-    private val storey = world.storey
     private val camera = viewport.camera
 
     override fun update(deltaTime: Float) {
@@ -34,7 +33,7 @@ class Render(
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val position = entity[Position.mapper]!!
-        if (position.z != storey.z) {
+        if (position.z != world.storey.z) {
             return
         }
 

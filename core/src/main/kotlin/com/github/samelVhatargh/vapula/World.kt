@@ -8,7 +8,9 @@ import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.map.generators.BSPDungeon
 import com.github.samelVhatargh.vapula.map.generators.Map
+import com.github.samelVhatargh.vapula.systems.MapRender
 import com.github.samelVhatargh.vapula.utility.random
+import ktx.ashley.getSystem
 
 private const val MAP_WIDTH = 16 * 2
 private const val MAP_HEIGHT = 16 * 2
@@ -16,12 +18,13 @@ private const val MAP_HEIGHT = 16 * 2
 private const val MAX_GOBLINS_PER_ROOM = 3
 private const val MAX_BARRELS_PER_ROOM = 4
 
-class World(engine: Engine) {
+class World(private val engine: Engine) {
 
     private val maps =
         arrayOf(BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT), BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT))
 
-    val storey = Storey(maps[0], 0)
+    private val stories = Array(maps.size) { z -> Storey(maps[z], z) }
+    var storey = stories[0]
 
     private val entityFactory = Factory(engine, storey)
 
@@ -30,11 +33,14 @@ class World(engine: Engine) {
     init {
         for (z in maps.indices) {
             val map = maps[z]
-            if (z > 0) {
-                entityFactory.storey = Storey(map, z)
-            }
+            entityFactory.storey = stories[z]
             fillMap(map, z)
         }
+    }
+
+    fun changeStory(z: Int) {
+        storey = stories[z]
+        engine.getSystem<MapRender>().shouldComputeTileGraphics = true
     }
 
     private fun fillMap(map: Map, z: Int) {

@@ -9,9 +9,8 @@ import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.components.Stats
 import ktx.ashley.get
 
-class FieldOfViewCalculator(world: World) : EntitySystem() {
+class FieldOfViewCalculator(private val world: World) : EntitySystem() {
     private val player = world.player
-    private val storey = world.storey
 
     override fun update(deltaTime: Float) {
         player[FieldOfView.mapper]?.let { fov ->
@@ -45,7 +44,7 @@ class FieldOfViewCalculator(world: World) : EntitySystem() {
                 for (i in 0 until line.size) {
                     val point = line[i]
                     fov.visibleTiles.add(Position(point.x, point.y))
-                    if (storey.blockSight(point.x, point.y)) {
+                    if (world.storey.blockSight(point.x, point.y)) {
                         break
                     }
                 }

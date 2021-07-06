@@ -16,15 +16,14 @@ import ktx.ashley.*
 class DebugCommandExecutor(
     private val inputMultiplexer: InputMultiplexer,
     private val camera: Camera,
-    world: World,
+    private val world: World,
     private val engine: Engine
 ) : CommandExecutor() {
 
-    private val storey = world.storey
     private val player = world.player
 
     private val mapDrawingMode by lazy {
-        MapDrawingMode(inputMultiplexer, camera, storey, engine)
+        MapDrawingMode(inputMultiplexer, camera, world.storey, engine)
     }
 
     /**
@@ -42,7 +41,7 @@ class DebugCommandExecutor(
      */
     @ConsoleDoc(description = "Makes all tiles of map visible by player")
     fun removeFog() {
-        removeFog(storey, player, engine)
+        removeFog(world.storey, player, engine)
     }
 
     /**
@@ -95,5 +94,13 @@ class DebugCommandExecutor(
     @ConsoleDoc(description = "Set set for random number generator", paramDescriptions = ["seed value"])
     fun seed(seed: Int) {
         random.setSeed(seed)
+    }
+
+    /**
+     * Change current storey of dungeon
+     */
+    @ConsoleDoc(description = "Change current dungeon level", paramDescriptions = ["level id"])
+    fun storey(z: Int) {
+        world.changeStory(z)
     }
 }
