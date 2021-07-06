@@ -10,11 +10,17 @@ import ktx.ashley.get
 /**
  * Changes entity position
  */
-class ChangePosition(private val entity: Entity, private val newPosition: Position) : Command {
+class ChangePosition(
+    private val entity: Entity,
+    private val newPosition: Position,
+    private val animate: Boolean = true
+) : Command {
     override fun execute() {
         val position = entity[Position.mapper]!!
-        val animation = Animation(position, newPosition, AnimationType.WALKING)
-        entity.add(animation)
+        if (animate) {
+            val animation = Animation(position, newPosition, AnimationType.WALKING)
+            entity.add(animation)
+        }
         position.x = newPosition.x
         position.y = newPosition.y
         position.z = newPosition.z
