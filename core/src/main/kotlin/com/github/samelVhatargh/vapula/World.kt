@@ -21,7 +21,11 @@ private const val MAX_BARRELS_PER_ROOM = 4
 class World(private val engine: Engine) {
 
     private val maps =
-        arrayOf(BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT), BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT))
+        arrayOf(
+            BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT),
+            BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT),
+            BSPDungeon().generate(MAP_WIDTH, MAP_HEIGHT)
+        )
 
     val stories = Array(maps.size) { z -> Storey(maps[z], z) }
     var storey = stories[0]
@@ -35,6 +39,12 @@ class World(private val engine: Engine) {
             val map = maps[z]
             entityFactory.storey = stories[z]
             fillMap(map, z)
+            if (z != 0) {
+                entityFactory.createStairs(false)
+            }
+            if (z != maps.size - 1) {
+                entityFactory.createStairs(true)
+            }
         }
     }
 

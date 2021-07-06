@@ -153,4 +153,16 @@ class Factory(private val engine: Engine, var storey: Storey) {
         position.z = storey.z
         tunnel.add(position)
     }
+
+    fun createStairs(up: Boolean, position: Position = getRandomEmptyPosition()) {
+        val stairs = engine.entity {
+            with<Graphics> {
+                spriteName = if (up) "StairsUp" else "StairsDown"
+                layer = Layer.FLOOR
+            }
+            with<VisibleIfExploredAndOutOfFieldOfView>()
+        }
+        position.z = storey.z
+        stairs.add(position)
+    }
 }
