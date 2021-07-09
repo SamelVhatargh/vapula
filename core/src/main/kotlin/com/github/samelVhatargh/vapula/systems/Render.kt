@@ -55,7 +55,7 @@ class Render(
     private fun animate(entity: Entity, deltaTime: Float): Vector2? {
         val animation = entity[Animation.mapper] ?: return null
 
-        if (animation.type === AnimationType.WALKING) {
+        if (animation.type === AnimationType.WALK) {
             val speed = 3f
 
             animation.vector.lerp(vec2(animation.end.x.toFloat(), animation.end.y.toFloat()), animation.progress)

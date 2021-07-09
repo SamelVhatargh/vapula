@@ -18,7 +18,7 @@ class ChangePosition(
     override fun execute() {
         val position = entity[Position.mapper]!!
         if (animate) {
-            val animation = Animation(position, newPosition, AnimationType.WALKING)
+            val animation = Animation(position, newPosition, AnimationType.WALK)
             entity.add(animation)
         }
         position.x = newPosition.x

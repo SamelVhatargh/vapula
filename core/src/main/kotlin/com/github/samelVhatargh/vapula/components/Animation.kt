@@ -6,7 +6,7 @@ import ktx.ashley.mapperFor
 import ktx.math.vec2
 
 enum class AnimationType {
-    NONE, WALKING
+    NONE, WALK
 }
 
 class Animation(var start: Position, var end: Position, var type: AnimationType) : Component, Pool.Poolable {
