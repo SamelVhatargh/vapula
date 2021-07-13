@@ -1,23 +1,74 @@
 package com.github.samelVhatargh.vapula.components
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.gdx.math.MathUtils.floor
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import ktx.ashley.mapperFor
 import ktx.math.vec2
 
-enum class AnimationType {
-    NONE, WALK
+data class Transition(val point: Vector2, var progress: Float = 0f)
+
+abstract class AnimationDescription {
+    abstract val start: Vector2
+    protected abstract val transitions: Array<Transition>
+    abstract val speed: Float
+    val transitionProgressFactor: Int
+        get() = transitions.size
+    open val moveCamera = false
+
+    fun getCurrentTransition(progress: Float): Transition? {
+        if (transitions.isEmpty()) {
+            return null
+        }
+
+        val chunkSize = 1f / transitions.size
+        val currentChunk = floor(progress / chunkSize)
+
+        if (currentChunk < 0 || currentChunk >= transitions.size) {
+            return null
+        }
+
+        return transitions[currentChunk]
+    }
 }
 
-class Animation(var start: Position, var end: Position, var type: AnimationType) : Component, Pool.Poolable {
+class NoAnimation : AnimationDescription() {
+    override val start = vec2(0f, 0f)
+    override val transitions = emptyArray<Transition>()
+    override val speed = 0f
+}
 
-    var vector = vec2(start.x.toFloat(), start.y.toFloat())
+class WalkAnimation(start: Position, end: Position) : AnimationDescription() {
+    override val start = start.toVec2()
+    override val transitions = arrayOf(Transition(end.toVec2()))
+    override val moveCamera = true
+    override val speed = .33f
+}
+
+class AttackAnimation(attacker: Position, target: Position) : AnimationDescription() {
+    override val start = attacker.toVec2()
+    override val transitions by lazy {
+        val a = attacker.toVec2()
+        val b = target.toVec2()
+        val attackPoint = a.add(b.sub(a).limit(.3f))
+        arrayOf(
+            Transition(attackPoint),
+            Transition(attacker.toVec2())
+        )
+    }
+    override val speed = .1f
+}
+
+class Animation(var description: AnimationDescription) : Component, Pool.Poolable {
+
+    var vector = description.start
     var progress = 0f
+    val transition: Transition?
+        get() = description.getCurrentTransition(progress)
 
     override fun reset() {
-        start = Position(0, 0)
-        end = Position(0, 0)
-        type = AnimationType.NONE
+        description = NoAnimation()
         vector = vec2(0f, 0f)
         progress = 0f
     }

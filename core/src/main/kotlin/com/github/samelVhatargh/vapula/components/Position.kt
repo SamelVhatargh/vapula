@@ -1,9 +1,11 @@
 package com.github.samelVhatargh.vapula.components
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import com.github.samelVhatargh.vapula.map.Direction
 import ktx.ashley.mapperFor
+import ktx.math.vec2
 import kotlin.math.abs
 import kotlin.math.sqrt
 
@@ -61,4 +63,6 @@ class Position(var x: Int = 0, var y: Int = 0, var z: Int = 0) : Component, Pool
     operator fun plus(direction: Direction): Position {
         return Position(x + direction.x, y + direction.y, z)
     }
+
+    fun toVec2(): Vector2 = vec2(x.toFloat(), y.toFloat())
 }

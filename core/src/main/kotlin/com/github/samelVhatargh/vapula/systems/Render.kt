@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.samelVhatargh.vapula.World
-import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.components.Animation
+import com.github.samelVhatargh.vapula.components.FieldOfView
+import com.github.samelVhatargh.vapula.components.Graphics
+import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.entities.RENDERABLE_FAMILY
 import com.github.samelVhatargh.vapula.utility.SpriteCache
 import ktx.ashley.get
@@ -55,15 +58,21 @@ class Render(
     private fun animate(entity: Entity, deltaTime: Float): Vector2? {
         val animation = entity[Animation.mapper] ?: return null
 
-        if (animation.type === AnimationType.WALK) {
-            val speed = 3f
+        val speed = animation.description.speed
 
-            animation.vector.lerp(vec2(animation.end.x.toFloat(), animation.end.y.toFloat()), animation.progress)
-            animation.progress += deltaTime * speed
+        val transition = animation.transition
+        if (transition === null) {
+            entity.remove<Animation>()
+            return null
+        }
 
-            if (animation.progress >= 1f) {
-                entity.remove<Animation>()
-            }
+        animation.vector.lerp(transition.point, transition.progress)
+
+        transition.progress += (deltaTime / speed) * animation.description.transitionProgressFactor
+        animation.progress += (deltaTime / speed)
+
+        if (animation.progress >= 1f) {
+            entity.remove<Animation>()
         }
 
         return animation.vector

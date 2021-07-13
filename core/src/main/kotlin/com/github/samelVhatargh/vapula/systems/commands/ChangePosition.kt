@@ -2,9 +2,9 @@ package com.github.samelVhatargh.vapula.systems.commands
 
 import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.components.Animation
-import com.github.samelVhatargh.vapula.components.AnimationType
 import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.components.WalkAnimation
 import ktx.ashley.get
 
 /**
@@ -18,7 +18,7 @@ class ChangePosition(
     override fun execute() {
         val position = entity[Position.mapper]!!
         if (animate) {
-            val animation = Animation(position, newPosition, AnimationType.WALK)
+            val animation = Animation(WalkAnimation(position, newPosition))
             entity.add(animation)
         }
         position.x = newPosition.x

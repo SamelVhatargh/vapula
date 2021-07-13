@@ -1,6 +1,9 @@
 package com.github.samelVhatargh.vapula.systems.commands
 
 import com.badlogic.ashley.core.Entity
+import com.github.samelVhatargh.vapula.components.Animation
+import com.github.samelVhatargh.vapula.components.AttackAnimation
+import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.components.Stats
 import com.github.samelVhatargh.vapula.events.EntityAttacked
 import com.github.samelVhatargh.vapula.events.Notifier
@@ -18,6 +21,7 @@ class Attack(private val notifier: Notifier, private val attacker: Entity, priva
         hitChance -= (defenderStats.perception + (defenderStats.dexterity / 2)) * 5
 
         val hit = random.chance(hitChance)
+        attacker.add(Animation(AttackAnimation(attacker[Position.mapper]!!, defender[Position.mapper]!!)))
 
         if (!hit) {
             notifier.notify(EntityAttacked(attacker, defender, true))

@@ -73,7 +73,7 @@ class Camera(private val camera: OrthographicCamera, private val inputMultiplexe
         var y = position.y.toFloat()
 
         val animation = player[Animation.mapper]
-        if (animation != null) {
+        if (animation != null && animation.description.moveCamera) {
             x = animation.vector.x
             y = animation.vector.y
         }
