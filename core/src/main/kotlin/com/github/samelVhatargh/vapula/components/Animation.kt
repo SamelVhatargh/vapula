@@ -60,6 +60,16 @@ class AttackAnimation(attacker: Position, target: Position) : AnimationDescripti
     override val speed = .1f
 }
 
+class DamageAnimation(position: Position) : AnimationDescription() {
+    override val start = position.toVec2()
+    override val transitions = arrayOf(
+        Transition(vec2(position.x + .1f, position.y.toFloat())),
+        Transition(vec2(position.x - .15f, position.y.toFloat())),
+        Transition(position.toVec2()),
+    )
+    override val speed = .1f
+}
+
 class Animation(var description: AnimationDescription) : Component, Pool.Poolable {
 
     var vector = description.start
