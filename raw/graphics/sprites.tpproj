@@ -5,7 +5,7 @@ output=../../assets/graphics
 alias=true
 alphaThreshold=0
 debug=false
-duplicatePadding=false
+duplicatePadding=true
 edgePadding=true
 fast=false
 filterMag=Nearest
@@ -37,7 +37,7 @@ inputFiles=[{path:character.png,type:Input,regionName:null},{path:monsters/gobli
 
 -PROJ-
 
-version=4.8.2
+version=4.10.0
 fileTypeType=png
 fileTypeData={encoding:RGBA8888}
 previewBackgroundColor=ffffffff

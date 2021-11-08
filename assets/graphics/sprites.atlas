@@ -1,348 +1,348 @@
 
 sprites.png
-size: 512,512
+size: 512, 512
 format: RGBA8888
-filter: Nearest,Nearest
+filter: Nearest, Nearest
 repeat: none
 Railroad0
   rotate: false
-  xy: 398, 203
+  xy: 265, 400
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad1
   rotate: false
-  xy: 200, 335
+  xy: 397, 202
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad10
   rotate: false
-  xy: 200, 71
+  xy: 133, 136
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad11
   rotate: false
-  xy: 68, 71
+  xy: 199, 400
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad12
   rotate: false
-  xy: 266, 5
+  xy: 265, 70
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad13
   rotate: false
-  xy: 68, 401
+  xy: 199, 268
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad14
   rotate: false
-  xy: 332, 401
+  xy: 397, 70
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad15
   rotate: false
-  xy: 266, 71
+  xy: 199, 136
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad2
   rotate: false
-  xy: 2, 5
+  xy: 265, 268
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad3
   rotate: false
-  xy: 332, 5
+  xy: 133, 400
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad4
   rotate: false
-  xy: 134, 137
+  xy: 133, 4
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad5
   rotate: false
-  xy: 200, 203
+  xy: 133, 202
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad6
   rotate: false
-  xy: 266, 269
+  xy: 331, 4
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad7
   rotate: false
-  xy: 266, 335
+  xy: 133, 70
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad8
   rotate: false
-  xy: 2, 71
+  xy: 67, 202
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Railroad9
   rotate: false
-  xy: 68, 5
+  xy: 199, 4
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 StairsDown
   rotate: false
-  xy: 398, 335
+  xy: 1, 268
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 StairsUp
   rotate: false
-  xy: 2, 335
+  xy: 265, 4
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Tile
   rotate: false
-  xy: 68, 203
+  xy: 199, 70
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall0
   rotate: false
-  xy: 2, 269
+  xy: 397, 268
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall1
   rotate: false
-  xy: 68, 335
+  xy: 1, 4
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall10
   rotate: false
-  xy: 2, 203
+  xy: 265, 202
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall11
   rotate: false
-  xy: 68, 269
+  xy: 199, 334
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall12
   rotate: false
-  xy: 134, 335
+  xy: 331, 136
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall13
   rotate: false
-  xy: 200, 401
+  xy: 67, 70
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall14
   rotate: false
-  xy: 2, 137
+  xy: 67, 334
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall2
   rotate: false
-  xy: 134, 401
+  xy: 1, 334
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall3
   rotate: false
-  xy: 134, 5
+  xy: 331, 268
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall4
   rotate: false
-  xy: 332, 335
+  xy: 1, 70
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall5
   rotate: false
-  xy: 200, 269
+  xy: 331, 70
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall6
   rotate: false
-  xy: 266, 401
+  xy: 199, 202
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall7
   rotate: false
-  xy: 200, 137
+  xy: 1, 202
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall8
   rotate: false
-  xy: 266, 203
+  xy: 265, 136
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Wall9
   rotate: false
-  xy: 134, 269
+  xy: 265, 334
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 WallCorner1
   rotate: false
-  xy: 266, 137
+  xy: 67, 4
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 WallCorner2
   rotate: false
-  xy: 332, 203
+  xy: 133, 334
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 WallCorner3
   rotate: false
-  xy: 398, 71
+  xy: 331, 202
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 WallCorner4
   rotate: false
-  xy: 200, 5
+  xy: 331, 400
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 barrel
   rotate: false
-  xy: 398, 401
+  xy: 397, 136
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 character
   rotate: false
-  xy: 398, 269
+  xy: 67, 136
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 characterDead
   rotate: false
-  xy: 332, 269
+  xy: 397, 400
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 goblin
   rotate: false
-  xy: 68, 137
+  xy: 397, 334
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 goblinArcher
   rotate: false
-  xy: 398, 137
+  xy: 1, 400
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 goblinArcherDead
   rotate: false
-  xy: 2, 401
+  xy: 67, 400
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 goblinDead
   rotate: false
-  xy: 134, 203
+  xy: 1, 136
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 goblinShaman
   rotate: false
-  xy: 332, 71
+  xy: 133, 268
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 goblinShamanDead
   rotate: false
-  xy: 134, 71
+  xy: 331, 334
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 white
   rotate: false
-  xy: 2, 2
+  xy: 1, 1
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 x
   rotate: false
-  xy: 332, 137
+  xy: 67, 268
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
