@@ -38,13 +38,13 @@ class Render(
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val position = entity[Position.mapper]!!
         if (position.z != world.storey.z) {
-            entity.remove<Animation>()
+            removeAnimation(entity)
             return
         }
 
         val fov = player[FieldOfView.mapper]!!
         if (!fov.isVisible(position)) {
-            entity.remove<Animation>()
+            removeAnimation(entity)
             return
         }
 
@@ -62,7 +62,7 @@ class Render(
 
         val transition = animation.transition
         if (transition === null) {
-            entity.remove<Animation>()
+            removeAnimation(entity)
             return null
         }
 
@@ -72,9 +72,16 @@ class Render(
         animation.progress += (deltaTime / speed)
 
         if (animation.progress >= 1f) {
-            entity.remove<Animation>()
+            removeAnimation(entity)
         }
 
         return animation.vector
+    }
+
+    private fun removeAnimation(entity: Entity) {
+        val animation = entity.remove<Animation>()
+        if (animation is Animation && animation.description.destroyEntityOnComplete) {
+            engine.removeEntity(entity)
+        }
     }
 }

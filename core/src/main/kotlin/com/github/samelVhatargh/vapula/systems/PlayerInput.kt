@@ -71,7 +71,7 @@ class PlayerInput(private val inputMultiplexer: InputMultiplexer, private val wo
             doNothing()
             return
         }
-        player.command = AggressiveMove(engine, playerEntity, direction, world.storey)
+        player.command = AggressiveMove(engine, playerEntity, direction, world)
     }
 
     private fun doNothing() {

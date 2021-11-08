@@ -16,6 +16,7 @@ abstract class AnimationDescription {
     val transitionProgressFactor: Int
         get() = transitions.size
     open val moveCamera = false
+    open val destroyEntityOnComplete = false
 
     fun getCurrentTransition(progress: Float): Transition? {
         if (transitions.isEmpty()) {
@@ -39,11 +40,17 @@ class NoAnimation : AnimationDescription() {
     override val speed = 0f
 }
 
-class WalkAnimation(start: Position, end: Position) : AnimationDescription() {
+open class WalkAnimation(start: Position, end: Position) : AnimationDescription() {
     override val start = start.toVec2()
     override val transitions = arrayOf(Transition(end.toVec2()))
     override val moveCamera = true
     override val speed = .33f
+}
+
+class ProjectileAnimation(start: Position, end: Position) : WalkAnimation(start, end) {
+    override val speed = 1f
+    override val moveCamera = false
+    override val destroyEntityOnComplete = true
 }
 
 class AttackAnimation(attacker: Position, target: Position) : AnimationDescription() {

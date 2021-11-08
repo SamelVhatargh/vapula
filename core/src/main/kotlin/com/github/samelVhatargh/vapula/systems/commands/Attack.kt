@@ -1,27 +1,37 @@
 package com.github.samelVhatargh.vapula.systems.commands
 
 import com.badlogic.ashley.core.Entity
-import com.github.samelVhatargh.vapula.components.Animation
-import com.github.samelVhatargh.vapula.components.AttackAnimation
-import com.github.samelVhatargh.vapula.components.Position
-import com.github.samelVhatargh.vapula.components.Stats
+import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.entities.Factory
 import com.github.samelVhatargh.vapula.events.EntityAttacked
 import com.github.samelVhatargh.vapula.events.Notifier
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.ashley.get
 
-class Attack(private val notifier: Notifier, private val attacker: Entity, private val defender: Entity) : Command {
+class Attack(
+    private val notifier: Notifier,
+    private val attacker: Entity,
+    private val defender: Entity,
+    private val entityFactory: Factory
+) : Command {
 
     override fun execute() {
         val attackerStats = attacker[Stats.mapper]!!
         val defenderStats = defender[Stats.mapper]!!
+        val attackerPosition = attacker[Position.mapper]!!
+        val defenderPosition = defender[Position.mapper]!!
 
         var hitChance = 65
         hitChance += (attackerStats.dexterity + (attackerStats.perception / 2)) * 5
         hitChance -= (defenderStats.perception + (defenderStats.dexterity / 2)) * 5
 
         val hit = random.chance(hitChance)
-        attacker.add(Animation(AttackAnimation(attacker[Position.mapper]!!, defender[Position.mapper]!!)))
+        attacker.add(Animation(AttackAnimation(attackerPosition, defenderPosition)))
+
+        if (attackerStats.ranged) {
+            val arrow = entityFactory.createArrow(attackerPosition, defenderPosition)
+            arrow.add(Animation(ProjectileAnimation(attackerPosition, defenderPosition)))
+        }
 
         if (!hit) {
             notifier.notify(EntityAttacked(attacker, defender, true))

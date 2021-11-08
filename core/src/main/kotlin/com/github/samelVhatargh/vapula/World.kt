@@ -32,7 +32,7 @@ class World(private val engine: Engine) {
     val stories = Array(maps.size) { z -> Storey(maps[z], z) }
     var storey = stories[0]
 
-    private val entityFactory = Factory(engine, storey)
+    val entityFactory = Factory(engine, storey)
 
     val player = entityFactory.createPlayer()
 

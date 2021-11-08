@@ -166,4 +166,19 @@ class Factory(private val engine: Engine, var storey: Storey) {
         stairs.add(position)
         stairs.add(if (up) GoUp() else GoDown())
     }
+
+    /**
+     * Creates [arrow][Entity] facing from [start] to [end]
+     */
+    fun createArrow(start: Position, end: Position): Entity {
+        val arrow = engine.entity {
+            with<Graphics> {
+                spriteName = "arrow"
+                layer = Layer.FLOOR
+            }
+        }
+
+        arrow.add(Position(start.x, start.y, start.z))
+        return arrow
+    }
 }
