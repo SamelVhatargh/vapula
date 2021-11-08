@@ -48,7 +48,7 @@ Railroad13
   index: -1
 Railroad14
   rotate: false
-  xy: 397, 70
+  xy: 397, 4
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -90,7 +90,7 @@ Railroad5
   index: -1
 Railroad6
   rotate: false
-  xy: 331, 4
+  xy: 397, 70
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -125,7 +125,7 @@ StairsDown
   index: -1
 StairsUp
   rotate: false
-  xy: 265, 4
+  xy: 331, 4
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -266,6 +266,13 @@ WallCorner3
 WallCorner4
   rotate: false
   xy: 331, 400
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+arrow
+  rotate: false
+  xy: 265, 4
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
