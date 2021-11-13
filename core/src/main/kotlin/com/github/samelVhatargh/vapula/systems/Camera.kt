@@ -74,8 +74,8 @@ class Camera(private val camera: OrthographicCamera, private val inputMultiplexe
 
         val animation = player[Animation.mapper]
         if (animation != null && animation.description.moveCamera) {
-            x = animation.vector.x
-            y = animation.vector.y
+            x = animation.animatedVector.x
+            y = animation.animatedVector.y
         }
 
         camera.position.x = x + HUD_WIDTH / 2

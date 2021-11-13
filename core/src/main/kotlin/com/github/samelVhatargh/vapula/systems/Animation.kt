@@ -11,6 +11,7 @@ import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.entities.ANIMATION_FAMILY
 import ktx.ashley.get
 import ktx.ashley.remove
+import ktx.math.vec2
 
 /**
  * This system updates entity [Graphics.position] according to its current [Animation]
@@ -47,16 +48,18 @@ class Animation(private val world: World) : IteratingSystem(ANIMATION_FAMILY) {
             return null
         }
 
-        animation.vector.lerp(transition.point, transition.progress)
+        animation.animatedVector = vec2(animation.startVector.x, animation.startVector.y)
+        animation.animatedVector.lerp(transition.point, transition.progress)
 
         transition.progress += (deltaTime / speed) * animation.description.transitionProgressFactor
         animation.progress += (deltaTime / speed)
 
         if (animation.progress >= 1f) {
             removeAnimation(entity)
+            return null
         }
 
-        return animation.vector
+        return animation.animatedVector
     }
 
     private fun removeAnimation(entity: Entity) {

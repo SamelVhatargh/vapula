@@ -79,14 +79,16 @@ class DamageAnimation(position: Position) : AnimationDescription() {
 
 class Animation(var description: AnimationDescription) : Component, Pool.Poolable {
 
-    var vector = description.start
+    var startVector = description.start
+    var animatedVector = startVector
     var progress = 0f
     val transition: Transition?
         get() = description.getCurrentTransition(progress)
 
     override fun reset() {
         description = NoAnimation()
-        vector = vec2(0f, 0f)
+        startVector = vec2(0f, 0f)
+        animatedVector = startVector
         progress = 0f
     }
 
