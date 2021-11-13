@@ -49,7 +49,7 @@ class Animation(private val world: World) : IteratingSystem(ANIMATION_FAMILY) {
         }
 
         animation.animatedVector = vec2(animation.startVector.x, animation.startVector.y)
-        animation.animatedVector.lerp(transition.point, transition.progress)
+        animation.animatedVector.interpolate(transition.point, transition.progress, animation.description.interpolation)
 
         transition.progress += (deltaTime / speed) * animation.description.transitionProgressFactor
         animation.progress += (deltaTime / speed)
