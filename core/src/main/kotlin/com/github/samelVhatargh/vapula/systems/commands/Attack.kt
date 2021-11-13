@@ -5,8 +5,11 @@ import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.entities.Factory
 import com.github.samelVhatargh.vapula.events.EntityAttacked
 import com.github.samelVhatargh.vapula.events.Notifier
+import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.ashley.get
+import ktx.log.debug
+import ktx.log.logger
 
 class Attack(
     private val notifier: Notifier,
@@ -29,8 +32,12 @@ class Attack(
         attacker.add(Animation(AttackAnimation(attackerPosition, defenderPosition)))
 
         if (attackerStats.ranged) {
-            val arrow = entityFactory.createArrow(attackerPosition, defenderPosition)
-            arrow.add(Animation(ProjectileAnimation(attackerPosition, defenderPosition)))
+            var targetPosition = Position(defenderPosition.x, defenderPosition.y, defenderPosition.z)
+            if (!hit) {
+                targetPosition += Direction.values().random()
+            }
+            val arrow = entityFactory.createArrow(attackerPosition, targetPosition)
+            arrow.add(Animation(ProjectileAnimation(attackerPosition, targetPosition)))
         }
 
         if (!hit) {
