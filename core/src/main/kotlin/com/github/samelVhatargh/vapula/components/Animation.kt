@@ -44,11 +44,11 @@ open class WalkAnimation(start: Position, end: Position) : AnimationDescription(
     override val start = start.toVec2()
     override val transitions = arrayOf(Transition(end.toVec2()))
     override val moveCamera = true
-    override val speed = .33f
+    override val speed = .15f
 }
 
 class ProjectileAnimation(start: Position, end: Position) : WalkAnimation(start, end) {
-    override val speed = 1f
+    override val speed = .2f
     override val moveCamera = false
     override val destroyEntityOnComplete = true
 }
