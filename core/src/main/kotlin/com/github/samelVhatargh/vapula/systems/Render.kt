@@ -37,51 +37,18 @@ class Render(
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val position = entity[Position.mapper]!!
-        if (position.z != world.storey.z) {
-            removeAnimation(entity)
-            return
-        }
+        val graphics = entity[Graphics.mapper]!!
+
+        if (position.z != world.storey.z) return
 
         val fov = player[FieldOfView.mapper]!!
-        if (!fov.isVisible(position)) {
-            removeAnimation(entity)
-            return
-        }
+        if (!fov.isVisible(position)) return
 
-        val vector = animate(entity, deltaTime) ?: vec2(position.x.toFloat(), position.y.toFloat())
-        spriteCache.getSprite(entity[Graphics.mapper]!!).apply {
+        val vector = graphics.position ?: position.toVec2()
+        spriteCache.getSprite(graphics).apply {
             setPosition(vector.x, vector.y)
             draw(batch)
         }
     }
 
-    private fun animate(entity: Entity, deltaTime: Float): Vector2? {
-        val animation = entity[Animation.mapper] ?: return null
-
-        val speed = animation.description.speed
-
-        val transition = animation.transition
-        if (transition === null) {
-            removeAnimation(entity)
-            return null
-        }
-
-        animation.vector.lerp(transition.point, transition.progress)
-
-        transition.progress += (deltaTime / speed) * animation.description.transitionProgressFactor
-        animation.progress += (deltaTime / speed)
-
-        if (animation.progress >= 1f) {
-            removeAnimation(entity)
-        }
-
-        return animation.vector
-    }
-
-    private fun removeAnimation(entity: Entity) {
-        val animation = entity.remove<Animation>()
-        if (animation is Animation && animation.description.destroyEntityOnComplete) {
-            engine.removeEntity(entity)
-        }
-    }
 }
