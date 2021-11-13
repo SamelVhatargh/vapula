@@ -17,11 +17,13 @@ class Graphics : Component, Pool.Poolable, Comparable<Graphics> {
     var spriteName = ""
     var layer = Layer.CREATURE
     var position: Vector2? = null
+    var rotation: Float? = null
 
     override fun reset() {
         spriteName = ""
-        position = null
         layer = Layer.CREATURE
+        position = null
+        rotation = null
     }
 
     companion object {

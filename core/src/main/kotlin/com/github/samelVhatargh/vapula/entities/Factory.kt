@@ -175,6 +175,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
             with<Graphics> {
                 spriteName = "arrow"
                 layer = Layer.FLOOR
+                rotation = start.toVec2().sub(end.toVec2()).angleDeg() - 270f
             }
         }
 

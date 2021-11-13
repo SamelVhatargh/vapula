@@ -47,6 +47,11 @@ class Render(
         val vector = graphics.position ?: position.toVec2()
         spriteCache.getSprite(graphics).apply {
             setPosition(vector.x, vector.y)
+            val spriteRotation = graphics.rotation
+            if (spriteRotation != null) {
+                setOriginCenter()
+                rotation = spriteRotation
+            }
             draw(batch)
         }
     }
