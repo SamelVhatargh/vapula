@@ -89,6 +89,11 @@ class Factory(private val engine: Engine, var storey: Storey) {
             damageDice = 4
             healDice = if (type === GoblinType.SHAMAN) 4 else 0
             ranged = type !== GoblinType.FIGHTER
+            projectileType = when (type) {
+                GoblinType.ARCHER -> ProjectileType.ARROW
+                GoblinType.SHAMAN -> ProjectileType.MAGIC
+                else -> ProjectileType.NONE
+            }
 
             generateHp(2)
         }
@@ -168,12 +173,12 @@ class Factory(private val engine: Engine, var storey: Storey) {
     }
 
     /**
-     * Creates [arrow][Entity] facing from [start] to [end]
+     * Creates [projectile][Entity] with specified [type] facing from [start] to [end]
      */
-    fun createArrow(start: Position, end: Position): Entity {
+    fun createProjectile(start: Position, end: Position, type: ProjectileType): Entity {
         val arrow = engine.entity {
             with<Graphics> {
-                spriteName = "arrow"
+                spriteName = type.spriteName
                 layer = Layer.FLOOR
                 rotation = start.toVec2().sub(end.toVec2()).angleDeg() - 270f
             }

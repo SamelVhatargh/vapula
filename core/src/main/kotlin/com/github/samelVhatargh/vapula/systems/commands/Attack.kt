@@ -8,8 +8,6 @@ import com.github.samelVhatargh.vapula.events.Notifier
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.ashley.get
-import ktx.log.debug
-import ktx.log.logger
 
 class Attack(
     private val notifier: Notifier,
@@ -36,7 +34,7 @@ class Attack(
             if (!hit) {
                 targetPosition += Direction.values().random()
             }
-            val arrow = entityFactory.createArrow(attackerPosition, targetPosition)
+            val arrow = entityFactory.createProjectile(attackerPosition, targetPosition, attackerStats.projectileType)
             arrow.add(Animation(ProjectileAnimation(attackerPosition, targetPosition)))
         }
 

@@ -9,6 +9,12 @@ import kotlin.math.min
 
 const val MAX_LEVEL = 10
 
+enum class ProjectileType(val spriteName: String) {
+    NONE(""),
+    ARROW("arrow"),
+    MAGIC("magicMissile")
+}
+
 /**
  * Способности всех существ, которые могут драться
  */
@@ -35,6 +41,7 @@ class Stats : Component, Pool.Poolable {
     var damageDice = 0
     var healDice = 0
     var ranged = false
+    var projectileType = ProjectileType.NONE
 
     val sightRange: Int
         get() = floor(perception / 3.5).toInt() + 3
@@ -56,6 +63,7 @@ class Stats : Component, Pool.Poolable {
         damageDice = 0
         healDice = 0
         ranged = false
+        projectileType = ProjectileType.NONE
 
         strength = 0
         dexterity = 0
