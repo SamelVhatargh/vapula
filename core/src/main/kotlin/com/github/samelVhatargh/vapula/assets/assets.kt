@@ -26,6 +26,8 @@ enum class SoundAsset(
     MELEE_ATTACK_01("attacks/melee01.wav"),
     MELEE_ATTACK_02("attacks/melee02.wav"),
     MELEE_ATTACK_03("attacks/melee03.wav"),
+    RANGE_ATTACK_01("attacks/range01.wav"),
+    MAGIC_ATTACK_01("attacks/magic01.wav"),
     CRUSH_HIT_01("hits/crushHit01.wav"),
     CRUSH_HIT_02("hits/crushHit02.wav"),
     CRUSH_HIT_03("hits/crushHit03.wav"),

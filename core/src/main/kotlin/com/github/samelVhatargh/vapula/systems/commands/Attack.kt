@@ -7,6 +7,7 @@ import com.github.samelVhatargh.vapula.entities.Factory
 import com.github.samelVhatargh.vapula.events.EntityAttacked
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.notifier
+import com.github.samelVhatargh.vapula.sounds.AttackType
 import com.github.samelVhatargh.vapula.sounds.HitSound
 import com.github.samelVhatargh.vapula.sounds.HitType
 import com.github.samelVhatargh.vapula.sounds.MeleeAttackSound
@@ -42,12 +43,20 @@ class Attack(
             }
             val arrow = entityFactory.createProjectile(attackerPosition, targetPosition, attackerStats.projectileType)
             arrow.add(Animation(ProjectileAnimation(attackerPosition, targetPosition)))
-        } else {
-            engine.entity {
-                with<SoundEffect> {
-                    type = MeleeAttackSound()
-                    position = attackerPosition
-                }
+        }
+
+        var attackType = AttackType.MELEE
+        if (attackerStats.ranged) {
+            attackType = AttackType.RANGE
+        }
+        if (attackerStats.projectileType === ProjectileType.MAGIC) {
+            attackType = AttackType.MAGIC
+        }
+
+        engine.entity {
+            with<SoundEffect> {
+                type = MeleeAttackSound(attackType)
+                position = attackerPosition
             }
         }
 
