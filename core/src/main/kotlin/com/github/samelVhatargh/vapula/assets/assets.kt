@@ -3,6 +3,7 @@ package com.github.samelVhatargh.vapula.assets
 import com.badlogic.gdx.assets.AssetDescriptor
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.assets.loaders.BitmapFontLoader
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
@@ -45,6 +46,13 @@ enum class SoundAsset(
     PLAYER_DEATH_01("death/player01.wav"),
 }
 
+enum class MusicAsset(
+    val fileName: String,
+    val descriptor: AssetDescriptor<Music> = AssetDescriptor(fileName, Music::class.java)
+) {
+    CAVE("music/ambienceCave01.mp3")
+}
+
 enum class TextureAtlasAsset(
     val fileName: String,
     val descriptor: AssetDescriptor<TextureAtlas> = AssetDescriptor(fileName, TextureAtlas::class.java)
@@ -66,5 +74,6 @@ enum class FontAsset(
 }
 
 operator fun AssetManager.get(asset: SoundAsset) = getAsset<Sound>(asset.fileName)
+operator fun AssetManager.get(asset: MusicAsset) = getAsset<Music>(asset.fileName)
 operator fun AssetManager.get(asset: TextureAtlasAsset) = getAsset<TextureAtlas>(asset.fileName)
 operator fun AssetManager.get(asset: FontAsset) = getAsset<BitmapFont>(asset.fileName)

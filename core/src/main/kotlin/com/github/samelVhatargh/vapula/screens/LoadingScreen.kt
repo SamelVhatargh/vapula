@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.github.samelVhatargh.vapula.Vapula
 import com.github.samelVhatargh.vapula.assets.FontAsset
+import com.github.samelVhatargh.vapula.assets.MusicAsset
 import com.github.samelVhatargh.vapula.assets.SoundAsset
 import com.github.samelVhatargh.vapula.assets.TextureAtlasAsset
 import com.github.samelVhatargh.vapula.ui.createSkin
@@ -22,6 +23,7 @@ class LoadingScreen(val assets: AssetManager, val game: Vapula) : KtxScreen {
 
     override fun show() {
         SoundAsset.values().forEach { if (it !== SoundAsset.EMPTY) assets.load(it.descriptor) }
+        MusicAsset.values().forEach { assets.load(it.descriptor) }
         TextureAtlasAsset.values().forEach { assets.load(it.descriptor) }
         FontAsset.values().forEach { assets.load(it.descriptor) }
     }
