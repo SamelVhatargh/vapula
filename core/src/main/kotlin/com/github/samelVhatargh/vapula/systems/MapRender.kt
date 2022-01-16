@@ -41,8 +41,10 @@ class MapRender(
     private val player = world.player
     private val camera = viewport.camera
 
-    private val fogOfWarSprite = spriteCache.getSprite("white").apply {
-        setColor(0f, 0f, 0f, 0.75f)
+    private val fogOfWarSprite by lazy {
+        spriteCache.getSprite("white").apply {
+            setColor(0f, 0f, 0f, 0.75f)
+        }
     }
 
     private val tileGraphics = mutableListOf<TileGraphic>()

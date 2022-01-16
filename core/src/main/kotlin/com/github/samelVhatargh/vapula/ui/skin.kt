@@ -1,19 +1,20 @@
 package com.github.samelVhatargh.vapula.ui
 
-import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.github.samelVhatargh.vapula.assets.FontAsset
+import com.github.samelVhatargh.vapula.assets.TextureAtlasAsset
+import com.github.samelVhatargh.vapula.assets.get
 import ktx.scene2d.Scene2DSkin
 import ktx.style.label
 import ktx.style.scrollPane
 import ktx.style.skin
 
-fun createSkin() {
-    val atlas = TextureAtlas(Gdx.files.internal("graphics/ui.atlas"))
+fun createSkin(assets: AssetManager) {
+    val atlas = assets[TextureAtlasAsset.UI]
     Scene2DSkin.defaultSkin = skin(atlas) {
         label {
-            font = BitmapFont(Gdx.files.internal("fonts/DejaVu24.fnt"), atlas.findRegion("DejaVu24"))
+            font = assets[FontAsset.SIZE_24]
             fontColor = Color.WHITE
         }
         scrollPane {

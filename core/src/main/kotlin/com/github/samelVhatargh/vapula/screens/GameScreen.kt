@@ -27,7 +27,7 @@ class GameScreen(
         Stage(FitViewport(16 * 64f, 9 * 64f))
     }
 
-    private val hud = Hud()
+    private val hud by lazy { Hud() }
 
     override fun show() {
         super.show()

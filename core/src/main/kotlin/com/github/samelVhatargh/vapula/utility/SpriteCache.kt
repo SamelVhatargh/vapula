@@ -1,7 +1,9 @@
 package com.github.samelVhatargh.vapula.utility
 
+import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.Sprite
-import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.github.samelVhatargh.vapula.assets.TextureAtlasAsset
+import com.github.samelVhatargh.vapula.assets.get
 import com.github.samelVhatargh.vapula.components.Graphics
 import ktx.log.debug
 import ktx.log.logger
@@ -9,7 +11,7 @@ import ktx.log.logger
 /**
  * Ensures that there is only on instance of each [Sprite]
  */
-class SpriteCache(private val atlas: TextureAtlas) {
+class SpriteCache(private val assets: AssetManager) {
 
     companion object {
         val log = logger<SpriteCache>()
@@ -20,7 +22,7 @@ class SpriteCache(private val atlas: TextureAtlas) {
     fun getSprite(name: String): Sprite {
         var sprite = cache[name]
         if (sprite == null) {
-            val region = atlas.findRegion(name)
+            val region = assets[TextureAtlasAsset.SPRITES].findRegion(name)
             require(region != null) { "Cant load sprite $name" }
 
             sprite = Sprite(region).apply {

@@ -4,15 +4,15 @@ import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
+import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.samelVhatargh.vapula.console.DebugArguments
 import com.github.samelVhatargh.vapula.console.DebugCommandExecutor
 import com.github.samelVhatargh.vapula.screens.GameScreen
+import com.github.samelVhatargh.vapula.screens.LoadingScreen
 import com.github.samelVhatargh.vapula.systems.*
-import com.github.samelVhatargh.vapula.ui.createSkin
 import com.github.samelVhatargh.vapula.utility.SpriteCache
 import com.github.samelVhatargh.vapula.utility.random
 import com.strongjoshua.console.GUIConsole
@@ -24,7 +24,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
     private var camera = OrthographicCamera()
     private var viewport = FitViewport(16f, 9f, camera)
     private val batch by lazy { SpriteBatch() }
-    private lateinit var spriteAtlas: TextureAtlas
+    private val assets by lazy { AssetManager() }
 
     private val engine = PooledEngine()
 
@@ -36,19 +36,17 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
         if (seed !== null) {
             random.setSeed(seed)
         }
-        spriteAtlas = TextureAtlas(Gdx.files.internal("graphics/sprites.atlas"))
 
         val world = World(engine)
-        createSkin()
 
         val inputMultiplexer = InputMultiplexer()
         Gdx.input.inputProcessor = inputMultiplexer
 
-        val spriteCache = SpriteCache(spriteAtlas)
+        val spriteCache = SpriteCache(assets)
         engine.apply {
             addSystem(PlayerInput(inputMultiplexer, world))
             addSystem(Animation(world))
-            addSystem(Sound())
+            addSystem(Sound(assets))
             addSystem(Camera(camera, inputMultiplexer))
             addSystem(MapRender(spriteCache, batch, viewport, world))
             addSystem(FieldOfViewCalculator(world))
@@ -68,13 +66,14 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
         }
 
         addScreen(GameScreen(engine, viewport, console, inputMultiplexer))
-        setScreen<GameScreen>()
+        addScreen(LoadingScreen(assets, this))
+        setScreen<LoadingScreen>()
     }
 
     override fun dispose() {
         super.dispose()
         console.dispose()
         batch.dispose()
-        spriteAtlas.dispose()
+        assets.dispose()
     }
 }
