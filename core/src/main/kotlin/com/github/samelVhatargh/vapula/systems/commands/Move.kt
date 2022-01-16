@@ -73,6 +73,6 @@ class AggressiveMove(
         val target = engine.getEntityAtPosition(targetPosition, allOf(Stats::class).exclude(Dead::class).get())
             ?: return MoveInDirection(engine, entity, direction, world.storey).execute()
 
-        return Attack(engine.notifier, entity, target, world.entityFactory).execute()
+        return Attack(engine, entity, target, world.entityFactory).execute()
     }
 }

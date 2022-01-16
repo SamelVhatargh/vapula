@@ -23,6 +23,9 @@ enum class SoundAsset(
     STEP_8("steps/footstepDirt08.wav"),
     STEP_9("steps/footstepDirt09.wav"),
     STEP_10("steps/footstepDirt10.wav"),
+    MELEE_ATTACK_01("attacks/melee01.wav"),
+    MELEE_ATTACK_02("attacks/melee02.wav"),
+    MELEE_ATTACK_03("attacks/melee03.wav"),
 }
 
 enum class TextureAtlasAsset(
