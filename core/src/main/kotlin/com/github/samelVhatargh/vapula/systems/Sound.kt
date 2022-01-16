@@ -11,6 +11,7 @@ import com.github.samelVhatargh.vapula.components.SoundEffect
 import com.github.samelVhatargh.vapula.sounds.SoundEffectType
 import ktx.ashley.allOf
 import ktx.ashley.get
+import ktx.math.random
 
 private const val AUDIBLE_DISTANCE = 5f
 
@@ -57,6 +58,7 @@ class Sound(
 
         val pan = clamp((soundEffect.position.x - playerPosition.x) / AUDIBLE_DISTANCE, -1f, 1f)
         val id = sound.play()
+        sound.setPitch(id, (.925f..1.075f).random())
         sound.setPan(id, pan, volume)
     }
 }
