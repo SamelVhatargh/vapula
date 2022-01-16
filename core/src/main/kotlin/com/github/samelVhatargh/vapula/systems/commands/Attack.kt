@@ -83,6 +83,6 @@ class Attack(
         val damage = (1..attackerStats.damageDice).random() + (attackerStats.strength / 2)
         engine.notifier.notify(EntityAttacked(attacker, defender, false))
 
-        Damage(engine.notifier, defender, damage).execute()
+        Damage(engine, defender, damage).execute()
     }
 }

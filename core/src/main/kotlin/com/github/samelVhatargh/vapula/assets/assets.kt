@@ -40,6 +40,9 @@ enum class SoundAsset(
     MAGIC_HIT_01("hits/magicHit01.wav"),
     SWORD_HIT_01("hits/swordHit01.wav"),
     SWORD_HIT_02("hits/swordHit02.wav"),
+    GOBLIN_DEATH_01("death/goblin01.wav"),
+    GOBLIN_DEATH_02("death/goblin02.wav"),
+    PLAYER_DEATH_01("death/player01.wav"),
 }
 
 enum class TextureAtlasAsset(
