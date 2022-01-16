@@ -3,18 +3,16 @@ package com.github.samelVhatargh.vapula.systems.commands
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.World
-import com.github.samelVhatargh.vapula.components.Dead
-import com.github.samelVhatargh.vapula.components.Position
-import com.github.samelVhatargh.vapula.components.Stats
+import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.entities.OCCUPY_SPACE_FAMILY
 import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Path
 import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.notifier
-import ktx.ashley.allOf
-import ktx.ashley.exclude
-import ktx.ashley.get
+import com.github.samelVhatargh.vapula.sounds.StepSound
+import ktx.ashley.*
+import kotlin.with
 
 abstract class BaseMove : Command {
     fun changePosition(engine: Engine, storey: Storey, entity: Entity, newPosition: Position) {
@@ -22,6 +20,14 @@ abstract class BaseMove : Command {
 
         if (obstacle == null && storey.isWalkable(newPosition.x, newPosition.y)) {
             ChangePosition(entity, newPosition).execute()
+            if (entity.has(Player.mapper)) {
+                engine.entity {
+                    with<SoundEffect> {
+                        position = newPosition
+                        type = StepSound()
+                    }
+                }
+            }
         }
     }
 }

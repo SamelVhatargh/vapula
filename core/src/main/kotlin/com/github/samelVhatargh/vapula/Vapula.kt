@@ -48,6 +48,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
         engine.apply {
             addSystem(PlayerInput(inputMultiplexer, world))
             addSystem(Animation(world))
+            addSystem(Sound())
             addSystem(Camera(camera, inputMultiplexer))
             addSystem(MapRender(spriteCache, batch, viewport, world))
             addSystem(FieldOfViewCalculator(world))
