@@ -20,12 +20,10 @@ abstract class BaseMove : Command {
 
         if (obstacle == null && storey.isWalkable(newPosition.x, newPosition.y)) {
             ChangePosition(entity, newPosition).execute()
-            if (entity.has(Player.mapper)) {
-                engine.entity {
-                    with<SoundEffect> {
-                        position = newPosition
-                        type = StepSound()
-                    }
+            engine.entity {
+                with<SoundEffect> {
+                    position = newPosition
+                    type = StepSound()
                 }
             }
         }
