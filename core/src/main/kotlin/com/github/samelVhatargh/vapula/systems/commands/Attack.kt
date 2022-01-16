@@ -7,6 +7,8 @@ import com.github.samelVhatargh.vapula.entities.Factory
 import com.github.samelVhatargh.vapula.events.EntityAttacked
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.notifier
+import com.github.samelVhatargh.vapula.sounds.HitSound
+import com.github.samelVhatargh.vapula.sounds.HitType
 import com.github.samelVhatargh.vapula.sounds.MeleeAttackSound
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.ashley.entity
@@ -52,6 +54,21 @@ class Attack(
         if (!hit) {
             engine.notifier.notify(EntityAttacked(attacker, defender, true))
             return
+        }
+
+        var hitType = HitType.SLASH
+        if (attackerStats.ranged) {
+            hitType = HitType.PIERCE
+        }
+        if (attackerStats.projectileType === ProjectileType.MAGIC) {
+            hitType = HitType.MAGIC
+        }
+
+        engine.entity {
+            with<SoundEffect> {
+                type = HitSound(hitType)
+                position = defenderPosition
+            }
         }
 
         val damage = (1..attackerStats.damageDice).random() + (attackerStats.strength / 2)

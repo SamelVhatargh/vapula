@@ -8,4 +8,6 @@ with use of [LibKTX](https://github.com/libktx/ktx) etension.
   - "10 Basic RPG enemies: the goblin supplement" by Stephen Challener (Redshrike) licensed CC-BY 3.0 or OGA-BY 3.0: [https://opengameart.org/content/10-basic-rpg-enemies-the-goblin-supplement](https://opengameart.org/content/10-basic-rpg-enemies-the-goblin-supplement)
 - Sound effects
   - "Fantasy Sound Effects Library" by [Little Robot Sound Factory](http://www.littlerobotsoundfactory.com) licensed CC-BY 3.0: [https://opengameart.org/content/fantasy-sound-effects-library](https://opengameart.org/content/fantasy-sound-effects-library)
-
+  - "Fleshy Fight Sounds" by will_leamon licensed OGA-BY 3.0: [https://opengameart.org/content/fleshy-fight-sounds](https://opengameart.org/content/fleshy-fight-sounds)
+  - "37 hits/punches" by Independent.nu licensed CC0: [https://opengameart.org/content/37-hitspunches](https://opengameart.org/content/37-hitspunches)
+  - "RPG Sound Pack" by artisticdude licensed CC0: [https://opengameart.org/content/rpg-sound-pack](https://opengameart.org/content/rpg-sound-pack)

@@ -26,6 +26,18 @@ enum class SoundAsset(
     MELEE_ATTACK_01("attacks/melee01.wav"),
     MELEE_ATTACK_02("attacks/melee02.wav"),
     MELEE_ATTACK_03("attacks/melee03.wav"),
+    CRUSH_HIT_01("hits/crushHit01.wav"),
+    CRUSH_HIT_02("hits/crushHit02.wav"),
+    CRUSH_HIT_03("hits/crushHit03.wav"),
+    CRUSH_HIT_04("hits/crushHit04.wav"),
+    CRUSH_HIT_05("hits/crushHit05.wav"),
+    CRUSH_HIT_06("hits/crushHit06.wav"),
+    CRUSH_HIT_07("hits/crushHit07.wav"),
+    ARROW_HIT_01("hits/arrowHit01.wav"),
+    ARROW_HIT_02("hits/arrowHit02.wav"),
+    MAGIC_HIT_01("hits/magicHit01.wav"),
+    SWORD_HIT_01("hits/swordHit01.wav"),
+    SWORD_HIT_02("hits/swordHit02.wav"),
 }
 
 enum class TextureAtlasAsset(
