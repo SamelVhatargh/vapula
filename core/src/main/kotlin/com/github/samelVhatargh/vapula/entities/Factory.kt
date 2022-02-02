@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.map.Terrain
+import com.github.samelVhatargh.vapula.sounds.*
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.ashley.entity
 import ktx.ashley.get
@@ -33,6 +34,12 @@ class Factory(private val engine: Engine, var storey: Storey) {
             with<FieldOfView>()
             with<Name> {
                 name = "player"
+            }
+            with<SoundSet> {
+                move = StepSound()
+                attack = AttackSound(AttackType.MELEE)
+                hit = HitSound(HitType.SLASH)
+                death = DeathSound(Creature.PLAYER)
             }
         }
 
@@ -98,6 +105,26 @@ class Factory(private val engine: Engine, var storey: Storey) {
             generateHp(2)
         }
         monster.add(stats)
+
+        val soundSet = SoundSet().apply {
+            move = StepSound()
+            death = DeathSound(Creature.GOBLIN)
+            when (stats.projectileType) {
+                ProjectileType.ARROW -> {
+                    attack = AttackSound(AttackType.RANGE)
+                    hit = HitSound(HitType.PIERCE)
+                }
+                ProjectileType.MAGIC -> {
+                    attack = AttackSound(AttackType.MAGIC)
+                    hit = HitSound(HitType.MAGIC)
+                }
+                ProjectileType.NONE -> {
+                    attack = AttackSound(AttackType.MELEE)
+                    hit = HitSound(HitType.SLASH)
+                }
+            }
+        }
+        monster.add(soundSet)
 
         log.debug { "${monster[Name.mapper]!!.name} - $stats" }
 

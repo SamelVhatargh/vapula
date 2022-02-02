@@ -21,20 +21,17 @@ class Kill(private val engine: Engine, private val entity: Entity) : Command {
         graphics.spriteName = "${graphics.spriteName}Dead"
         graphics.layer = Layer.CORPSE
 
-        var creature = Creature.GOBLIN
-
-        if (entity.has(Player.mapper)) {
-            creature = Creature.PLAYER
-        }
-
         val creaturePosition = entity[Position.mapper]!!
-        engine.entity {
-            with<SoundEffect> {
-                type = DeathSound(creature)
-                position = creaturePosition
-            }
 
+        entity[SoundSet.mapper]?.death?.let {
+            engine.entity {
+                with<SoundEffect> {
+                    type = it
+                    position = creaturePosition
+                }
+            }
         }
+
         engine.notifier.notify(EntityDied(entity))
     }
 }

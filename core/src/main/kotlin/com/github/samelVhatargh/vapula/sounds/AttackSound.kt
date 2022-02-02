@@ -6,7 +6,7 @@ enum class AttackType {
     RANGE, MELEE, MAGIC
 }
 
-class MeleeAttackSound(val type: AttackType) : SoundEffectType {
+class AttackSound(val type: AttackType) : SoundEffectType {
     override fun getSoundAsset(): SoundAsset {
         val assets = when (type) {
             AttackType.RANGE -> arrayOf(

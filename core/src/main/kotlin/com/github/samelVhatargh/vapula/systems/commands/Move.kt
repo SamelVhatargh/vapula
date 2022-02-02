@@ -9,10 +9,7 @@ import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Path
 import com.github.samelVhatargh.vapula.map.Storey
-import com.github.samelVhatargh.vapula.notifier
-import com.github.samelVhatargh.vapula.sounds.StepSound
 import ktx.ashley.*
-import kotlin.with
 
 abstract class BaseMove : Command {
     fun changePosition(engine: Engine, storey: Storey, entity: Entity, newPosition: Position) {
@@ -20,10 +17,12 @@ abstract class BaseMove : Command {
 
         if (obstacle == null && storey.isWalkable(newPosition.x, newPosition.y)) {
             ChangePosition(entity, newPosition).execute()
-            engine.entity {
-                with<SoundEffect> {
-                    position = newPosition
-                    type = StepSound()
+            entity[SoundSet.mapper]?.move?.let {
+                engine.entity {
+                    with<SoundEffect> {
+                        position = newPosition
+                        type = it
+                    }
                 }
             }
         }

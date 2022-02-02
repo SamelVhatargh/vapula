@@ -7,10 +7,6 @@ import com.github.samelVhatargh.vapula.entities.Factory
 import com.github.samelVhatargh.vapula.events.EntityAttacked
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.notifier
-import com.github.samelVhatargh.vapula.sounds.AttackType
-import com.github.samelVhatargh.vapula.sounds.HitSound
-import com.github.samelVhatargh.vapula.sounds.HitType
-import com.github.samelVhatargh.vapula.sounds.MeleeAttackSound
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.ashley.entity
 import ktx.ashley.get
@@ -28,6 +24,7 @@ class Attack(
         val defenderStats = defender[Stats.mapper]!!
         val attackerPosition = attacker[Position.mapper]!!
         val defenderPosition = defender[Position.mapper]!!
+        val attackerSounds = attacker[SoundSet.mapper]
 
         var hitChance = 65
         hitChance += (attackerStats.dexterity + (attackerStats.perception / 2)) * 5
@@ -45,18 +42,12 @@ class Attack(
             arrow.add(Animation(ProjectileAnimation(attackerPosition, targetPosition)))
         }
 
-        var attackType = AttackType.MELEE
-        if (attackerStats.ranged) {
-            attackType = AttackType.RANGE
-        }
-        if (attackerStats.projectileType === ProjectileType.MAGIC) {
-            attackType = AttackType.MAGIC
-        }
-
-        engine.entity {
-            with<SoundEffect> {
-                type = MeleeAttackSound(attackType)
-                position = attackerPosition
+        attackerSounds?.attack?.let {
+            engine.entity {
+                with<SoundEffect> {
+                    type = it
+                    position = attackerPosition
+                }
             }
         }
 
@@ -65,18 +56,12 @@ class Attack(
             return
         }
 
-        var hitType = HitType.SLASH
-        if (attackerStats.ranged) {
-            hitType = HitType.PIERCE
-        }
-        if (attackerStats.projectileType === ProjectileType.MAGIC) {
-            hitType = HitType.MAGIC
-        }
-
-        engine.entity {
-            with<SoundEffect> {
-                type = HitSound(hitType)
-                position = defenderPosition
+        attackerSounds?.hit?.let {
+            engine.entity {
+                with<SoundEffect> {
+                    type = it
+                    position = defenderPosition
+                }
             }
         }
 
