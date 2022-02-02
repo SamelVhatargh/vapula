@@ -24,7 +24,6 @@ class Attack(
         val defenderStats = defender[Stats.mapper]!!
         val attackerPosition = attacker[Position.mapper]!!
         val defenderPosition = defender[Position.mapper]!!
-        val attackerSounds = attacker[SoundSet.mapper]
 
         var hitChance = 65
         hitChance += (attackerStats.dexterity + (attackerStats.perception / 2)) * 5
@@ -45,15 +44,6 @@ class Attack(
         if (!hit) {
             engine.notifier.notify(EntityAttacked(attacker, defender, true))
             return
-        }
-
-        attackerSounds?.hit?.let {
-            engine.entity {
-                with<SoundEffect> {
-                    type = it
-                    position = defenderPosition
-                }
-            }
         }
 
         val damage = (1..attackerStats.damageDice).random() + (attackerStats.strength / 2)
