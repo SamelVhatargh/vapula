@@ -82,32 +82,34 @@ class Sound(
         when (event) {
             is EntityAttacked -> {
                 event.attacker[SoundSet.mapper]?.attack?.let {
-                    addSound(it, event.attacker[Position.mapper]!!)
+                    addSound(it, event.attacker[Position.mapper])
                 }
             }
             is EntityDamaged -> {
                 event.attacker[SoundSet.mapper]?.hit?.let {
-                    addSound(it, event.attacker[Position.mapper]!!)
+                    addSound(it, event.attacker[Position.mapper])
                 }
             }
             is EntityDied -> {
                 event.victim[SoundSet.mapper]?.death?.let {
-                    addSound(it, event.victim[Position.mapper]!!)
+                    addSound(it, event.victim[Position.mapper])
                 }
             }
             is EntityMoved -> {
                 event.entity[SoundSet.mapper]?.move?.let {
-                    addSound(it, event.entity[Position.mapper]!!)
+                    addSound(it, event.entity[Position.mapper])
                 }
             }
         }
     }
 
-    private fun addSound(soundEffectType: SoundEffectType, soundPosition: Position) {
-        engine.entity {
-            with<SoundEffect> {
-                type = soundEffectType
-                position = soundPosition
+    private fun addSound(soundEffectType: SoundEffectType, soundPosition: Position?) {
+        if (soundPosition != null) {
+            engine.entity {
+                with<SoundEffect> {
+                    type = soundEffectType
+                    position = soundPosition
+                }
             }
         }
     }
