@@ -21,10 +21,11 @@ internal class DamageTest {
     @Test
     fun `should lower hp for damage amount`() {
         val startingHp = 100
+        val attacker = createEntity(startingHp)
         val entity = createEntity(startingHp)
 
         val damage = 5
-        val damageCommand = Damage(TestNotifier(), entity, damage)
+        val damageCommand = Damage(TestNotifier(), attacker, entity, damage)
 
         damageCommand.execute()
 
@@ -34,11 +35,12 @@ internal class DamageTest {
     @Test
     fun `should not lower hp if entity is invulnerable`() {
         val startingHp = 100
+        val attacker = createEntity(startingHp)
         val entity = createEntity(startingHp)
         entity.add(Invulnerability())
 
         val damage = 50
-        val damageCommand = Damage(TestNotifier(), entity, damage)
+        val damageCommand = Damage(TestNotifier(), attacker, entity, damage)
 
         damageCommand.execute()
 
@@ -48,11 +50,12 @@ internal class DamageTest {
     @Test
     fun `should kill entity if hp reaches zero`() {
         val startingHp = 10
+        val attacker = createEntity(startingHp)
         val entity = createEntity(startingHp)
 
         val notifier = TestNotifier()
         val damage = 50
-        val damageCommand = Damage(notifier, entity, damage)
+        val damageCommand = Damage(notifier, attacker, entity, damage)
 
         damageCommand.execute()
 
