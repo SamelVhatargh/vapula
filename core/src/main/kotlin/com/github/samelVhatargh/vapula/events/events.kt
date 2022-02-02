@@ -1,6 +1,7 @@
 package com.github.samelVhatargh.vapula.events
 
 import com.badlogic.ashley.core.Entity
+import com.github.samelVhatargh.vapula.components.Position
 
 interface Event {
     val type: EventType
@@ -9,7 +10,8 @@ interface Event {
 enum class EventType {
     ENTITY_ATTACKED,
     ENTITY_DAMAGED,
-    ENTITY_DIED
+    ENTITY_DIED,
+    ENTITY_MOVED,
 }
 
 /**
@@ -21,9 +23,9 @@ data class EntityAttacked(val attacker: Entity, val defender: Entity, val miss: 
 }
 
 /**
- * Когда [сущность][victim] получает [урон][damage]
+ * When [entity][victim] receive [damage] from another [entity][attacker]
  */
-data class EntityDamaged(val victim: Entity, val damage: Int) : Event {
+data class EntityDamaged(val attacker: Entity, val victim: Entity, val damage: Int) : Event {
     override val type: EventType
         get() = EventType.ENTITY_DAMAGED
 }
@@ -42,4 +44,13 @@ data class EntityHealed(val healer: Entity, val target: Entity, val hp: Int) : E
 data class EntityDied(val victim: Entity) : Event {
     override val type: EventType
         get() = EventType.ENTITY_DIED
+}
+
+/**
+ * When [entity] moves to new [position]
+ */
+data class EntityMoved(val entity: Entity, val position: Position) : Event {
+    override val type: EventType
+        get() = EventType.ENTITY_MOVED
+
 }

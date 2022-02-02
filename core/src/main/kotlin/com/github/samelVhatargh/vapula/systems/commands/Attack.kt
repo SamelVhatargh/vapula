@@ -42,15 +42,6 @@ class Attack(
             arrow.add(Animation(ProjectileAnimation(attackerPosition, targetPosition)))
         }
 
-        attackerSounds?.attack?.let {
-            engine.entity {
-                with<SoundEffect> {
-                    type = it
-                    position = attackerPosition
-                }
-            }
-        }
-
         if (!hit) {
             engine.notifier.notify(EntityAttacked(attacker, defender, true))
             return
@@ -68,6 +59,6 @@ class Attack(
         val damage = (1..attackerStats.damageDice).random() + (attackerStats.strength / 2)
         engine.notifier.notify(EntityAttacked(attacker, defender, false))
 
-        Damage(engine, defender, damage).execute()
+        Damage(engine, attacker, defender, damage).execute()
     }
 }

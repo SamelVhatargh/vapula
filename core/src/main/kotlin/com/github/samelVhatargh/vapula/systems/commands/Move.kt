@@ -5,10 +5,12 @@ import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.entities.OCCUPY_SPACE_FAMILY
+import com.github.samelVhatargh.vapula.events.EntityMoved
 import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Path
 import com.github.samelVhatargh.vapula.map.Storey
+import com.github.samelVhatargh.vapula.notifier
 import ktx.ashley.*
 
 abstract class BaseMove : Command {
@@ -17,14 +19,7 @@ abstract class BaseMove : Command {
 
         if (obstacle == null && storey.isWalkable(newPosition.x, newPosition.y)) {
             ChangePosition(entity, newPosition).execute()
-            entity[SoundSet.mapper]?.move?.let {
-                engine.entity {
-                    with<SoundEffect> {
-                        position = newPosition
-                        type = it
-                    }
-                }
-            }
+            engine.notifier.notify(EntityMoved(entity, newPosition))
         }
     }
 }
