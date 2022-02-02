@@ -18,8 +18,9 @@ abstract class BaseMove : Command {
         val obstacle = engine.getEntityAtPosition(newPosition, OCCUPY_SPACE_FAMILY)
 
         if (obstacle == null && storey.isWalkable(newPosition.x, newPosition.y)) {
+            val oldPosition = entity[Position.mapper]!!.clone()
             ChangePosition(entity, newPosition).execute()
-            engine.notifier.notify(EntityMoved(entity, newPosition))
+            engine.notifier.notify(EntityMoved(entity, oldPosition, newPosition))
         }
     }
 }
@@ -67,6 +68,6 @@ class AggressiveMove(
         val target = engine.getEntityAtPosition(targetPosition, allOf(Stats::class).exclude(Dead::class).get())
             ?: return MoveInDirection(engine, entity, direction, world.storey).execute()
 
-        return Attack(engine, entity, target, world.entityFactory).execute()
+        return Attack(engine, entity, target).execute()
     }
 }

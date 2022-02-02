@@ -18,7 +18,7 @@ abstract class UseStairs(private val engine: Engine, private val world: World, p
         }
         if (stairs != null) {
             val stairsPosition = stairs[Position.mapper]!!
-            ChangePosition(entity, stairsPosition, animate = false).execute()
+            ChangePosition(entity, stairsPosition).execute()
             world.changeStory(newZ)
         }
     }

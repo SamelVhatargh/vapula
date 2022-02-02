@@ -47,9 +47,9 @@ data class EntityDied(val victim: Entity) : Event {
 }
 
 /**
- * When [entity] moves to new [position]
+ * When [entity] moves to from [old position][oldPosition] to [new position][newPosition]
  */
-data class EntityMoved(val entity: Entity, val position: Position) : Event {
+data class EntityMoved(val entity: Entity, val oldPosition: Position, val newPosition: Position) : Event {
     override val type: EventType
         get() = EventType.ENTITY_MOVED
 

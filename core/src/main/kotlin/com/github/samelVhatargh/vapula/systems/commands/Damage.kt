@@ -28,9 +28,6 @@ class Damage(
 
         defenderStats.hp -= damage
         notifier.notify(EntityDamaged(attacker, defender, damage))
-        if (!defender.has(Animation.mapper) && defender.has(Position.mapper)) {
-            defender += Animation(DamageAnimation(defender[Position.mapper]!!))
-        }
 
         if (defenderStats.hp <= 0) {
             Kill(notifier, defender).execute()

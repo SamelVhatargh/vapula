@@ -97,7 +97,7 @@ class Sound(
             }
             is EntityMoved -> {
                 event.entity[SoundSet.mapper]?.move?.let {
-                    addSound(it, event.entity[Position.mapper])
+                    addSound(it, event.newPosition)
                 }
             }
         }

@@ -65,4 +65,6 @@ class Position(var x: Int = 0, var y: Int = 0, var z: Int = 0) : Component, Pool
     }
 
     fun toVec2(): Vector2 = vec2(x.toFloat(), y.toFloat())
+
+    fun clone(): Position = Position(x, y, z)
 }

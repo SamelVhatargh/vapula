@@ -57,12 +57,12 @@ class AiBrain(private val engine: Engine, private val world: World) {
 
         // if player is near - attack!
         if (playerPosition.isNeighbourTo(monsterPosition)) {
-            return Attack(engine, entity, player, world.entityFactory)
+            return Attack(engine, entity, player)
         }
 
         // if can shoot and in line of sight - attack!
         if (playerIsInLingOfSight && monsterStats.ranged) {
-            return Attack(engine, entity, player, world.entityFactory)
+            return Attack(engine, entity, player)
         }
 
         val lastKnownPlayerPosition = ai.lastKnownPlayerPosition
