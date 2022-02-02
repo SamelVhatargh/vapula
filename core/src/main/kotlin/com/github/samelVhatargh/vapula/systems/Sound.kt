@@ -87,7 +87,7 @@ class Sound(
             }
             is EntityDamaged -> {
                 event.attacker[SoundSet.mapper]?.hit?.let {
-                    addSound(it, event.attacker[Position.mapper])
+                    addSound(it, event.victim[Position.mapper])
                 }
             }
             is EntityDied -> {
