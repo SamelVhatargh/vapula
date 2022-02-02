@@ -69,7 +69,6 @@ class Notifier : NotifierInterface {
      * Уведомляет наблюдателей о наступлении [события][event]
      */
     override fun notify(event: Event) {
-        log.info { event.type.toString() }
         observers[event.type]?.forEach { it.onNotify(event) }
     }
 }
