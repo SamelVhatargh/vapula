@@ -42,8 +42,7 @@ class Sound(
 
         engine.removeEntity(entity)
 
-
-        //You can only hear sounds if you see them for now
+        //You can only hear sounds if you see them
         if (!playerFov.isVisible(soundEffect.position)) {
             return
         }
