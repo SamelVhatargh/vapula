@@ -13,6 +13,7 @@ import com.github.samelVhatargh.vapula.components.SoundSet
 import com.github.samelVhatargh.vapula.events.*
 import com.github.samelVhatargh.vapula.notifier
 import com.github.samelVhatargh.vapula.sounds.SoundEffectType
+import com.github.samelVhatargh.vapula.sounds.queue.Queue
 import ktx.ashley.allOf
 import ktx.ashley.entity
 import ktx.ashley.get
@@ -31,9 +32,12 @@ class Sound(
 
     private val currentSounds: HashMap<SoundEffectType, Int> = hashMapOf()
 
+    private val queue = Queue(assets)
+
     override fun update(deltaTime: Float) {
         currentSounds.clear()
         super.update(deltaTime)
+        queue.play()
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -62,9 +66,14 @@ class Sound(
         }
 
         val pan = clamp((soundEffect.position.x - playerPosition.x) / AUDIBLE_DISTANCE, -1f, 1f)
-        val id = sound.play()
-        sound.setPitch(id, (.925f..1.075f).random())
-        sound.setPan(id, pan, volume)
+
+        queue.addSound(soundEffect.type, volume, pan)
+
+
+//        val id = sound.play()
+//        sound.setPitch(id, (.925f..1.075f).random())
+//        sound.setPan(id, pan, volume)
+
     }
 
     override fun addedToEngine(engine: Engine) {

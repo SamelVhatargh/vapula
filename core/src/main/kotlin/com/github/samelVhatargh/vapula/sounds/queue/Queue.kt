@@ -1,22 +1,55 @@
 package com.github.samelVhatargh.vapula.sounds.queue
 
+import com.badlogic.gdx.assets.AssetDescriptor
+import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.audio.Sound
 import com.github.samelVhatargh.vapula.sounds.SoundEffectType
+import ktx.math.random
+import kotlin.math.absoluteValue
 
+private data class SoundParameters(val volume: Float, val pan: Float)
 
-class Channel {
-    private val count: HashMap<SoundEffectType, Int> = hashMapOf()
-    private val pan: HashMap<SoundEffectType, Int> = hashMapOf()
-    private val volume: HashMap<SoundEffectType, Int> = hashMapOf()
+private data class PlayableSound(val type: SoundEffectType, val parameters: SoundParameters)
 
-    fun addSound(type: SoundEffectType, volume: Float, pan: Float) {
-        val currentCount = count.getOrDefault(type, 0) + 1
-        count[type] = currentCount
+private class Channel {
+    private val sounds: HashMap<SoundEffectType, MutableList<SoundParameters>> = linkedMapOf()
 
-
+    fun addSound(type: SoundEffectType, parameters: SoundParameters) {
+        val stored = sounds[type]
+        if (stored == null) {
+            sounds[type] = mutableListOf(parameters)
+            return
+        }
+        stored.add(parameters)
     }
 
-    fun play() {
+    fun getPlSounds(): Array<PlayableSound> {
+        return Array(sounds.size) {
+            val soundEffectType = sounds.keys.first()
+            val parameters = sounds[soundEffectType]!!
+            val soundCount = parameters.size
 
+            var loudestSound = parameters.first()
+
+            //todo parameters.reduce
+            parameters.forEach {
+                if (it.volume > loudestSound.volume) {
+                    loudestSound = it
+                } else {
+                    if (it.volume == loudestSound.volume) {
+                        if (it.pan.absoluteValue < loudestSound.pan.absoluteValue) {
+                            loudestSound = it
+                        }
+                    }
+                }
+            }
+
+            sounds.remove(soundEffectType)
+            PlayableSound(
+                soundEffectType,
+                SoundParameters(loudestSound.volume + (soundCount - 1) * .05f, loudestSound.pan)
+            )
+        }
     }
 }
 
@@ -24,7 +57,7 @@ class Channel {
 /**
  * Help to resolve playing same simultaneous sounds
  */
-class Queue {
+class Queue(private val assets: AssetManager) {
 
     private val center = Channel()
     private val left = Channel()
@@ -33,22 +66,31 @@ class Queue {
 
     fun addSound(type: SoundEffectType, volume: Float, pan: Float) {
         if (pan < 0f) {
-            left.addSound(type, volume, pan)
+            left.addSound(type, SoundParameters(volume, pan))
             return
         }
 
         if (pan > 0f) {
-            right.addSound(type, volume, pan)
+            right.addSound(type, SoundParameters(volume, pan))
             return
         }
 
-        center.addSound(type, volume, pan)
+        center.addSound(type, SoundParameters(volume, pan))
     }
 
 
     fun play() {
-        left.play()
-        center.play()
-        right.play()
+        val sounds = /*left.getSounds() + center.getSounds() + */right.getPlSounds()
+        if (sounds.isNotEmpty()) {
+            sounds.forEach { playSound(it) }
+        }
+    }
+
+    private fun playSound(playableSound: PlayableSound) {
+        println(playableSound.type.javaClass.toString() + playableSound.parameters.pan)
+        val sound = assets[playableSound.type.getSoundAsset().descriptor]
+        val id = sound.play()
+        sound.setPitch(id, (.925f..1.075f).random())
+        sound.setPan(id, playableSound.parameters.pan, playableSound.parameters.volume)
     }
 }
