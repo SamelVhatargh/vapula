@@ -20,6 +20,7 @@ import ktx.ashley.get
 import ktx.ashley.with
 
 private const val AUDIBLE_DISTANCE = 5f
+private const val VOLUME_OPTION = 1f
 
 class Sound(
     assets: AssetManager,
@@ -32,7 +33,7 @@ class Sound(
 
     override fun update(deltaTime: Float) {
         super.update(deltaTime)
-        queue.play()
+        queue.play(VOLUME_OPTION)
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {

@@ -77,12 +77,12 @@ class Queue(private val assets: AssetManager) {
     }
 
 
-    fun play() = (left.getSounds() + center.getSounds() + right.getSounds()).forEach { playSound(it) }
+    fun play(baseVolume: Float) = (left.getSounds() + center.getSounds() + right.getSounds()).forEach { playSound(it, baseVolume) }
 
-    private fun playSound(playableSound: Sound) {
+    private fun playSound(playableSound: Sound, baseVolume: Float) {
         val sound = assets[playableSound.type.getSoundAsset().descriptor]
         val id = sound.play()
         sound.setPitch(id, (.925f..1.075f).random())
-        sound.setPan(id, playableSound.pan, playableSound.volume)
+        sound.setPan(id, playableSound.pan, playableSound.volume * baseVolume)
     }
 }
