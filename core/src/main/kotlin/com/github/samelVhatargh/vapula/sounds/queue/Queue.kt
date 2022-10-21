@@ -37,19 +37,12 @@ private class Channel {
             val parameters = sounds[soundEffectType]!!
             val soundCount = parameters.size
 
-            var loudestSound = parameters.first()
-
-            //todo parameters.reduce
-            parameters.forEach {
-                if (it.volume > loudestSound.volume) {
-                    loudestSound = it
-                } else {
-                    if (it.volume == loudestSound.volume) {
-                        if (it.pan.absoluteValue < loudestSound.pan.absoluteValue) {
-                            loudestSound = it
-                        }
-                    }
-                }
+            val loudestSound = parameters.reduce { loudestSound, sound ->
+                if (sound.volume > loudestSound.volume
+                    || (sound.volume == loudestSound.volume && sound.pan.absoluteValue < loudestSound.pan.absoluteValue)
+                )
+                    sound
+                else loudestSound
             }
 
             sounds.remove(soundEffectType)
@@ -84,12 +77,7 @@ class Queue(private val assets: AssetManager) {
     }
 
 
-    fun play() {
-        val sounds = left.getSounds() + center.getSounds() + right.getSounds()
-        if (sounds.isNotEmpty()) {
-            sounds.forEach { playSound(it) }
-        }
-    }
+    fun play() = (left.getSounds() + center.getSounds() + right.getSounds()).forEach { playSound(it) }
 
     private fun playSound(playableSound: Sound) {
         val sound = assets[playableSound.type.getSoundAsset().descriptor]
