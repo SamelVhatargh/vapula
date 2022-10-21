@@ -18,32 +18,25 @@ import ktx.ashley.allOf
 import ktx.ashley.entity
 import ktx.ashley.get
 import ktx.ashley.with
-import ktx.math.random
 
 private const val AUDIBLE_DISTANCE = 5f
 
 class Sound(
-    private val assets: AssetManager,
+    assets: AssetManager,
     world: World
 ) : IteratingSystem(allOf(SoundEffect::class).get()), Observer {
 
     private val playerFov = world.player[FieldOfView.mapper]!!
     private val playerPosition = world.player[Position.mapper]!!
-
-    private val currentSounds: HashMap<SoundEffectType, Int> = hashMapOf()
-
     private val queue = Queue(assets)
 
     override fun update(deltaTime: Float) {
-        currentSounds.clear()
         super.update(deltaTime)
         queue.play()
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val soundEffect = entity[SoundEffect.mapper]!!
-        val sound = assets[soundEffect.type.getSoundAsset().descriptor]
-
         engine.removeEntity(entity)
 
         //You can only hear sounds if you see them
@@ -52,28 +45,15 @@ class Sound(
         }
 
         val distance = playerPosition.toVec2().dst(soundEffect.position.toVec2())
-        var volume = clamp(1f - distance / AUDIBLE_DISTANCE, 0f, 1f)
+        val volume = clamp(1f - distance / AUDIBLE_DISTANCE, 0f, 1f)
 
-        val currentSoundsCount = currentSounds.getOrDefault(soundEffect.type, 0) + 1
-        currentSounds[soundEffect.type] = currentSoundsCount
-
-        if (currentSoundsCount > 1) {
-            volume *= 1f / currentSoundsCount
-        }
-
-        if (currentSoundsCount > 5 || volume == 0f) {
+        if (volume == 0f) {
             return
         }
 
         val pan = clamp((soundEffect.position.x - playerPosition.x) / AUDIBLE_DISTANCE, -1f, 1f)
 
         queue.addSound(soundEffect.type, volume, pan)
-
-
-//        val id = sound.play()
-//        sound.setPitch(id, (.925f..1.075f).random())
-//        sound.setPan(id, pan, volume)
-
     }
 
     override fun addedToEngine(engine: Engine) {
