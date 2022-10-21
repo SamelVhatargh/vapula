@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
+import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.getEntityAtPosition
@@ -16,8 +17,13 @@ import ktx.app.KtxInputAdapter
 import ktx.ashley.get
 import ktx.ashley.has
 import ktx.ashley.oneOf
+import ktx.math.vec3
 
-class PlayerInput(private val inputMultiplexer: InputMultiplexer, private val world: World) :
+class PlayerInput(
+    private val inputMultiplexer: InputMultiplexer,
+    private val camera: Camera,
+    private val world: World
+) :
     EntitySystem(), KtxInputAdapter {
 
     private val playerEntity = world.player
@@ -29,6 +35,22 @@ class PlayerInput(private val inputMultiplexer: InputMultiplexer, private val wo
 
     override fun removedFromEngine(engine: Engine) {
         inputMultiplexer.removeProcessor(this)
+    }
+
+    override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
+        val coordinates = camera.unproject(vec3(screenX.toFloat(), screenY.toFloat()))
+        val playerPosition = playerEntity[Position.mapper]!!
+        val direction = Direction.fromVector(
+            Position(
+                coordinates.x.toInt(),
+                coordinates.y.toInt(),
+                world.storey.z
+            ).toVec2().sub(playerPosition.toVec2())
+        )
+
+        if (direction == Direction.NONE) doNothing() else move(direction)
+
+        return true
     }
 
     override fun keyDown(keycode: Int): Boolean {

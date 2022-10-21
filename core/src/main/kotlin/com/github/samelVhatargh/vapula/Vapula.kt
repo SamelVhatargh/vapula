@@ -44,7 +44,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
 
         val spriteCache = SpriteCache(assets)
         engine.apply {
-            addSystem(PlayerInput(inputMultiplexer, world))
+            addSystem(PlayerInput(inputMultiplexer, camera, world))
             addSystem(Animation(world))
             addSystem(Sound(assets, world))
             addSystem(Camera(camera, inputMultiplexer))
