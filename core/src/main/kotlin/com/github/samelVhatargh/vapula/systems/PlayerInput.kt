@@ -17,6 +17,7 @@ import ktx.app.KtxInputAdapter
 import ktx.ashley.get
 import ktx.ashley.has
 import ktx.ashley.oneOf
+import ktx.ashley.plusAssign
 import ktx.math.vec3
 
 class PlayerInput(
@@ -27,7 +28,6 @@ class PlayerInput(
     EntitySystem(), KtxInputAdapter {
 
     private val playerEntity = world.player
-    private val player = playerEntity[Player.mapper]!!
 
     override fun addedToEngine(engine: Engine) {
         inputMultiplexer.addProcessor(this)
@@ -54,7 +54,7 @@ class PlayerInput(
     }
 
     override fun keyDown(keycode: Int): Boolean {
-        if (player.command !== null) return true
+        if (playerEntity.has(Action.mapper)) return true
 
         when (keycode) {
             Input.Keys.U -> useStairs()
@@ -78,11 +78,11 @@ class PlayerInput(
 
         if (entity !== null) {
             if (entity.has(GoUp.mapper)) {
-                player.command = GoUpstairs(engine, world, playerEntity)
+                playerEntity += Action(GoUpstairs(engine, world, playerEntity))
                 return
             }
             if (entity.has(GoDown.mapper)) {
-                player.command = GoDownstairs(engine, world, playerEntity)
+                playerEntity += Action(GoDownstairs(engine, world, playerEntity))
                 return
             }
         }
@@ -93,10 +93,10 @@ class PlayerInput(
             doNothing()
             return
         }
-        player.command = AggressiveMove(engine, playerEntity, direction, world)
+        playerEntity += Action(AggressiveMove(engine, playerEntity, direction, world))
     }
 
     private fun doNothing() {
-        player.command = DoNothing()
+        playerEntity += Action(DoNothing())
     }
 }

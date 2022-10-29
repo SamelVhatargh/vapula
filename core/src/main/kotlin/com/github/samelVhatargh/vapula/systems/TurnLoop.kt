@@ -2,16 +2,13 @@ package com.github.samelVhatargh.vapula.systems
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import com.github.samelVhatargh.vapula.AiBrain
 import com.github.samelVhatargh.vapula.components.*
-import ktx.ashley.allOf
-import ktx.ashley.exclude
-import ktx.ashley.get
+import ktx.ashley.*
 import ktx.log.logger
 
-class TurnLoop(private val aiBrain: AiBrain, private val player: Entity) :
+class TurnLoop(private val player: Entity) :
     IteratingSystem(
-        allOf(Ai::class, Name::class, Position::class).exclude(Dead::class).get()
+        allOf(Action::class).exclude(Dead::class).get()
     ) {
 
     companion object {
@@ -19,15 +16,15 @@ class TurnLoop(private val aiBrain: AiBrain, private val player: Entity) :
     }
 
     override fun update(deltaTime: Float) {
-        val playerCommand = player[Player.mapper]!!
-        playerCommand.command?.let {
-            it.execute()
+        val playerAction = player[Action.mapper]
+        playerAction?.let {
             super.update(deltaTime)
-            playerCommand.command = null
+            engine.getSystem<Ai>().setProcessing(true)
         }
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        aiBrain.getCommand(entity).execute()
+        entity[Action.mapper]!!.command.execute()
+        entity.remove<Action>()
     }
 }

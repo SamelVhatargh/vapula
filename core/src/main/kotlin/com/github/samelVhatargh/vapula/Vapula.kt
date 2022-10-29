@@ -51,7 +51,8 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             addSystem(MapRender(spriteCache, batch, viewport, world))
             addSystem(FieldOfViewCalculator(world))
             addSystem(Render(spriteCache, batch, viewport, world))
-            addSystem(TurnLoop(AiBrain(engine, world), world.player))
+            addSystem(TurnLoop(world.player))
+            addSystem(Ai(AiBrain(engine, world)))
             addSystem(Music(assets))
         }
 
