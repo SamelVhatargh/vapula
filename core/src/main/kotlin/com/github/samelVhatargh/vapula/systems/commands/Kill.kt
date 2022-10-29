@@ -15,7 +15,7 @@ import ktx.ashley.remove
  * Kills entity
  */
 class Kill(private val notifier: NotifierInterface, private val entity: Entity) : Command {
-    override fun execute() {
+    override fun execute(): Boolean {
         val graphics = entity[Graphics.mapper]!!
 
         entity += Dead()
@@ -24,5 +24,7 @@ class Kill(private val notifier: NotifierInterface, private val entity: Entity) 
         graphics.layer = Layer.CORPSE
 
         notifier.notify(EntityDied(entity))
+
+        return false
     }
 }

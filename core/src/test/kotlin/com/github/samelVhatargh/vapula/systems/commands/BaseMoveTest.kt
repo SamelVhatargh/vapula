@@ -20,7 +20,7 @@ class TestBaseMove(
     val entity: Entity,
     private val newPosition: Position
 ) : BaseMove() {
-    override fun execute() {
+    override fun execute(): Boolean {
         return changePosition(engine, storey, entity, newPosition)
     }
 }

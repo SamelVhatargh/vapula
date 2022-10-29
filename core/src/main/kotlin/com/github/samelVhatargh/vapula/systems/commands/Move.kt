@@ -14,14 +14,16 @@ import com.github.samelVhatargh.vapula.notifier
 import ktx.ashley.*
 
 abstract class BaseMove : Command {
-    fun changePosition(engine: Engine, storey: Storey, entity: Entity, newPosition: Position) {
+    fun changePosition(engine: Engine, storey: Storey, entity: Entity, newPosition: Position): Boolean {
         val obstacle = engine.getEntityAtPosition(newPosition, OCCUPY_SPACE_FAMILY)
 
         if (obstacle == null && storey.isWalkable(newPosition.x, newPosition.y)) {
             val oldPosition = entity[Position.mapper]!!.clone()
-            ChangePosition(entity, newPosition).execute()
             engine.notifier.notify(EntityMoved(entity, oldPosition, newPosition))
+            return ChangePosition(entity, newPosition).execute()
         }
+
+        return false
     }
 }
 
@@ -32,13 +34,15 @@ class MoveInDirection(
     private val storey: Storey
 ) : BaseMove() {
 
-    override fun execute() {
+    override fun execute(): Boolean {
         val position = entity[Position.mapper]!!
 
         val newX = position.x + direction.x
         val newY = position.y + direction.y
 
         changePosition(engine, storey, entity, Position(newX, newY, position.z))
+
+        return false
     }
 }
 
@@ -46,13 +50,20 @@ class MoveInPath(
     private val engine: Engine,
     private val entity: Entity,
     private val path: Path,
-    private val storey: Storey
+    private val storey: Storey,
+    private val continueToMoveInNextTurn: Boolean = false
 ) : BaseMove() {
-    override fun execute() {
+    override fun execute(): Boolean {
         val currentPosition = entity[Position.mapper]!!
         val destination = path.getNextPosition(currentPosition)
 
         changePosition(engine, storey, entity, destination)
+
+        if (currentPosition == path.getLastPosition()) {
+            return false
+        }
+
+        return continueToMoveInNextTurn
     }
 }
 
@@ -62,7 +73,7 @@ class AggressiveMove(
     private val direction: Direction,
     private val world: World
 ) : BaseMove() {
-    override fun execute() {
+    override fun execute(): Boolean {
         val entityPosition = entity[Position.mapper]!!
         val targetPosition = Position(entityPosition.x + direction.x, entityPosition.y + direction.y, entityPosition.z)
         val target = engine.getEntityAtPosition(targetPosition, allOf(Stats::class).exclude(Dead::class).get())

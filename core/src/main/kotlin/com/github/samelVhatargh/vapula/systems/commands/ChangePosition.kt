@@ -12,12 +12,14 @@ class ChangePosition(
     private val entity: Entity,
     private val newPosition: Position,
 ) : Command {
-    override fun execute() {
+    override fun execute(): Boolean {
         val position = entity[Position.mapper]!!
 
         position.x = newPosition.x
         position.y = newPosition.y
         position.z = newPosition.z
         entity[FieldOfView.mapper]?.shouldUpdate = true
+
+        return false
     }
 }

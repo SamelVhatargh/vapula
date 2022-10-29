@@ -8,11 +8,13 @@ import com.github.samelVhatargh.vapula.components.Ai
 import ktx.ashley.allOf
 import ktx.ashley.exclude
 import ktx.ashley.plusAssign
+import ktx.ashley.remove
 
-class Ai(private val aiBrain: AiBrain) :
+class Ai(private val aiBrain: AiBrain, private val player: Entity) :
     IteratingSystem(allOf(Ai::class, Name::class, Position::class).exclude(Dead::class).get()) {
 
     override fun update(deltaTime: Float) {
+        player.remove<InDanger>()
         super.update(deltaTime)
         setProcessing(false)
     }

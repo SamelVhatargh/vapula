@@ -126,6 +126,10 @@ class Path(private val positions: List<Position> = listOf()) {
         return positions[0]
     }
 
+    fun getLastPosition(): Position {
+        return positions.last()
+    }
+
     override fun hashCode(): Int {
         return positions.hashCode()
     }

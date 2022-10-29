@@ -52,7 +52,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             addSystem(FieldOfViewCalculator(world))
             addSystem(Render(spriteCache, batch, viewport, world))
             addSystem(TurnLoop(world.player))
-            addSystem(Ai(AiBrain(engine, world)))
+            addSystem(Ai(AiBrain(engine, world), world.player))
             addSystem(Music(assets))
         }
 

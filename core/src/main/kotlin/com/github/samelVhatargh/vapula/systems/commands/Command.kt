@@ -7,6 +7,8 @@ interface Command {
 
     /**
      * Executes the command
+     *
+     * @return true if this command should be repeated in next turn
      */
-    fun execute()
+    fun execute(): Boolean
 }

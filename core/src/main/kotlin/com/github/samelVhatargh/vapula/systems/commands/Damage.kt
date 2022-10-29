@@ -6,7 +6,6 @@ import com.github.samelVhatargh.vapula.events.EntityDamaged
 import com.github.samelVhatargh.vapula.events.NotifierInterface
 import ktx.ashley.get
 import ktx.ashley.has
-import ktx.ashley.plusAssign
 
 /**
  * Damages entity
@@ -20,17 +19,19 @@ class Damage(
 
     private val defenderStats = defender[Stats.mapper]!!
 
-    override fun execute() {
+    override fun execute(): Boolean {
         if (defender.has(Invulnerability.mapper)) {
             notifier.notify(EntityDamaged(attacker, defender, 0))
-            return
+            return false
         }
 
         defenderStats.hp -= damage
         notifier.notify(EntityDamaged(attacker, defender, damage))
 
         if (defenderStats.hp <= 0) {
-            Kill(notifier, defender).execute()
+            return Kill(notifier, defender).execute()
         }
+
+        return false
     }
 }

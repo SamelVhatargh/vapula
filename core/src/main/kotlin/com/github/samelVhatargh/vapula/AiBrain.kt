@@ -6,10 +6,7 @@ import com.badlogic.gdx.math.Bresenham2
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.systems.commands.*
-import ktx.ashley.allOf
-import ktx.ashley.exclude
-import ktx.ashley.get
-import ktx.ashley.has
+import ktx.ashley.*
 
 /**
  * Decides what a monster will do
@@ -35,7 +32,7 @@ class AiBrain(private val engine: Engine, private val world: World) {
         }
 
         // start pursuing if player us visible
-        val playerIsInLingOfSight = isInLineOfSight(entity, playerPosition)
+        val playerIsInLingOfSight = isInLineOfSight(entity, player)
         if (playerIsInLingOfSight) {
             ai.lastKnownPlayerPosition = playerPosition
             ai.state = State.PURSUE
@@ -47,7 +44,7 @@ class AiBrain(private val engine: Engine, private val world: World) {
             val allMonsters = allOf(Stats::class, Ai::class, Position::class).exclude(Player::class, Dead::class).get()
             val injuredMonster = engine.getEntitiesFor(allMonsters).find {
                 it[Stats.mapper]!!.hp > 0 && it[Stats.mapper]!!.hp < it[Stats.mapper]!!.maxHp
-                        && isInLineOfSight(entity, it[Position.mapper]!!)
+                        && isInLineOfSight(entity, it)
             }
 
             if (injuredMonster !== null) {
@@ -96,9 +93,10 @@ class AiBrain(private val engine: Engine, private val world: World) {
     /**
      * Check if Entity can see another Entity
      */
-    private fun isInLineOfSight(entity: Entity, targetPosition: Position): Boolean {
+    private fun isInLineOfSight(entity: Entity, target: Entity): Boolean {
         val start = entity[Position.mapper]!!
         val sightRange = entity[Stats.mapper]!!.sightRange
+        val targetPosition = target[Position.mapper]!!
 
         if (start.z != targetPosition.z) {
             return false
@@ -114,6 +112,11 @@ class AiBrain(private val engine: Engine, private val world: World) {
             if (world.storey.blockSight(point.x, point.y)) {
                 return false
             }
+        }
+
+        if (target.has(Player.mapper)) {
+            target += InDanger()
+            target.remove<Action>()
         }
 
         return true

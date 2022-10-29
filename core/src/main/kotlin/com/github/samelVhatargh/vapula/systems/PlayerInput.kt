@@ -9,10 +9,9 @@ import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
-import com.github.samelVhatargh.vapula.systems.commands.AggressiveMove
-import com.github.samelVhatargh.vapula.systems.commands.DoNothing
-import com.github.samelVhatargh.vapula.systems.commands.GoDownstairs
-import com.github.samelVhatargh.vapula.systems.commands.GoUpstairs
+import com.github.samelVhatargh.vapula.map.Path
+import com.github.samelVhatargh.vapula.map.PathFinder
+import com.github.samelVhatargh.vapula.systems.commands.*
 import ktx.app.KtxInputAdapter
 import ktx.ashley.get
 import ktx.ashley.has
@@ -40,15 +39,22 @@ class PlayerInput(
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
         val coordinates = camera.unproject(vec3(screenX.toFloat(), screenY.toFloat()))
         val playerPosition = playerEntity[Position.mapper]!!
-        val direction = Direction.fromVector(
-            Position(
-                coordinates.x.toInt(),
-                coordinates.y.toInt(),
-                world.storey.z
-            ).toVec2().sub(playerPosition.toVec2())
-        )
+        val targetPosition = Position(coordinates.x.toInt(), coordinates.y.toInt(), world.storey.z)
+        val direction = Direction.fromVector(targetPosition.toVec2().sub(playerPosition.toVec2()))
 
-        if (direction == Direction.NONE) doNothing() else move(direction)
+        if (direction === Direction.NONE) {
+            doNothing()
+            return true
+        }
+
+        if (playerEntity.has(InDanger.mapper)) {
+            move(direction)
+
+            return true
+        }
+
+        val pathfinder = PathFinder(world.storey, engine)
+        moveInPath(pathfinder.findPath(playerPosition, targetPosition))
 
         return true
     }
@@ -94,6 +100,14 @@ class PlayerInput(
             return
         }
         playerEntity += Action(AggressiveMove(engine, playerEntity, direction, world))
+    }
+
+    private fun moveInPath(path: Path) {
+        if (playerEntity.has(Dead.mapper) || path.isEmpty()) {
+            doNothing()
+            return
+        }
+        playerEntity += Action(MoveInPath(engine, playerEntity, path, world.storey, continueToMoveInNextTurn = true))
     }
 
     private fun doNothing() {

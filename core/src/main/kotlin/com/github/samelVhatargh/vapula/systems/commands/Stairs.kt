@@ -26,13 +26,17 @@ abstract class UseStairs(private val engine: Engine, private val world: World, p
 
 
 class GoUpstairs(engine: Engine, world: World, entity: Entity) : UseStairs(engine, world, entity) {
-    override fun execute() {
+    override fun execute(): Boolean {
         useStairs(1, allOf(GoDown::class).get())
+
+        return false
     }
 }
 
 class GoDownstairs(engine: Engine, world: World, entity: Entity) : UseStairs(engine, world, entity) {
-    override fun execute() {
+    override fun execute(): Boolean {
         useStairs(-1, allOf(GoUp::class).get())
+
+        return false
     }
 }

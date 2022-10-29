@@ -8,10 +8,12 @@ import com.github.samelVhatargh.vapula.utility.random
 import ktx.ashley.get
 
 class Heal(val notifier: NotifierInterface, private val healer: Entity, private val injuredMonster: Entity) : Command {
-    override fun execute() {
+    override fun execute(): Boolean {
         val healDice = healer[Stats.mapper]!!.healDice
         val healedAmount = random.dice(1, healDice)
         injuredMonster[Stats.mapper]!!.hp += healedAmount
         notifier.notify(EntityHealed(healer, injuredMonster, healedAmount))
+
+        return false
     }
 }

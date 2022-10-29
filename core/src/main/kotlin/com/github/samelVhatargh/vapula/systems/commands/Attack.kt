@@ -14,7 +14,7 @@ class Attack(
     private val defender: Entity
 ) : Command {
 
-    override fun execute() {
+    override fun execute(): Boolean {
         val attackerStats = attacker[Stats.mapper]!!
         val defenderStats = defender[Stats.mapper]!!
 
@@ -26,12 +26,14 @@ class Attack(
 
         if (!hit) {
             engine.notifier.notify(EntityAttacked(attacker, defender, true))
-            return
+            return false
         }
 
         val damage = (1..attackerStats.damageDice).random() + (attackerStats.strength / 2)
         engine.notifier.notify(EntityAttacked(attacker, defender, false))
 
         Damage(engine.notifier, attacker, defender, damage).execute()
+
+        return false
     }
 }

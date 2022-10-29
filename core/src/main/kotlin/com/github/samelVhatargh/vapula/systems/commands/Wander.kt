@@ -19,8 +19,10 @@ private val directions = listOf(
 )
 
 class Wander(private val engine: Engine, private val entity: Entity, private val world: World) : Command {
-    override fun execute() {
+    override fun execute(): Boolean {
         val z = entity[Position.mapper]!!.z
         MoveInDirection(engine, entity, directions.random(), world.stories[z]).execute()
+
+        return false
     }
 }
