@@ -16,9 +16,7 @@ enum class Direction(val x: Int, val y: Int) {
 
     companion object {
         fun fromVector (vec: Vector2): Direction {
-            println(vec)
             vec.setLength(1f)
-            println(vec)
             val x = vec.x.roundToInt()
             val y = vec.y.roundToInt()
             return when (x) {
