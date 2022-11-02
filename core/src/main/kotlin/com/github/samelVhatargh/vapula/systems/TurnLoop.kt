@@ -27,7 +27,9 @@ class TurnLoop(private val player: Entity) :
 
         val playerAction = player[Action.mapper]
         playerAction?.let {
-            super.update(deltaTime)
+            if (player.hasNot(Dead.mapper)) {
+                super.update(deltaTime)
+            }
             engine.getSystem<Ai>().setProcessing(true)
         }
     }
