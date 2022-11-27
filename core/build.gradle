@@ -34,3 +34,20 @@ compileTestKotlin {
 test {
     useJUnitPlatform()
 }
+
+project.ext {
+    rawGraphicsDir = "../raw/graphics"
+    rawUiDir = "../raw/ui"
+    assetsDir = "../assets/graphics"
+    graphicAtlasName = "sprites"
+    uiAtlasName = "ui"
+}
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
+
+task texturePacker {
+    doLast {
+        logger.info "Calling TexturePacker: " + texturePacker
+        TexturePacker.process(rawGraphicsDir, assetsDir, graphicAtlasName)
+        TexturePacker.process(rawUiDir, assetsDir, uiAtlasName)
+    }
+}
