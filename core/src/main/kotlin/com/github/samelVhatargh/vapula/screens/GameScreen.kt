@@ -32,7 +32,7 @@ class GameScreen(
     override fun show() {
         super.show()
         setupUI()
-        inputMultiplexer.addProcessor(stage)
+        inputMultiplexer.addProcessor(0, stage)
         engine.notifier.addObserver(hud)
     }
 

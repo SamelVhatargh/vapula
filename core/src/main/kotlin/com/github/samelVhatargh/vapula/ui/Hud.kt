@@ -7,6 +7,7 @@ import com.github.samelVhatargh.vapula.components.Name
 import com.github.samelVhatargh.vapula.components.Player
 import com.github.samelVhatargh.vapula.components.Stats
 import com.github.samelVhatargh.vapula.events.*
+import ktx.actors.onClick
 import ktx.ashley.get
 import ktx.ashley.has
 import ktx.scene2d.label
@@ -53,6 +54,8 @@ class Hud : Observer {
 
         right()
         setFillParent(true)
+        onClick {
+        }
     }
 
     /**

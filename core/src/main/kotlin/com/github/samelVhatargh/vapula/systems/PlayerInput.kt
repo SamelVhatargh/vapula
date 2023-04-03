@@ -2,6 +2,7 @@ package com.github.samelVhatargh.vapula.systems
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.EntitySystem
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Camera
@@ -12,6 +13,7 @@ import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Path
 import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.systems.commands.*
+import com.github.samelVhatargh.vapula.ui.HUD_WIDTH
 import ktx.app.KtxInputAdapter
 import ktx.ashley.get
 import ktx.ashley.has
@@ -37,6 +39,10 @@ class PlayerInput(
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
+        if (screenX > Gdx.graphics.width / 16 * (16 - HUD_WIDTH)) { //Ignore Hud clicks
+            return true
+        }
+
         val coordinates = camera.unproject(vec3(screenX.toFloat(), screenY.toFloat()))
         val playerPosition = playerEntity[Position.mapper]!!
         val targetPosition = Position(coordinates.x.toInt(), coordinates.y.toInt(), world.storey.z)
