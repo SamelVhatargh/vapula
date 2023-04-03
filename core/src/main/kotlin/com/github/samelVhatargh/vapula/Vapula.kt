@@ -13,6 +13,7 @@ import com.github.samelVhatargh.vapula.console.DebugCommandExecutor
 import com.github.samelVhatargh.vapula.screens.GameScreen
 import com.github.samelVhatargh.vapula.screens.LoadingScreen
 import com.github.samelVhatargh.vapula.systems.*
+import com.github.samelVhatargh.vapula.ui.Hud
 import com.github.samelVhatargh.vapula.utility.SpriteCache
 import com.github.samelVhatargh.vapula.utility.random
 import com.strongjoshua.console.GUIConsole
@@ -43,6 +44,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
         Gdx.input.inputProcessor = inputMultiplexer
 
         val spriteCache = SpriteCache(assets)
+        val hud = Hud(inputMultiplexer)
         engine.apply {
             addSystem(PlayerInput(inputMultiplexer, camera, world))
             addSystem(Animation(world))
@@ -54,6 +56,8 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             addSystem(TurnLoop(world.player))
             addSystem(Ai(AiBrain(engine, world), world.player))
             addSystem(Music(assets))
+            addSystem(hud)
+            addSystem(ModalDialogs())
         }
 
         val commandExecutor =
@@ -67,8 +71,8 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             console.execCommand(command)
         }
 
-        addScreen(GameScreen(engine, viewport, console, inputMultiplexer))
-        addScreen(LoadingScreen(assets, this))
+        addScreen(GameScreen(engine, viewport, console))
+        addScreen(LoadingScreen(assets, this, hud))
         setScreen<LoadingScreen>()
     }
 

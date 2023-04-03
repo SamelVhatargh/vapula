@@ -9,17 +9,18 @@ import com.github.samelVhatargh.vapula.assets.FontAsset
 import com.github.samelVhatargh.vapula.assets.MusicAsset
 import com.github.samelVhatargh.vapula.assets.SoundAsset
 import com.github.samelVhatargh.vapula.assets.TextureAtlasAsset
+import com.github.samelVhatargh.vapula.ui.Hud
 import com.github.samelVhatargh.vapula.ui.createSkin
 import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
 import ktx.graphics.use
 
-class LoadingScreen(val assets: AssetManager, val game: Vapula) : KtxScreen {
+class LoadingScreen(val assets: AssetManager, private val game: Vapula, private val hud: Hud) : KtxScreen {
 
     private val width = Gdx.graphics.width.toFloat()
     private val height = 15f
 
-    val shapeRenderer = ShapeRenderer()
+    private val shapeRenderer = ShapeRenderer()
 
     override fun show() {
         SoundAsset.values().forEach { if (it !== SoundAsset.EMPTY) assets.load(it.descriptor) }
@@ -41,6 +42,7 @@ class LoadingScreen(val assets: AssetManager, val game: Vapula) : KtxScreen {
 
         if (assets.update()) {
             createSkin(assets)
+            hud.setupUI()
 
             game.setScreen<GameScreen>()
             shapeRenderer.dispose()
