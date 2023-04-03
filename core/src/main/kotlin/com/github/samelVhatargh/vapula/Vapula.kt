@@ -56,7 +56,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             addSystem(Ai(AiBrain(engine, world), world.player))
             addSystem(Music(assets))
             addSystem(hud)
-            addSystem(ModalDialogs())
+            addSystem(ModalDialogs(inputMultiplexer))
             addSystem(DebugConsole(debugArguments, inputMultiplexer, viewport, world))
         }
 

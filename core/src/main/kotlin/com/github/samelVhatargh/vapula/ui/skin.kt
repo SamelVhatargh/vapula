@@ -6,9 +6,8 @@ import com.github.samelVhatargh.vapula.assets.FontAsset
 import com.github.samelVhatargh.vapula.assets.TextureAtlasAsset
 import com.github.samelVhatargh.vapula.assets.get
 import ktx.scene2d.Scene2DSkin
-import ktx.style.label
+import ktx.style.*
 import ktx.style.scrollPane
-import ktx.style.skin
 
 fun createSkin(assets: AssetManager) {
     val atlas = assets[TextureAtlasAsset.UI]
@@ -16,6 +15,9 @@ fun createSkin(assets: AssetManager) {
         label {
             font = assets[FontAsset.SIZE_24]
             fontColor = Color.WHITE
+        }
+        button {
+
         }
         scrollPane {
 
