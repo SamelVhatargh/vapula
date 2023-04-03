@@ -2,14 +2,13 @@ package com.github.samelVhatargh.vapula
 
 import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.samelVhatargh.vapula.console.DebugArguments
-import com.github.samelVhatargh.vapula.console.DebugCommandExecutor
+import com.github.samelVhatargh.vapula.console.DebugConsole
 import com.github.samelVhatargh.vapula.screens.GameScreen
 import com.github.samelVhatargh.vapula.screens.LoadingScreen
 import com.github.samelVhatargh.vapula.systems.*
@@ -58,20 +57,10 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             addSystem(Music(assets))
             addSystem(hud)
             addSystem(ModalDialogs())
+            addSystem(DebugConsole(debugArguments, inputMultiplexer, viewport, world))
         }
 
-        val commandExecutor =
-            DebugCommandExecutor(inputMultiplexer, viewport.camera, world, engine)
-        console = GUIConsole().apply {
-            setCommandExecutor(commandExecutor)
-            displayKeyID = Input.Keys.GRAVE
-        }
-
-        debugArguments.getStartupCommands().forEach { command ->
-            console.execCommand(command)
-        }
-
-        addScreen(GameScreen(engine, viewport, console))
+        addScreen(GameScreen(engine, viewport))
         addScreen(LoadingScreen(assets, this, hud))
         setScreen<LoadingScreen>()
     }
