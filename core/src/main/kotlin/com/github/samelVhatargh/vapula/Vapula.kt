@@ -15,7 +15,6 @@ import com.github.samelVhatargh.vapula.systems.*
 import com.github.samelVhatargh.vapula.ui.Hud
 import com.github.samelVhatargh.vapula.utility.SpriteCache
 import com.github.samelVhatargh.vapula.utility.random
-import com.strongjoshua.console.GUIConsole
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 
@@ -27,8 +26,6 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
     private val assets by lazy { AssetManager() }
 
     private val engine = PooledEngine()
-
-    private lateinit var console: GUIConsole
 
     override fun create() {
         Gdx.app.logLevel = debugArguments.logLevel
@@ -67,7 +64,6 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
 
     override fun dispose() {
         super.dispose()
-        console.dispose()
         batch.dispose()
         assets.dispose()
     }
