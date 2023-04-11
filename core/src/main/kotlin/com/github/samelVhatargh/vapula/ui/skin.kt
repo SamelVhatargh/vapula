@@ -17,7 +17,10 @@ fun createSkin(assets: AssetManager) {
             fontColor = Color.WHITE
         }
         button {
-
+            up = it["button"]
+            over = it["buttonOver"]
+            pressedOffsetX = 1f
+            pressedOffsetY = -1f
         }
         scrollPane {
 

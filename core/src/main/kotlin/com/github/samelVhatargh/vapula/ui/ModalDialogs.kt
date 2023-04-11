@@ -40,19 +40,29 @@ class ModalDialogs(private val inputMultiplexer: InputMultiplexer) : IteratingSy
     private fun show(title: String, text: String) {
         val system = this
         val dialog = scene2d.table {
-            label(title)
-            row()
-            label(text)
-            row()
-            button {
-                label("ok")
-            }.onClick {
-                inputMultiplexer.removeProcessor(system)
-                inputMultiplexer.removeProcessor(stage)
-                stage.dispose()
+            table {
+                label(title)
+                row()
+                label(text) {
+                    wrap = true
+                    fontScaleX = 20 / 24f
+                    fontScaleY = 20 / 24f
+                    it.minWidth(8 * 64f).pad(16f)
+                }
+                row()
+                button {
+                    label("OK") {
+                        fontScaleX = 20 / 24f
+                        fontScaleY = 20 / 24f
+                    }
+                }.onClick {
+                    inputMultiplexer.removeProcessor(system)
+                    inputMultiplexer.removeProcessor(stage)
+                    stage.dispose()
+                }
+                background("modal")
             }
 
-            debug = true
             setFillParent(true)
         }
 
