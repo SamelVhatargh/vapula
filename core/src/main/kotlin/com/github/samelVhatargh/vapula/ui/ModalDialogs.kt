@@ -6,14 +6,12 @@ import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.samelVhatargh.vapula.components.ModalDialog
+import com.github.samelVhatargh.vapula.components.ModalDialogButton
 import ktx.actors.onClick
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
 import ktx.ashley.get
-import ktx.scene2d.button
-import ktx.scene2d.label
-import ktx.scene2d.scene2d
-import ktx.scene2d.table
+import ktx.scene2d.*
 
 /**
  * Manages dialog windows
@@ -32,13 +30,13 @@ class ModalDialogs(private val inputMultiplexer: InputMultiplexer) : IteratingSy
     override fun processEntity(entity: Entity, deltaTime: Float) {
         if (stage == null) {
             val modalDialog = entity[ModalDialog.mapper]!!
-            show(modalDialog.title, modalDialog.text)
+            show(modalDialog.title, modalDialog.text, modalDialog.buttons)
             engine.removeEntity(entity)
         }
     }
 
-    private fun show(title: String, text: String) {
-        val system = this
+    private fun show(title: String, text: String, buttons: Array<ModalDialogButton>) {
+        var buttonContainer: KTableWidget
         val dialog = scene2d.table {
             table {
                 label(title, LabelStyle.CAPTION.name)
@@ -48,15 +46,20 @@ class ModalDialogs(private val inputMultiplexer: InputMultiplexer) : IteratingSy
                     it.minWidth(8 * 64f).pad(16f)
                 }
                 row()
-                button {
-                    label("OK")
-                }.onClick {
-                    system.clearStage()
+                buttonContainer = table {
+                    defaults().pad(8f)
                 }
                 background("modal")
             }
 
             setFillParent(true)
+        }
+
+        buttons.forEach { button ->
+            buttonContainer.add(scene2d.button {
+                label(button.text())
+                onClick { button.action() }
+            })
         }
 
         stage = Stage(FitViewport(16 * 64f, 9 * 64f))
@@ -65,7 +68,7 @@ class ModalDialogs(private val inputMultiplexer: InputMultiplexer) : IteratingSy
         inputMultiplexer.addProcessor(0, stage)
     }
 
-    private fun clearStage() {
+    fun closeModal() {
         inputMultiplexer.removeProcessor(this)
         inputMultiplexer.removeProcessor(stage)
         stage?.dispose()

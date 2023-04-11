@@ -4,8 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.graphics.g2d.Sprite
-import com.github.samelVhatargh.vapula.components.ModalDialog
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.events.Notifier
 import ktx.ashley.entity
 import ktx.ashley.get
@@ -25,11 +24,16 @@ fun Engine.getEntityAtPosition(position: Position, family: Family): Entity? {
     }
 }
 
-fun Engine.addModalDialogWindow(modalTitle: String, modelText: String) {
+fun Engine.addModalDialogWindow(
+    modalTitle: String,
+    modalText: String,
+    modalButtons: Array<ModalDialogButton> = arrayOf(CloseDialogButton(this))
+) {
     entity {
         with<ModalDialog> {
             title = modalTitle
-            text = modelText
+            text = modalText
+            buttons = modalButtons
         }
     }
 }
