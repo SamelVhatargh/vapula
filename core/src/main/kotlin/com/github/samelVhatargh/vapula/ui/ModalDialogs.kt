@@ -51,9 +51,7 @@ class ModalDialogs(private val inputMultiplexer: InputMultiplexer) : IteratingSy
                 button {
                     label("OK")
                 }.onClick {
-                    inputMultiplexer.removeProcessor(system)
-                    inputMultiplexer.removeProcessor(stage)
-                    stage.dispose()
+                    system.clearStage()
                 }
                 background("modal")
             }
@@ -65,6 +63,13 @@ class ModalDialogs(private val inputMultiplexer: InputMultiplexer) : IteratingSy
         stage!!.addActor(dialog)
         inputMultiplexer.addProcessor(0, this)
         inputMultiplexer.addProcessor(0, stage)
+    }
+
+    private fun clearStage() {
+        inputMultiplexer.removeProcessor(this)
+        inputMultiplexer.removeProcessor(stage)
+        stage?.dispose()
+        stage = null
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int) = true
