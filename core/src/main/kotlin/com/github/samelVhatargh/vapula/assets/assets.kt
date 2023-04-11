@@ -71,6 +71,8 @@ enum class FontAsset(
         })
 ) {
     SIZE_24("fonts/DejaVu24.fnt"),
+    SIZE_20("fonts/DejaVu20.fnt"),
+    SIZE_15("fonts/DejaVu15.fnt"),
 }
 
 operator fun AssetManager.get(asset: SoundAsset) = getAsset<Sound>(asset.fileName)

@@ -44,15 +44,13 @@ private class HudView {
                 defaults().pad(8f).left().expandX()
                 right().top().cell(growY = true, width = HUD_WIDTH * 64f)
 
-                hp = label("HP: ")
+                hp = label("HP: ", LabelStyle.CAPTION.name)
                 row()
                 messageScrollPane = scrollPane { cell ->
                     cell.height(4 * 64f - 2).expandY().fillX().bottom()
 
-                    messageLog = label("") {
+                    messageLog = label("", LabelStyle.SMALL.name) {
                         wrap = true
-                        fontScaleX = 15 / 24f
-                        fontScaleY = 15 / 24f
                         setAlignment(Align.bottomLeft)
                     }
                 }
