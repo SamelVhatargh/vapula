@@ -13,6 +13,7 @@ import com.github.samelVhatargh.vapula.screens.GameScreen
 import com.github.samelVhatargh.vapula.screens.LoadingScreen
 import com.github.samelVhatargh.vapula.systems.*
 import com.github.samelVhatargh.vapula.ui.Hud
+import com.github.samelVhatargh.vapula.ui.ModalDialogs
 import com.github.samelVhatargh.vapula.utility.SpriteCache
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.app.KtxGame
