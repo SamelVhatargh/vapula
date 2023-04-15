@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.entities.RENDERABLE_FAMILY
+import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.utility.SpriteCache
 import ktx.ashley.get
 import ktx.ashley.has
@@ -59,6 +60,9 @@ class Render(
                 setPosition(vector.x, vector.y - .25f)
                 setPosition(vector.x, vector.y - .25f)
             }
+
+            setFlip(graphics.direction === Direction.EAST, false)
+
             draw(batch)
         }
     }

@@ -2,8 +2,11 @@ package com.github.samelVhatargh.vapula.systems.commands
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.github.samelVhatargh.vapula.components.Graphics
+import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.components.Stats
 import com.github.samelVhatargh.vapula.events.EntityAttacked
+import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.notifier
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.ashley.get
@@ -24,6 +27,8 @@ class Attack(
 
         val hit = random.chance(hitChance)
 
+        changeDirection(attacker, defender)
+
         if (!hit) {
             engine.notifier.notify(EntityAttacked(attacker, defender, true))
             return false
@@ -35,5 +40,20 @@ class Attack(
         Damage(engine.notifier, attacker, defender, damage).execute()
 
         return false
+    }
+
+    private fun changeDirection(attacker: Entity, defender: Entity) {
+        val attackerGraphics = attacker[Graphics.mapper]
+        val attackerPosition = attacker[Position.mapper]
+        val defenderPosition = defender[Position.mapper]
+
+        if (attackerGraphics != null && attackerPosition != null && defenderPosition != null) {
+            if (attackerPosition.x < defenderPosition.x) {
+                attackerGraphics.direction = Direction.EAST
+            }
+            if (attackerPosition.x > defenderPosition.x) {
+                attackerGraphics.direction = Direction.WEST
+            }
+        }
     }
 }
