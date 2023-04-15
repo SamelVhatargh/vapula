@@ -2,6 +2,7 @@ package com.github.samelVhatargh.vapula.ui
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
@@ -20,6 +21,7 @@ class ModalDialogs(private val inputMultiplexer: InputMultiplexer) : IteratingSy
     KtxInputAdapter {
 
     private var stage: Stage? = null
+    private var enterAction: (() -> Unit)? = null
 
     override fun update(deltaTime: Float) {
         super.update(deltaTime)
@@ -64,6 +66,12 @@ class ModalDialogs(private val inputMultiplexer: InputMultiplexer) : IteratingSy
             })
         }
 
+        if (buttons.count() == 1) {
+            enterAction = {
+                buttons.first().action()
+            }
+        }
+
         stage = Stage(FitViewport(16 * 64f, 9 * 64f))
         stage!!.addActor(dialog)
         inputMultiplexer.addProcessor(0, this)
@@ -71,6 +79,7 @@ class ModalDialogs(private val inputMultiplexer: InputMultiplexer) : IteratingSy
     }
 
     fun closeModal() {
+        enterAction = null
         inputMultiplexer.removeProcessor(this)
         inputMultiplexer.removeProcessor(stage)
         stage?.dispose()
@@ -78,7 +87,12 @@ class ModalDialogs(private val inputMultiplexer: InputMultiplexer) : IteratingSy
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int) = true
-    override fun keyDown(keycode: Int) = true
+    override fun keyDown(keycode: Int): Boolean {
+        if (enterAction != null && keycode == Input.Keys.ENTER) {
+            enterAction!!.invoke()
+        }
+        return true
+    }
     override fun keyTyped(character: Char) = true
     override fun keyUp(keycode: Int) = true
     override fun mouseMoved(screenX: Int, screenY: Int) = true
