@@ -20,7 +20,6 @@ class Kill(private val notifier: NotifierInterface, private val entity: Entity) 
 
         entity += Dead()
         entity.remove<Animation>()
-        graphics.spriteName = "${graphics.spriteName}Dead"
         graphics.layer = Layer.CORPSE
 
         notifier.notify(EntityDied(entity))
