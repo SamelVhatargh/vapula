@@ -38,7 +38,8 @@ class ModalDialogs(private val inputMultiplexer: InputMultiplexer) : IteratingSy
     private fun show(title: String, text: String, buttons: Array<ModalDialogButton>) {
         var buttonContainer: KTableWidget
         val dialog = scene2d.table {
-            table {
+            table {wrapper ->
+                wrapper.padTop(64f)
                 label(title, LabelStyle.CAPTION.name)
                 row()
                 label(text) {
@@ -51,6 +52,7 @@ class ModalDialogs(private val inputMultiplexer: InputMultiplexer) : IteratingSy
                 }
                 background("modal")
             }
+            top()
 
             setFillParent(true)
         }
