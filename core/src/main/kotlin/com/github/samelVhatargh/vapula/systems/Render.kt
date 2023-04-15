@@ -44,7 +44,8 @@ class Render(
         val vector = graphics.position ?: position.toVec2()
         spriteCache.getSprite(graphics).apply {
             setPosition(vector.x, vector.y)
-            setScale(1f)
+            setOrigin(.5f, 0f)
+            setScale(graphics.scale.x, graphics.scale.y)
             rotation = 0f
 
             val spriteRotation = graphics.rotation

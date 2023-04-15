@@ -32,6 +32,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
             with<Player>()
             with<OccupySpace>()
             with<FieldOfView>()
+            with<IdleAnimation>()
             with<Name> {
                 name = "player"
             }
@@ -78,6 +79,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
                 name = "Goblin ${type.role} $goblinCount"
             }
             with<Ai>()
+            with<IdleAnimation>()
         }
         position.z = storey.z
         monster.add(position)

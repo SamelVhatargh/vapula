@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import com.github.samelVhatargh.vapula.map.Direction
 import ktx.ashley.mapperFor
+import ktx.math.vec2
 
 enum class Layer {
     FLOOR, CORPSE, CREATURE
@@ -20,6 +21,7 @@ class Graphics : Component, Pool.Poolable, Comparable<Graphics> {
     var position: Vector2? = null
     var rotation: Float? = null
     var direction: Direction = Direction.WEST
+    var scale: Vector2 = vec2(1f, 1f)
 
     override fun reset() {
         spriteName = ""
@@ -27,6 +29,7 @@ class Graphics : Component, Pool.Poolable, Comparable<Graphics> {
         position = null
         rotation = null
         direction = Direction.WEST
+        scale = vec2(1f, 1f)
     }
 
     companion object {
