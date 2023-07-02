@@ -8,12 +8,12 @@ import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.game.commands.*
 import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Path
 import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.map.PositionComponent
-import com.github.samelVhatargh.vapula.systems.commands.*
 import ktx.app.KtxInputAdapter
 import ktx.ashley.get
 import ktx.ashley.has
@@ -66,7 +66,7 @@ class PlayerInputSystem(
     }
 
     override fun keyDown(keycode: Int): Boolean {
-        if (playerEntity.has(Action.mapper)) return true
+        if (playerEntity.has(ActionComponent.mapper)) return true
 
         when (keycode) {
             Input.Keys.U -> useStairs()
@@ -90,11 +90,11 @@ class PlayerInputSystem(
 
         if (entity !== null) {
             if (entity.has(GoUp.mapper)) {
-                playerEntity += Action(GoUpstairs(engine, world, playerEntity))
+                playerEntity += ActionComponent(GoUpstairs(engine, world, playerEntity))
                 return
             }
             if (entity.has(GoDown.mapper)) {
-                playerEntity += Action(GoDownstairs(engine, world, playerEntity))
+                playerEntity += ActionComponent(GoDownstairs(engine, world, playerEntity))
                 return
             }
         }
@@ -105,7 +105,7 @@ class PlayerInputSystem(
             doNothing()
             return
         }
-        playerEntity += Action(AggressiveMove(engine, playerEntity, direction, world))
+        playerEntity += ActionComponent(AggressiveMove(engine, playerEntity, direction, world))
     }
 
     private fun moveInPath(path: Path) {
@@ -113,10 +113,10 @@ class PlayerInputSystem(
             doNothing()
             return
         }
-        playerEntity += Action(MoveInPath(engine, playerEntity, path, world.storey, continueToMoveInNextTurn = true))
+        playerEntity += ActionComponent(MoveInPath(engine, playerEntity, path, world.storey, continueToMoveInNextTurn = true))
     }
 
     private fun doNothing() {
-        playerEntity += Action(DoNothing())
+        playerEntity += ActionComponent(DoNothing())
     }
 }

@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.systems.commands
+package com.github.samelVhatargh.vapula.game.commands
 
 import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.map.FieldOfViewComponent

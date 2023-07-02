@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.game.ai.AiSystem
+import com.github.samelVhatargh.vapula.game.commands.ActionComponent
 import ktx.ashley.*
 import ktx.log.logger
 
@@ -11,7 +12,7 @@ private const val AUTO_TURN_DELAY = .1f
 
 class TurnLoop(private val player: Entity) :
     IteratingSystem(
-        allOf(Action::class).exclude(Dead::class).get()
+        allOf(ActionComponent::class).exclude(Dead::class).get()
     ) {
 
     private var delay = AUTO_TURN_DELAY
@@ -26,7 +27,7 @@ class TurnLoop(private val player: Entity) :
             return
         }
 
-        val playerAction = player[Action.mapper]
+        val playerAction = player[ActionComponent.mapper]
         playerAction?.let {
             if (player.hasNot(Dead.mapper)) {
                 super.update(deltaTime)
@@ -36,9 +37,9 @@ class TurnLoop(private val player: Entity) :
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val shouldBeRepeatedNextTurn = entity[Action.mapper]!!.command.execute()
+        val shouldBeRepeatedNextTurn = entity[ActionComponent.mapper]!!.command.execute()
         if (!shouldBeRepeatedNextTurn) {
-            entity.remove<Action>()
+            entity.remove<ActionComponent>()
         } else if (entity.has(Player.mapper)) {
             delay = 0f
         }

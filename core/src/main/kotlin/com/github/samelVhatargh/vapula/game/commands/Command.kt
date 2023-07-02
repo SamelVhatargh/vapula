@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.systems.commands
+package com.github.samelVhatargh.vapula.game.commands
 
 /**
  * An action that can be performed by an [entity][com.badlogic.ashley.core.Entity]

@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.systems.commands
+package com.github.samelVhatargh.vapula.game.commands
 
 class DoNothing : Command {
     override fun execute(): Boolean {

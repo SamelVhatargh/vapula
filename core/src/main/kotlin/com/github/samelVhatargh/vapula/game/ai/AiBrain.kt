@@ -5,10 +5,10 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Bresenham2
 import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.game.commands.*
 import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.notifier
-import com.github.samelVhatargh.vapula.systems.commands.*
 import ktx.ashley.*
 
 /**
@@ -119,7 +119,7 @@ class AiBrain(private val engine: Engine, private val world: World) {
 
         if (target.has(Player.mapper)) {
             target += InDanger()
-            target.remove<Action>()
+            target.remove<ActionComponent>()
         }
 
         return true

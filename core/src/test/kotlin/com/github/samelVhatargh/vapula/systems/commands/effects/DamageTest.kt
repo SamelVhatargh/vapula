@@ -7,7 +7,7 @@ import com.github.samelVhatargh.vapula.components.Dead
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import com.github.samelVhatargh.vapula.components.Invulnerability
 import com.github.samelVhatargh.vapula.components.Stats
-import com.github.samelVhatargh.vapula.systems.commands.Damage
+import com.github.samelVhatargh.vapula.game.commands.Damage
 import com.github.samelVhatargh.vapula.tests.GdxTestApplication
 import com.github.samelVhatargh.vapula.tests.TestNotifier
 import ktx.ashley.entity
