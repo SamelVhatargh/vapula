@@ -8,9 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.FitViewport
-import com.github.samelVhatargh.vapula.components.Name
-import com.github.samelVhatargh.vapula.components.Player
-import com.github.samelVhatargh.vapula.components.Stats
+import com.github.samelVhatargh.vapula.game.stats.NameComponent
+import com.github.samelVhatargh.vapula.game.PlayerComponent
+import com.github.samelVhatargh.vapula.game.stats.StatsComponent
 import com.github.samelVhatargh.vapula.events.*
 import com.github.samelVhatargh.vapula.notifier
 import ktx.actors.onClick
@@ -68,7 +68,7 @@ private class HudView {
     /**
      * Updates player [stats]
      */
-    fun updatePlayerStats(stats: Stats) {
+    fun updatePlayerStats(stats: StatsComponent) {
         hp?.setText("HP: ${stats.hp}/${stats.maxHp}")
     }
 
@@ -121,30 +121,30 @@ class Hud(private val inputMultiplexer: InputMultiplexer) : EntitySystem(), Obse
     fun setupUI() {
         stage += hudView.create()
         stage.scrollFocus = hudView.scrollFocus
-        val player = engine.getEntitiesFor(allOf(Player::class, Stats::class).get()).first()
-        hudView.updatePlayerStats(player[Stats.mapper]!!)
+        val player = engine.getEntitiesFor(allOf(PlayerComponent::class, StatsComponent::class).get()).first()
+        hudView.updatePlayerStats(player[StatsComponent.mapper]!!)
     }
 
     override fun onNotify(event: Event) {
         when (event) {
             is EntityDamaged -> {
-                if (event.victim.has(Player.mapper) && event.victim.has(Stats.mapper)) {
-                    hudView.updatePlayerStats(event.victim[Stats.mapper]!!)
+                if (event.victim.has(PlayerComponent.mapper) && event.victim.has(StatsComponent.mapper)) {
+                    hudView.updatePlayerStats(event.victim[StatsComponent.mapper]!!)
                 }
-                hudView.logMessage("${event.victim[Name.mapper]!!.name} takes ${event.damage} damage")
+                hudView.logMessage("${event.victim[NameComponent.mapper]!!.name} takes ${event.damage} damage")
             }
 
             is EntityHealed -> {
-                hudView.logMessage("${event.healer[Name.mapper]!!.name} heals ${event.target[Name.mapper]!!.name} for  ${event.hp} damage")
+                hudView.logMessage("${event.healer[NameComponent.mapper]!!.name} heals ${event.target[NameComponent.mapper]!!.name} for  ${event.hp} damage")
             }
 
             is EntityAttacked -> {
                 val word = if (event.miss) "misses" else "attacks"
-                hudView.logMessage("${event.attacker[Name.mapper]!!.name} $word ${event.defender[Name.mapper]!!.name}")
+                hudView.logMessage("${event.attacker[NameComponent.mapper]!!.name} $word ${event.defender[NameComponent.mapper]!!.name}")
             }
 
             is EntityDied -> {
-                hudView.logMessage("${event.victim[Name.mapper]!!.name} dies")
+                hudView.logMessage("${event.victim[NameComponent.mapper]!!.name} dies")
             }
         }
     }

@@ -1,9 +1,9 @@
 package com.github.samelVhatargh.vapula.game.commands
 
 import com.badlogic.ashley.core.Entity
-import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.events.EntityDamaged
 import com.github.samelVhatargh.vapula.events.NotifierInterface
+import com.github.samelVhatargh.vapula.game.stats.StatsComponent
 import com.github.samelVhatargh.vapula.game.statuses.Invulnerability
 import ktx.ashley.get
 import ktx.ashley.has
@@ -18,7 +18,7 @@ class Damage(
     private val damage: Int
 ) : Command {
 
-    private val defenderStats = defender[Stats.mapper]!!
+    private val defenderStats = defender[StatsComponent.mapper]!!
 
     override fun execute(): Boolean {
         if (defender.has(Invulnerability.mapper)) {

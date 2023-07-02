@@ -2,7 +2,6 @@ package com.github.samelVhatargh.vapula.game
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
-import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.game.ai.AiSystem
 import com.github.samelVhatargh.vapula.game.commands.ActionComponent
 import com.github.samelVhatargh.vapula.game.statuses.Dead
@@ -41,7 +40,7 @@ class TurnLoopSystem(private val player: Entity) :
         val shouldBeRepeatedNextTurn = entity[ActionComponent.mapper]!!.command.execute()
         if (!shouldBeRepeatedNextTurn) {
             entity.remove<ActionComponent>()
-        } else if (entity.has(Player.mapper)) {
+        } else if (entity.has(PlayerComponent.mapper)) {
             delay = 0f
         }
     }

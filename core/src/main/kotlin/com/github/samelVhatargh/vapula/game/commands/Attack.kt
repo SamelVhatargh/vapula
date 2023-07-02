@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import com.github.samelVhatargh.vapula.map.PositionComponent
-import com.github.samelVhatargh.vapula.components.Stats
+import com.github.samelVhatargh.vapula.game.stats.StatsComponent
 import com.github.samelVhatargh.vapula.events.EntityAttacked
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.notifier
@@ -18,8 +18,8 @@ class Attack(
 ) : Command {
 
     override fun execute(): Boolean {
-        val attackerStats = attacker[Stats.mapper]!!
-        val defenderStats = defender[Stats.mapper]!!
+        val attackerStats = attacker[StatsComponent.mapper]!!
+        val defenderStats = defender[StatsComponent.mapper]!!
 
         var hitChance = 65
         hitChance += (attackerStats.dexterity + (attackerStats.perception / 2)) * 5

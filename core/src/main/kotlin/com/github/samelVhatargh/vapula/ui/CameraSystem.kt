@@ -7,7 +7,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.github.samelVhatargh.vapula.graphics.AnimationComponent
-import com.github.samelVhatargh.vapula.components.Player
+import com.github.samelVhatargh.vapula.game.PlayerComponent
 import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.map.Direction
 import ktx.app.KtxInputAdapter
@@ -43,7 +43,7 @@ class CameraSystem(private val camera: OrthographicCamera, private val inputMult
 
     override fun addedToEngine(engine: Engine) {
         super.addedToEngine(engine)
-        player = engine.getEntitiesFor(allOf(Player::class, PositionComponent::class).get()).first()
+        player = engine.getEntitiesFor(allOf(PlayerComponent::class, PositionComponent::class).get()).first()
     }
 
     override fun update(deltaTime: Float) {

@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.math.Bresenham2
 import com.badlogic.gdx.math.Vector2
 import com.github.samelVhatargh.vapula.game.World
-import com.github.samelVhatargh.vapula.components.Stats
+import com.github.samelVhatargh.vapula.game.stats.StatsComponent
 import ktx.ashley.get
 
 class FieldOfViewCalculatorSystem(private val world: World) : EntitySystem() {
@@ -15,7 +15,7 @@ class FieldOfViewCalculatorSystem(private val world: World) : EntitySystem() {
             if (!fov.shouldUpdate) return
             fov.reset()
 
-            val visionRadius = player[Stats.mapper]!!.sightRange
+            val visionRadius = player[StatsComponent.mapper]!!.sightRange
 
             val origin = player[PositionComponent.mapper]!!
             val edges = mutableListOf<Vector2>()

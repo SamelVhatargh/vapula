@@ -5,9 +5,9 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Vector2
 import com.github.samelVhatargh.vapula.game.World
-import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.entities.ANIMATION_FAMILY
 import com.github.samelVhatargh.vapula.events.*
+import com.github.samelVhatargh.vapula.game.stats.StatsComponent
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.FieldOfViewComponent
 import com.github.samelVhatargh.vapula.map.PositionComponent
@@ -99,7 +99,7 @@ class AnimationSystem(private val world: World) : IteratingSystem(ANIMATION_FAMI
                 val attacker = event.attacker
                 val attackerPosition = attacker[PositionComponent.mapper]
                 val defenderPosition = event.defender[PositionComponent.mapper]
-                val attackerStats = attacker[Stats.mapper]
+                val attackerStats = attacker[StatsComponent.mapper]
 
                 if (attackerPosition != null && defenderPosition != null && attackerStats != null) {
                     addAnimation(attacker, AttackAnimation(attackerPosition, defenderPosition))

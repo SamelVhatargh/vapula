@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx
 import com.github.samelVhatargh.vapula.game.statuses.Dead
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import com.github.samelVhatargh.vapula.game.statuses.Invulnerability
-import com.github.samelVhatargh.vapula.components.Stats
+import com.github.samelVhatargh.vapula.game.stats.StatsComponent
 import com.github.samelVhatargh.vapula.game.commands.Damage
 import com.github.samelVhatargh.vapula.tests.GdxTestApplication
 import com.github.samelVhatargh.vapula.tests.TestNotifier
@@ -29,7 +29,7 @@ internal class DamageTest {
 
         damageCommand.execute()
 
-        Assertions.assertEquals(startingHp - damage, entity[Stats.mapper]!!.hp)
+        Assertions.assertEquals(startingHp - damage, entity[StatsComponent.mapper]!!.hp)
     }
 
     @Test
@@ -44,7 +44,7 @@ internal class DamageTest {
 
         damageCommand.execute()
 
-        Assertions.assertEquals(startingHp, entity[Stats.mapper]!!.hp)
+        Assertions.assertEquals(startingHp, entity[StatsComponent.mapper]!!.hp)
     }
 
     @Test
@@ -64,7 +64,7 @@ internal class DamageTest {
 
     private fun createEntity(startingHp: Int): Entity {
         Gdx.app = GdxTestApplication()
-        val stats = Stats().apply {
+        val stats = StatsComponent().apply {
             generateHp(startingHp)
         }
 

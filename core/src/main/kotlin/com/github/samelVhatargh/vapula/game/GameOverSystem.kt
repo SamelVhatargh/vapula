@@ -6,13 +6,12 @@ import com.badlogic.gdx.Gdx
 import com.github.samelVhatargh.vapula.addModalDialogWindow
 import com.github.samelVhatargh.vapula.ui.CustomDialogButton
 import com.github.samelVhatargh.vapula.game.statuses.Dead
-import com.github.samelVhatargh.vapula.components.Player
 import ktx.ashley.allOf
 
 /**
  * Manages game over state and conditions
  */
-class GameOverSystem: IteratingSystem(allOf(Player::class, Dead::class).get()) {
+class GameOverSystem: IteratingSystem(allOf(PlayerComponent::class, Dead::class).get()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         engine.addModalDialogWindow("Game Over", "You are dead", arrayOf(

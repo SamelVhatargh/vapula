@@ -4,8 +4,9 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Bresenham2
 import com.github.samelVhatargh.vapula.game.World
-import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.game.PlayerComponent
 import com.github.samelVhatargh.vapula.game.commands.*
+import com.github.samelVhatargh.vapula.game.stats.StatsComponent
 import com.github.samelVhatargh.vapula.game.statuses.Dead
 import com.github.samelVhatargh.vapula.game.statuses.InDanger
 import com.github.samelVhatargh.vapula.map.PathFinder
@@ -25,7 +26,7 @@ class AiBrain(private val engine: Engine, private val world: World) {
     fun getCommand(entity: Entity): Command {
         val playerPosition = player[PositionComponent.mapper]!!
         val monsterPosition = entity[PositionComponent.mapper]!!
-        val monsterStats = entity[Stats.mapper]!!
+        val monsterStats = entity[StatsComponent.mapper]!!
         val ai = entity[AiComponent.mapper]!!
 
         if (entity.has(Dead.mapper)) {
@@ -46,9 +47,9 @@ class AiBrain(private val engine: Engine, private val world: World) {
         // try to heal if possible and needed
         if (monsterStats.healDice > 0) {
             // find all injured hostiles
-            val allMonsters = allOf(Stats::class, AiComponent::class, PositionComponent::class).exclude(Player::class, Dead::class).get()
+            val allMonsters = allOf(StatsComponent::class, AiComponent::class, PositionComponent::class).exclude(PlayerComponent::class, Dead::class).get()
             val injuredMonster = engine.getEntitiesFor(allMonsters).find {
-                it[Stats.mapper]!!.hp > 0 && it[Stats.mapper]!!.hp < it[Stats.mapper]!!.maxHp
+                it[StatsComponent.mapper]!!.hp > 0 && it[StatsComponent.mapper]!!.hp < it[StatsComponent.mapper]!!.maxHp
                         && isInLineOfSight(entity, it)
             }
 
@@ -100,7 +101,7 @@ class AiBrain(private val engine: Engine, private val world: World) {
      */
     private fun isInLineOfSight(entity: Entity, target: Entity): Boolean {
         val start = entity[PositionComponent.mapper]!!
-        val sightRange = entity[Stats.mapper]!!.sightRange
+        val sightRange = entity[StatsComponent.mapper]!!.sightRange
         val targetPosition = target[PositionComponent.mapper]!!
 
         if (start.z != targetPosition.z) {
@@ -119,7 +120,7 @@ class AiBrain(private val engine: Engine, private val world: World) {
             }
         }
 
-        if (target.has(Player.mapper)) {
+        if (target.has(PlayerComponent.mapper)) {
             target += InDanger()
             target.remove<ActionComponent>()
         }

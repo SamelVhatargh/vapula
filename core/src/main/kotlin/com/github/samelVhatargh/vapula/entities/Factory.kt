@@ -2,10 +2,13 @@ package com.github.samelVhatargh.vapula.entities
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.game.PlayerComponent
 import com.github.samelVhatargh.vapula.game.ai.AiComponent
 import com.github.samelVhatargh.vapula.game.stairs.GoDown
 import com.github.samelVhatargh.vapula.game.stairs.GoUp
+import com.github.samelVhatargh.vapula.game.stats.NameComponent
+import com.github.samelVhatargh.vapula.game.stats.ProjectileType
+import com.github.samelVhatargh.vapula.game.stats.StatsComponent
 import com.github.samelVhatargh.vapula.game.statuses.OccupySpace
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import com.github.samelVhatargh.vapula.graphics.IdleAnimationComponent
@@ -36,11 +39,11 @@ class Factory(private val engine: Engine, var storey: Storey) {
             with<GraphicsComponent> {
                 spriteName = "character"
             }
-            with<Player>()
+            with<PlayerComponent>()
             with<OccupySpace>()
             with<FieldOfViewComponent>()
             with<IdleAnimationComponent>()
-            with<Name> {
+            with<NameComponent> {
                 name = "player"
             }
             with<SoundSetComponent> {
@@ -54,7 +57,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
         position.z = storey.z
         player.add(position)
 
-        val stats = Stats().apply {
+        val stats = StatsComponent().apply {
             strength = random.dice("1d6 + 3")
             dexterity = random.dice("1d6 + 3")
             constitution = random.dice("1d6 + 3")
@@ -82,7 +85,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
                 spriteName = "goblin${type.role}"
             }
             with<OccupySpace>()
-            with<Name> {
+            with<NameComponent> {
                 name = "Goblin ${type.role} $goblinCount"
             }
             with<AiComponent>()
@@ -91,7 +94,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
         position.z = storey.z
         monster.add(position)
 
-        val stats = Stats().apply {
+        val stats = StatsComponent().apply {
             strength = random.dice("1d2")
             dexterity = random.dice("1d6 + 1")
             constitution = random.dice("1d4 - 1")
@@ -135,7 +138,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
         }
         monster.add(soundSet)
 
-        log.debug { "${monster[Name.mapper]!!.name} - $stats" }
+        log.debug { "${monster[NameComponent.mapper]!!.name} - $stats" }
 
         return monster
     }

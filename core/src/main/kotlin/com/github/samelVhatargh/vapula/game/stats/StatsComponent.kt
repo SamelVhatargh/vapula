@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.components
+package com.github.samelVhatargh.vapula.game.stats
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
@@ -18,7 +18,7 @@ enum class ProjectileType(val spriteName: String) {
 /**
  * Способности всех существ, которые могут драться
  */
-class Stats : Component, Pool.Poolable {
+class StatsComponent : Component, Pool.Poolable {
 
     var level = 0
     var baseHp = 0
@@ -99,6 +99,6 @@ class Stats : Component, Pool.Poolable {
     }
 
     companion object {
-        val mapper = mapperFor<Stats>()
+        val mapper = mapperFor<StatsComponent>()
     }
 }
