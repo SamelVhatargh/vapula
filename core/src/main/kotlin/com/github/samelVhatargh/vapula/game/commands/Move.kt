@@ -6,7 +6,7 @@ import com.github.samelVhatargh.vapula.game.World
 import com.github.samelVhatargh.vapula.entities.OCCUPY_SPACE_FAMILY
 import com.github.samelVhatargh.vapula.events.EntityMoved
 import com.github.samelVhatargh.vapula.game.stats.StatsComponent
-import com.github.samelVhatargh.vapula.game.statuses.Dead
+import com.github.samelVhatargh.vapula.game.statuses.DeadComponent
 import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Path
@@ -78,7 +78,7 @@ class AggressiveMove(
     override fun execute(): Boolean {
         val entityPosition = entity[PositionComponent.mapper]!!
         val targetPosition = PositionComponent(entityPosition.x + direction.x, entityPosition.y + direction.y, entityPosition.z)
-        val target = engine.getEntityAtPosition(targetPosition, allOf(StatsComponent::class).exclude(Dead::class).get())
+        val target = engine.getEntityAtPosition(targetPosition, allOf(StatsComponent::class).exclude(DeadComponent::class).get())
             ?: return MoveInDirection(engine, entity, direction, world.storey).execute()
 
         return Attack(engine, entity, target).execute()

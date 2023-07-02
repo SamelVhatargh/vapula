@@ -5,9 +5,8 @@ import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.samelVhatargh.vapula.game.World
-import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.entities.RENDERABLE_FAMILY
-import com.github.samelVhatargh.vapula.game.statuses.Dead
+import com.github.samelVhatargh.vapula.game.statuses.DeadComponent
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.FieldOfViewComponent
 import com.github.samelVhatargh.vapula.map.PositionComponent
@@ -36,7 +35,7 @@ class RenderSystem(
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val position = entity[PositionComponent.mapper]!!
         val graphics = entity[GraphicsComponent.mapper]!!
-        val dead = entity.has(Dead.mapper)
+        val dead = entity.has(DeadComponent.mapper)
 
         if (position.z != world.storey.z) return
 

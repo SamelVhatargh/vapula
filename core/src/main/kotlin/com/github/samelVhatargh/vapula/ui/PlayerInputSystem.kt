@@ -12,8 +12,8 @@ import com.github.samelVhatargh.vapula.game.stairs.GoDown
 import com.github.samelVhatargh.vapula.game.stairs.GoDownstairs
 import com.github.samelVhatargh.vapula.game.stairs.GoUp
 import com.github.samelVhatargh.vapula.game.stairs.GoUpstairs
-import com.github.samelVhatargh.vapula.game.statuses.Dead
-import com.github.samelVhatargh.vapula.game.statuses.InDanger
+import com.github.samelVhatargh.vapula.game.statuses.DeadComponent
+import com.github.samelVhatargh.vapula.game.statuses.InDangerComponent
 import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Path
@@ -58,7 +58,7 @@ class PlayerInputSystem(
             return true
         }
 
-        if (playerEntity.has(InDanger.mapper)) {
+        if (playerEntity.has(InDangerComponent.mapper)) {
             move(direction)
 
             return true
@@ -106,7 +106,7 @@ class PlayerInputSystem(
     }
 
     private fun move(direction: Direction) {
-        if (playerEntity.has(Dead.mapper)) {
+        if (playerEntity.has(DeadComponent.mapper)) {
             doNothing()
             return
         }
@@ -114,7 +114,7 @@ class PlayerInputSystem(
     }
 
     private fun moveInPath(path: Path) {
-        if (playerEntity.has(Dead.mapper) || path.isEmpty()) {
+        if (playerEntity.has(DeadComponent.mapper) || path.isEmpty()) {
             doNothing()
             return
         }

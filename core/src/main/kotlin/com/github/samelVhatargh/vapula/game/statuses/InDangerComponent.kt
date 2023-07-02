@@ -4,16 +4,13 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
 import ktx.ashley.mapperFor
 
-/**
- * Неуязвимость
- */
-class Invulnerability : Component, Pool.Poolable {
+class InDangerComponent : Component, Pool.Poolable {
 
     override fun reset() {
 
     }
 
     companion object {
-        val mapper = mapperFor<Invulnerability>()
+        val mapper = mapperFor<InDangerComponent>()
     }
 }

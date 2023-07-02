@@ -4,13 +4,13 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
 import ktx.ashley.mapperFor
 
-class Dead : Component, Pool.Poolable {
+class DeadComponent : Component, Pool.Poolable {
 
     override fun reset() {
 
     }
 
     companion object {
-        val mapper = mapperFor<Dead>()
+        val mapper = mapperFor<DeadComponent>()
     }
 }

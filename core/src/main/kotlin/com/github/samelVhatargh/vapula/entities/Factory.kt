@@ -9,7 +9,7 @@ import com.github.samelVhatargh.vapula.game.stairs.GoUp
 import com.github.samelVhatargh.vapula.game.stats.NameComponent
 import com.github.samelVhatargh.vapula.game.stats.ProjectileType
 import com.github.samelVhatargh.vapula.game.stats.StatsComponent
-import com.github.samelVhatargh.vapula.game.statuses.OccupySpace
+import com.github.samelVhatargh.vapula.game.statuses.OccupySpaceComponent
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import com.github.samelVhatargh.vapula.graphics.IdleAnimationComponent
 import com.github.samelVhatargh.vapula.graphics.Layer
@@ -40,7 +40,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
                 spriteName = "character"
             }
             with<PlayerComponent>()
-            with<OccupySpace>()
+            with<OccupySpaceComponent>()
             with<FieldOfViewComponent>()
             with<IdleAnimationComponent>()
             with<NameComponent> {
@@ -84,7 +84,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
             with<GraphicsComponent> {
                 spriteName = "goblin${type.role}"
             }
-            with<OccupySpace>()
+            with<OccupySpaceComponent>()
             with<NameComponent> {
                 name = "Goblin ${type.role} $goblinCount"
             }
@@ -178,7 +178,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
             with<GraphicsComponent> {
                 spriteName = "barrel"
             }
-            with<OccupySpace>()
+            with<OccupySpaceComponent>()
         }
         position.z = storey.z
         barrel.add(position)

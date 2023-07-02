@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.game.World
-import com.github.samelVhatargh.vapula.game.statuses.Invulnerability
+import com.github.samelVhatargh.vapula.game.statuses.InvulnerabilityComponent
 import com.github.samelVhatargh.vapula.debug.commands.MapDrawingMode
 import com.github.samelVhatargh.vapula.debug.commands.removeFog
 import com.github.samelVhatargh.vapula.utility.random
@@ -76,11 +76,11 @@ class DebugCommandExecutor(
      */
     @ConsoleDoc(description = "Enables or disables invulnerability")
     fun hemonugi() {
-        val enabledWord = if (player.has(Invulnerability.mapper)) {
-            player.remove<Invulnerability>()
+        val enabledWord = if (player.has(InvulnerabilityComponent.mapper)) {
+            player.remove<InvulnerabilityComponent>()
             "lost invulnerability"
         } else {
-            player.addComponent<Invulnerability>(engine)
+            player.addComponent<InvulnerabilityComponent>(engine)
             "becomes invulnerable"
         }
 

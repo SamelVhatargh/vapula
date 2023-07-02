@@ -3,9 +3,9 @@ package com.github.samelVhatargh.vapula.systems.commands.effects
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
-import com.github.samelVhatargh.vapula.game.statuses.Dead
+import com.github.samelVhatargh.vapula.game.statuses.DeadComponent
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
-import com.github.samelVhatargh.vapula.game.statuses.Invulnerability
+import com.github.samelVhatargh.vapula.game.statuses.InvulnerabilityComponent
 import com.github.samelVhatargh.vapula.game.stats.StatsComponent
 import com.github.samelVhatargh.vapula.game.commands.Damage
 import com.github.samelVhatargh.vapula.tests.GdxTestApplication
@@ -37,7 +37,7 @@ internal class DamageTest {
         val startingHp = 100
         val attacker = createEntity(startingHp)
         val entity = createEntity(startingHp)
-        entity.add(Invulnerability())
+        entity.add(InvulnerabilityComponent())
 
         val damage = 50
         val damageCommand = Damage(TestNotifier(), attacker, entity, damage)
@@ -59,7 +59,7 @@ internal class DamageTest {
 
         damageCommand.execute()
 
-        Assertions.assertTrue(entity.has(Dead.mapper))
+        Assertions.assertTrue(entity.has(DeadComponent.mapper))
     }
 
     private fun createEntity(startingHp: Int): Entity {

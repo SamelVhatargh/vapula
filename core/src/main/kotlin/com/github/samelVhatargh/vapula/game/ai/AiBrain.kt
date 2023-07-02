@@ -7,8 +7,8 @@ import com.github.samelVhatargh.vapula.game.World
 import com.github.samelVhatargh.vapula.game.PlayerComponent
 import com.github.samelVhatargh.vapula.game.commands.*
 import com.github.samelVhatargh.vapula.game.stats.StatsComponent
-import com.github.samelVhatargh.vapula.game.statuses.Dead
-import com.github.samelVhatargh.vapula.game.statuses.InDanger
+import com.github.samelVhatargh.vapula.game.statuses.DeadComponent
+import com.github.samelVhatargh.vapula.game.statuses.InDangerComponent
 import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.notifier
@@ -29,11 +29,11 @@ class AiBrain(private val engine: Engine, private val world: World) {
         val monsterStats = entity[StatsComponent.mapper]!!
         val ai = entity[AiComponent.mapper]!!
 
-        if (entity.has(Dead.mapper)) {
+        if (entity.has(DeadComponent.mapper)) {
             return DoNothing()
         }
 
-        if (player.has(Dead.mapper)) {
+        if (player.has(DeadComponent.mapper)) {
             return Wander(engine, entity, world)
         }
 
@@ -47,7 +47,7 @@ class AiBrain(private val engine: Engine, private val world: World) {
         // try to heal if possible and needed
         if (monsterStats.healDice > 0) {
             // find all injured hostiles
-            val allMonsters = allOf(StatsComponent::class, AiComponent::class, PositionComponent::class).exclude(PlayerComponent::class, Dead::class).get()
+            val allMonsters = allOf(StatsComponent::class, AiComponent::class, PositionComponent::class).exclude(PlayerComponent::class, DeadComponent::class).get()
             val injuredMonster = engine.getEntitiesFor(allMonsters).find {
                 it[StatsComponent.mapper]!!.hp > 0 && it[StatsComponent.mapper]!!.hp < it[StatsComponent.mapper]!!.maxHp
                         && isInLineOfSight(entity, it)
@@ -121,7 +121,7 @@ class AiBrain(private val engine: Engine, private val world: World) {
         }
 
         if (target.has(PlayerComponent.mapper)) {
-            target += InDanger()
+            target += InDangerComponent()
             target.remove<ActionComponent>()
         }
 

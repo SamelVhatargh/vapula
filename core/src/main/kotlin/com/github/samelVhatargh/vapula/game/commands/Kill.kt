@@ -1,10 +1,9 @@
 package com.github.samelVhatargh.vapula.game.commands
 
 import com.badlogic.ashley.core.Entity
-import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.events.EntityDied
 import com.github.samelVhatargh.vapula.events.NotifierInterface
-import com.github.samelVhatargh.vapula.game.statuses.Dead
+import com.github.samelVhatargh.vapula.game.statuses.DeadComponent
 import com.github.samelVhatargh.vapula.graphics.AnimationComponent
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import com.github.samelVhatargh.vapula.graphics.IdleAnimationComponent
@@ -21,7 +20,7 @@ class Kill(private val notifier: NotifierInterface, private val entity: Entity) 
     override fun execute(): Boolean {
         val graphics = entity[GraphicsComponent.mapper]!!
 
-        entity += Dead()
+        entity += DeadComponent()
         entity.remove<AnimationComponent>()
         entity.remove<IdleAnimationComponent>()
         graphics.scale = vec2(1f, 1f)
