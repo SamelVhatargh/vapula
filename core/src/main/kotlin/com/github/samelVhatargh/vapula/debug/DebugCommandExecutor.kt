@@ -48,7 +48,7 @@ class DebugCommandExecutor(
      */
     @ConsoleDoc(description = "Enables or disables camera movement on mouse hover over edge screen")
     fun eye() {
-        val cameraSystem = engine.getSystem<com.github.samelVhatargh.vapula.systems.Camera>()
+        val cameraSystem = engine.getSystem<com.github.samelVhatargh.vapula.ui.CameraSystem>()
         cameraSystem.moveWithMouseEnabled = !cameraSystem.moveWithMouseEnabled
         val enabledWord = if (cameraSystem.moveWithMouseEnabled) "enabled" else "disabled"
         console.log("Free camera mode $enabledWord")

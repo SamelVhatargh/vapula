@@ -21,12 +21,12 @@ import com.github.samelVhatargh.vapula.screens.GameScreen
 import com.github.samelVhatargh.vapula.screens.LoadingScreen
 import com.github.samelVhatargh.vapula.sounds.MusicSystem
 import com.github.samelVhatargh.vapula.sounds.SoundSystem
-import com.github.samelVhatargh.vapula.systems.*
 import com.github.samelVhatargh.vapula.ui.Hud
 import com.github.samelVhatargh.vapula.ui.ModalDialogSystem
 import com.github.samelVhatargh.vapula.graphics.SpriteCache
 import com.github.samelVhatargh.vapula.map.FieldOfViewCalculatorSystem
 import com.github.samelVhatargh.vapula.map.MapRenderSystem
+import com.github.samelVhatargh.vapula.ui.CameraSystem
 import com.github.samelVhatargh.vapula.ui.PlayerInputSystem
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.app.KtxGame
@@ -59,7 +59,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             addSystem(PlayerInputSystem(inputMultiplexer, camera, world))
             addSystem(AnimationSystem(world))
             addSystem(SoundSystem(assets, world))
-            addSystem(Camera(camera, inputMultiplexer))
+            addSystem(CameraSystem(camera, inputMultiplexer))
             addSystem(MapRenderSystem(spriteCache, batch, viewport, world))
             addSystem(FieldOfViewCalculatorSystem(world))
             addSystem(IdleAnimationSystem())

@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.systems
+package com.github.samelVhatargh.vapula.ui
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
@@ -6,12 +6,10 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.math.Vector3
 import com.github.samelVhatargh.vapula.graphics.AnimationComponent
 import com.github.samelVhatargh.vapula.components.Player
 import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.map.Direction
-import com.github.samelVhatargh.vapula.ui.HUD_WIDTH
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
 import ktx.ashley.get
@@ -24,7 +22,7 @@ private const val ZOOM_SPEED = 0.5f
 /**
  * Управление камерой
  */
-class Camera(private val camera: OrthographicCamera, private val inputMultiplexer: InputMultiplexer) : EntitySystem(),
+class CameraSystem(private val camera: OrthographicCamera, private val inputMultiplexer: InputMultiplexer) : EntitySystem(),
     KtxInputAdapter {
 
     var moveWithMouseEnabled = false
@@ -112,8 +110,4 @@ class Camera(private val camera: OrthographicCamera, private val inputMultiplexe
         camera.zoom += ZOOM_SPEED * amountY
         return true
     }
-}
-
-private fun Vector3.set(position: PositionComponent) {
-    set(position.x.toFloat(), position.y.toFloat(), 0f)
 }
