@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.systems.commands.effects
+package com.github.samelVhatargh.vapula.game.commands
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
@@ -7,7 +7,6 @@ import com.github.samelVhatargh.vapula.game.statuses.DeadComponent
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import com.github.samelVhatargh.vapula.game.statuses.InvulnerabilityComponent
 import com.github.samelVhatargh.vapula.game.stats.StatsComponent
-import com.github.samelVhatargh.vapula.game.commands.Damage
 import com.github.samelVhatargh.vapula.tests.GdxTestApplication
 import com.github.samelVhatargh.vapula.tests.TestNotifier
 import ktx.ashley.entity

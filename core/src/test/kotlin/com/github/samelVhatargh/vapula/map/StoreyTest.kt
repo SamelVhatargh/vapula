@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.components
+package com.github.samelVhatargh.vapula.map
 
 import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.tests.MapBaseTest
