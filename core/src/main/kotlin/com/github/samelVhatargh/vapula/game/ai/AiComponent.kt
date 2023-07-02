@@ -1,15 +1,11 @@
-package com.github.samelVhatargh.vapula.components
+package com.github.samelVhatargh.vapula.game.ai
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
 import com.github.samelVhatargh.vapula.map.PositionComponent
 import ktx.ashley.mapperFor
 
-enum class State {
-    WANDER, PURSUE
-}
-
-class Ai : Component, Pool.Poolable {
+class AiComponent : Component, Pool.Poolable {
 
     var state = State.WANDER
     var lastKnownPlayerPosition: PositionComponent? = null
@@ -20,6 +16,6 @@ class Ai : Component, Pool.Poolable {
     }
 
     companion object {
-        val mapper = mapperFor<Ai>()
+        val mapper = mapperFor<AiComponent>()
     }
 }

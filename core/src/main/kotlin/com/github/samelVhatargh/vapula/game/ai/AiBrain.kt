@@ -1,11 +1,13 @@
-package com.github.samelVhatargh.vapula
+package com.github.samelVhatargh.vapula.game.ai
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Bresenham2
+import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.map.PositionComponent
+import com.github.samelVhatargh.vapula.notifier
 import com.github.samelVhatargh.vapula.systems.commands.*
 import ktx.ashley.*
 
@@ -22,7 +24,7 @@ class AiBrain(private val engine: Engine, private val world: World) {
         val playerPosition = player[PositionComponent.mapper]!!
         val monsterPosition = entity[PositionComponent.mapper]!!
         val monsterStats = entity[Stats.mapper]!!
-        val ai = entity[Ai.mapper]!!
+        val ai = entity[AiComponent.mapper]!!
 
         if (entity.has(Dead.mapper)) {
             return DoNothing()
@@ -42,7 +44,7 @@ class AiBrain(private val engine: Engine, private val world: World) {
         // try to heal if possible and needed
         if (monsterStats.healDice > 0) {
             // find all injured hostiles
-            val allMonsters = allOf(Stats::class, Ai::class, PositionComponent::class).exclude(Player::class, Dead::class).get()
+            val allMonsters = allOf(Stats::class, AiComponent::class, PositionComponent::class).exclude(Player::class, Dead::class).get()
             val injuredMonster = engine.getEntitiesFor(allMonsters).find {
                 it[Stats.mapper]!!.hp > 0 && it[Stats.mapper]!!.hp < it[Stats.mapper]!!.maxHp
                         && isInLineOfSight(entity, it)
@@ -58,7 +60,7 @@ class AiBrain(private val engine: Engine, private val world: World) {
             return Attack(engine, entity, player)
         }
 
-        // if can shoot and in line of sight - attack!
+        // if entity can shoot and in line of sight - attack!
         if (playerIsInLingOfSight && monsterStats.ranged) {
             return Attack(engine, entity, player)
         }

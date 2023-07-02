@@ -3,6 +3,7 @@ package com.github.samelVhatargh.vapula.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.game.ai.AiSystem
 import ktx.ashley.*
 import ktx.log.logger
 
@@ -30,7 +31,7 @@ class TurnLoop(private val player: Entity) :
             if (player.hasNot(Dead.mapper)) {
                 super.update(deltaTime)
             }
-            engine.getSystem<Ai>().setProcessing(true)
+            engine.getSystem<AiSystem>().setProcessing(true)
         }
     }
 

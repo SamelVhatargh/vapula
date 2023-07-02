@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.samelVhatargh.vapula.debug.DebugArguments
 import com.github.samelVhatargh.vapula.debug.DebugConsoleSystem
+import com.github.samelVhatargh.vapula.game.ai.AiBrain
+import com.github.samelVhatargh.vapula.game.ai.AiSystem
 import com.github.samelVhatargh.vapula.graphics.AnimationSystem
 import com.github.samelVhatargh.vapula.graphics.IdleAnimationSystem
 import com.github.samelVhatargh.vapula.graphics.RenderSystem
@@ -60,7 +62,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             addSystem(IdleAnimationSystem())
             addSystem(RenderSystem(spriteCache, batch, viewport, world))
             addSystem(TurnLoop(world.player))
-            addSystem(Ai(AiBrain(engine, world), world.player))
+            addSystem(AiSystem(AiBrain(engine, world), world.player))
             addSystem(GameOver())
             addSystem(MusicSystem(assets))
             addSystem(hud)

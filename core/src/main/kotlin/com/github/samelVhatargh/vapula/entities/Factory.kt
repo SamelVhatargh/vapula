@@ -3,6 +3,7 @@ package com.github.samelVhatargh.vapula.entities
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.game.ai.AiComponent
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import com.github.samelVhatargh.vapula.graphics.IdleAnimationComponent
 import com.github.samelVhatargh.vapula.graphics.Layer
@@ -81,7 +82,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
             with<Name> {
                 name = "Goblin ${type.role} $goblinCount"
             }
-            with<Ai>()
+            with<AiComponent>()
             with<IdleAnimationComponent>()
         }
         position.z = storey.z
