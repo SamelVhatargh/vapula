@@ -1,7 +1,7 @@
 package com.github.samelVhatargh.vapula.sounds.queue
 
 import com.badlogic.gdx.assets.AssetManager
-import com.github.samelVhatargh.vapula.sounds.SoundEffectType
+import com.github.samelVhatargh.vapula.sounds.soundEffects.SoundEffectType
 import ktx.math.random
 import kotlin.math.absoluteValue
 

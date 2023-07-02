@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.sounds
+package com.github.samelVhatargh.vapula.sounds.soundEffects
 
 import com.github.samelVhatargh.vapula.assets.SoundAsset
 
@@ -6,7 +6,7 @@ enum class AttackType {
     RANGE, MELEE, MAGIC
 }
 
-class AttackSound(val type: AttackType) : SoundEffectType {
+class AttackSound(private val type: AttackType) : SoundEffectType {
     override fun getSoundAsset(): SoundAsset {
         val assets = when (type) {
             AttackType.RANGE -> arrayOf(

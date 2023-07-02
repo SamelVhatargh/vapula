@@ -1,11 +1,11 @@
-package com.github.samelVhatargh.vapula.sounds
+package com.github.samelVhatargh.vapula.sounds.soundEffects
 
 import com.github.samelVhatargh.vapula.assets.SoundAsset
 
 /**
  * Contains logic of loading specific footstep sound
  */
-class StepSound() : SoundEffectType {
+class StepSound : SoundEffectType {
     override fun getSoundAsset(): SoundAsset {
         return arrayOf(
             SoundAsset.STEP_1,

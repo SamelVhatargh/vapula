@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.sounds
+package com.github.samelVhatargh.vapula.sounds.soundEffects
 
 import com.github.samelVhatargh.vapula.assets.SoundAsset
 

@@ -1,14 +1,14 @@
-package com.github.samelVhatargh.vapula.components
+package com.github.samelVhatargh.vapula.sounds
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
-import com.github.samelVhatargh.vapula.sounds.SoundEffectType
+import com.github.samelVhatargh.vapula.sounds.soundEffects.SoundEffectType
 import ktx.ashley.mapperFor
 
 /**
  * Represents sounds that entity can produce
  */
-class SoundSet : Component, Pool.Poolable {
+class SoundSetComponent : Component, Pool.Poolable {
 
     var move: SoundEffectType? = null
     var attack: SoundEffectType? = null
@@ -23,6 +23,6 @@ class SoundSet : Component, Pool.Poolable {
     }
 
     companion object {
-        val mapper = mapperFor<SoundSet>()
+        val mapper = mapperFor<SoundSetComponent>()
     }
 }
