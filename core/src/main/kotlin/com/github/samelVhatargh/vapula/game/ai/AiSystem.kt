@@ -3,8 +3,8 @@ package com.github.samelVhatargh.vapula.game.ai
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.github.samelVhatargh.vapula.game.commands.ActionComponent
-import com.github.samelVhatargh.vapula.components.Dead
-import com.github.samelVhatargh.vapula.components.InDanger
+import com.github.samelVhatargh.vapula.game.statuses.Dead
+import com.github.samelVhatargh.vapula.game.statuses.InDanger
 import com.github.samelVhatargh.vapula.components.Name
 import com.github.samelVhatargh.vapula.map.PositionComponent
 import ktx.ashley.allOf

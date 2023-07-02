@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Bresenham2
 import com.github.samelVhatargh.vapula.game.World
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.game.commands.*
+import com.github.samelVhatargh.vapula.game.statuses.Dead
+import com.github.samelVhatargh.vapula.game.statuses.InDanger
 import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.notifier

@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.events.EntityDied
 import com.github.samelVhatargh.vapula.events.NotifierInterface
+import com.github.samelVhatargh.vapula.game.statuses.Dead
 import com.github.samelVhatargh.vapula.graphics.AnimationComponent
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import com.github.samelVhatargh.vapula.graphics.IdleAnimationComponent

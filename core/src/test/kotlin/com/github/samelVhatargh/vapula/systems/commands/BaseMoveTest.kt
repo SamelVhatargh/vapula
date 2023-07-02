@@ -2,7 +2,7 @@ package com.github.samelVhatargh.vapula.systems.commands
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.github.samelVhatargh.vapula.components.OccupySpace
+import com.github.samelVhatargh.vapula.game.statuses.OccupySpace
 import com.github.samelVhatargh.vapula.game.commands.BaseMove
 import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.map.Direction

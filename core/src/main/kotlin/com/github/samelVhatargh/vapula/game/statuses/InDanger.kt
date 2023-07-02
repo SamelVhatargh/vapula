@@ -1,16 +1,16 @@
-package com.github.samelVhatargh.vapula.components
+package com.github.samelVhatargh.vapula.game.statuses
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
 import ktx.ashley.mapperFor
 
-class Dead : Component, Pool.Poolable {
+class InDanger : Component, Pool.Poolable {
 
     override fun reset() {
 
     }
 
     companion object {
-        val mapper = mapperFor<Dead>()
+        val mapper = mapperFor<InDanger>()
     }
 }

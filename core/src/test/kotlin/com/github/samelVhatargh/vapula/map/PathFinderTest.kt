@@ -1,7 +1,7 @@
 package com.github.samelVhatargh.vapula.map
 
 import com.badlogic.ashley.core.Engine
-import com.github.samelVhatargh.vapula.components.OccupySpace
+import com.github.samelVhatargh.vapula.game.statuses.OccupySpace
 import com.github.samelVhatargh.vapula.tests.DescribedMap
 import com.github.samelVhatargh.vapula.tests.MapBaseTest
 import ktx.ashley.entity

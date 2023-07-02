@@ -6,6 +6,7 @@ import com.github.samelVhatargh.vapula.game.World
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.entities.OCCUPY_SPACE_FAMILY
 import com.github.samelVhatargh.vapula.events.EntityMoved
+import com.github.samelVhatargh.vapula.game.statuses.Dead
 import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Path

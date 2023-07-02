@@ -6,6 +6,7 @@ import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.game.ai.AiComponent
 import com.github.samelVhatargh.vapula.game.stairs.GoDown
 import com.github.samelVhatargh.vapula.game.stairs.GoUp
+import com.github.samelVhatargh.vapula.game.statuses.OccupySpace
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import com.github.samelVhatargh.vapula.graphics.IdleAnimationComponent
 import com.github.samelVhatargh.vapula.graphics.Layer

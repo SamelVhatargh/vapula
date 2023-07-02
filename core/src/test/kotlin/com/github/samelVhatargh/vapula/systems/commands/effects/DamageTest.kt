@@ -3,9 +3,9 @@ package com.github.samelVhatargh.vapula.systems.commands.effects
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
-import com.github.samelVhatargh.vapula.components.Dead
+import com.github.samelVhatargh.vapula.game.statuses.Dead
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
-import com.github.samelVhatargh.vapula.components.Invulnerability
+import com.github.samelVhatargh.vapula.game.statuses.Invulnerability
 import com.github.samelVhatargh.vapula.components.Stats
 import com.github.samelVhatargh.vapula.game.commands.Damage
 import com.github.samelVhatargh.vapula.tests.GdxTestApplication

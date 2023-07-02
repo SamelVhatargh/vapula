@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.game.World
-import com.github.samelVhatargh.vapula.components.Invulnerability
+import com.github.samelVhatargh.vapula.game.statuses.Invulnerability
 import com.github.samelVhatargh.vapula.debug.commands.MapDrawingMode
 import com.github.samelVhatargh.vapula.debug.commands.removeFog
 import com.github.samelVhatargh.vapula.utility.random

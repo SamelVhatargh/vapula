@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.samelVhatargh.vapula.game.World
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.entities.RENDERABLE_FAMILY
+import com.github.samelVhatargh.vapula.game.statuses.Dead
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.FieldOfViewComponent
 import com.github.samelVhatargh.vapula.map.PositionComponent

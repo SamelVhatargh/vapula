@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.events.EntityDamaged
 import com.github.samelVhatargh.vapula.events.NotifierInterface
+import com.github.samelVhatargh.vapula.game.statuses.Invulnerability
 import ktx.ashley.get
 import ktx.ashley.has
 

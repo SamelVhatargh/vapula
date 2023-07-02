@@ -5,6 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.game.ai.AiSystem
 import com.github.samelVhatargh.vapula.game.commands.ActionComponent
+import com.github.samelVhatargh.vapula.game.statuses.Dead
 import ktx.ashley.*
 import ktx.log.logger
 
