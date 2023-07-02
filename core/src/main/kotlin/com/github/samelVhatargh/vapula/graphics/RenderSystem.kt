@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.systems
+package com.github.samelVhatargh.vapula.graphics
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
@@ -8,18 +8,17 @@ import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.entities.RENDERABLE_FAMILY
 import com.github.samelVhatargh.vapula.map.Direction
-import com.github.samelVhatargh.vapula.utility.SpriteCache
 import ktx.ashley.get
 import ktx.ashley.has
 import ktx.graphics.use
 
-class Render(
+class RenderSystem(
     private val spriteCache: SpriteCache,
     private val batch: SpriteBatch,
     viewport: Viewport,
     private val world: World
 ) :
-    SortedIteratingSystem(RENDERABLE_FAMILY, compareBy { entity -> entity[Graphics.mapper] }) {
+    SortedIteratingSystem(RENDERABLE_FAMILY, compareBy { entity -> entity[GraphicsComponent.mapper] }) {
 
     private val player = world.player
     private val camera = viewport.camera
@@ -33,7 +32,7 @@ class Render(
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val position = entity[Position.mapper]!!
-        val graphics = entity[Graphics.mapper]!!
+        val graphics = entity[GraphicsComponent.mapper]!!
         val dead = entity.has(Dead.mapper)
 
         if (position.z != world.storey.z) return

@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
 import com.github.samelVhatargh.vapula.components.Dead
-import com.github.samelVhatargh.vapula.components.Graphics
+import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import com.github.samelVhatargh.vapula.components.Invulnerability
 import com.github.samelVhatargh.vapula.components.Stats
 import com.github.samelVhatargh.vapula.systems.commands.Damage
@@ -70,7 +70,7 @@ internal class DamageTest {
 
         val entity = Engine().entity().apply {
             add(stats)
-            add(Graphics())
+            add(GraphicsComponent())
         }
 
         return entity

@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.samelVhatargh.vapula.console.DebugArguments
 import com.github.samelVhatargh.vapula.console.DebugConsole
+import com.github.samelVhatargh.vapula.graphics.AnimationSystem
+import com.github.samelVhatargh.vapula.graphics.IdleAnimationSystem
+import com.github.samelVhatargh.vapula.graphics.RenderSystem
 import com.github.samelVhatargh.vapula.screens.GameScreen
 import com.github.samelVhatargh.vapula.screens.LoadingScreen
 import com.github.samelVhatargh.vapula.sounds.MusicSystem
@@ -16,7 +19,7 @@ import com.github.samelVhatargh.vapula.sounds.SoundSystem
 import com.github.samelVhatargh.vapula.systems.*
 import com.github.samelVhatargh.vapula.ui.Hud
 import com.github.samelVhatargh.vapula.ui.ModalDialogs
-import com.github.samelVhatargh.vapula.utility.SpriteCache
+import com.github.samelVhatargh.vapula.graphics.SpriteCache
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
@@ -46,13 +49,13 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
         val hud = Hud(inputMultiplexer)
         engine.apply {
             addSystem(PlayerInput(inputMultiplexer, camera, world))
-            addSystem(Animation(world))
+            addSystem(AnimationSystem(world))
             addSystem(SoundSystem(assets, world))
             addSystem(Camera(camera, inputMultiplexer))
             addSystem(MapRender(spriteCache, batch, viewport, world))
             addSystem(FieldOfViewCalculator(world))
-            addSystem(IdleAnimation())
-            addSystem(Render(spriteCache, batch, viewport, world))
+            addSystem(IdleAnimationSystem())
+            addSystem(RenderSystem(spriteCache, batch, viewport, world))
             addSystem(TurnLoop(world.player))
             addSystem(Ai(AiBrain(engine, world), world.player))
             addSystem(GameOver())

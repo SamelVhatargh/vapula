@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.components
+package com.github.samelVhatargh.vapula.graphics
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
@@ -8,7 +8,7 @@ import ktx.ashley.mapperFor
 /**
  * Represents all variables required to render idle or breathing animation
  */
-class IdleAnimation(var length: Float = random.range(1f..3f)) : Component, Pool.Poolable {
+class IdleAnimationComponent(var length: Float = random.range(1f..3f)) : Component, Pool.Poolable {
 
     var progress = 0f
 
@@ -18,6 +18,6 @@ class IdleAnimation(var length: Float = random.range(1f..3f)) : Component, Pool.
     }
 
     companion object {
-        val mapper = mapperFor<IdleAnimation>()
+        val mapper = mapperFor<IdleAnimationComponent>()
     }
 }

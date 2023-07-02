@@ -3,6 +3,9 @@ package com.github.samelVhatargh.vapula.entities
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
+import com.github.samelVhatargh.vapula.graphics.IdleAnimationComponent
+import com.github.samelVhatargh.vapula.graphics.Layer
 import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.sounds.SoundSetComponent
@@ -27,13 +30,13 @@ class Factory(private val engine: Engine, var storey: Storey) {
 
     fun createPlayer(position: Position = getRandomEmptyPosition()): Entity {
         val player = engine.entity {
-            with<Graphics> {
+            with<GraphicsComponent> {
                 spriteName = "character"
             }
             with<Player>()
             with<OccupySpace>()
             with<FieldOfView>()
-            with<IdleAnimation>()
+            with<IdleAnimationComponent>()
             with<Name> {
                 name = "player"
             }
@@ -72,7 +75,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
     fun createGoblin(position: Position = getRandomEmptyPosition(), type: GoblinType = GoblinType.FIGHTER): Entity {
         goblinCount++
         val monster = engine.entity {
-            with<Graphics> {
+            with<GraphicsComponent> {
                 spriteName = "goblin${type.role}"
             }
             with<OccupySpace>()
@@ -80,7 +83,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
                 name = "Goblin ${type.role} $goblinCount"
             }
             with<Ai>()
-            with<IdleAnimation>()
+            with<IdleAnimationComponent>()
         }
         position.z = storey.z
         monster.add(position)
@@ -166,7 +169,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
         }
 
         val barrel = engine.entity {
-            with<Graphics> {
+            with<GraphicsComponent> {
                 spriteName = "barrel"
             }
             with<OccupySpace>()
@@ -179,7 +182,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
 
     fun createTunnel(position: Position, sprite: String = "Railroad16") {
         val tunnel = engine.entity {
-            with<Graphics> {
+            with<GraphicsComponent> {
                 spriteName = sprite
                 layer = Layer.FLOOR
             }
@@ -191,7 +194,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
 
     fun createStairs(up: Boolean, position: Position = getRandomEmptyPosition()) {
         val stairs = engine.entity {
-            with<Graphics> {
+            with<GraphicsComponent> {
                 spriteName = if (up) "StairsUp" else "StairsDown"
                 layer = Layer.FLOOR
             }
@@ -207,7 +210,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
      */
     fun createProjectile(start: Position, end: Position, type: ProjectileType): Entity {
         val arrow = engine.entity {
-            with<Graphics> {
+            with<GraphicsComponent> {
                 spriteName = type.spriteName
                 layer = Layer.FLOOR
                 rotation = start.toVec2().sub(end.toVec2()).angleDeg() - 270f

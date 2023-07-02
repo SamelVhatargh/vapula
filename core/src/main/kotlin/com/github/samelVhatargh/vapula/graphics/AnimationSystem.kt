@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.systems
+package com.github.samelVhatargh.vapula.graphics
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
@@ -6,7 +6,6 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Vector2
 import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.*
-import com.github.samelVhatargh.vapula.components.Animation
 import com.github.samelVhatargh.vapula.entities.ANIMATION_FAMILY
 import com.github.samelVhatargh.vapula.events.*
 import com.github.samelVhatargh.vapula.map.Direction
@@ -18,15 +17,15 @@ import ktx.ashley.remove
 import ktx.math.vec2
 
 /**
- * This system updates entity [Graphics.position] according to its current [Animation]
+ * This system updates entity [GraphicsComponent.position] according to its current [AnimationComponent]
  */
-class Animation(private val world: World) : IteratingSystem(ANIMATION_FAMILY), Observer {
+class AnimationSystem(private val world: World) : IteratingSystem(ANIMATION_FAMILY), Observer {
 
     private val player = world.player
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val position = entity[Position.mapper]!!
-        val graphics = entity[Graphics.mapper]!!
+        val graphics = entity[GraphicsComponent.mapper]!!
         if (position.z != world.storey.z) {
             removeAnimation(entity)
             return
@@ -42,7 +41,7 @@ class Animation(private val world: World) : IteratingSystem(ANIMATION_FAMILY), O
     }
 
     private fun animate(entity: Entity, deltaTime: Float): Vector2? {
-        val animation = entity[Animation.mapper] ?: return null
+        val animation = entity[AnimationComponent.mapper] ?: return null
 
         val speed = animation.description.speed
 
@@ -67,9 +66,9 @@ class Animation(private val world: World) : IteratingSystem(ANIMATION_FAMILY), O
     }
 
     private fun removeAnimation(entity: Entity) {
-        val animation = entity.remove<Animation>()
-        entity[Graphics.mapper]!!.position = null
-        if (animation is Animation && animation.description.destroyEntityOnComplete) {
+        val animation = entity.remove<AnimationComponent>()
+        entity[GraphicsComponent.mapper]!!.position = null
+        if (animation is AnimationComponent && animation.description.destroyEntityOnComplete) {
             engine.removeEntity(entity)
         }
     }
@@ -90,7 +89,7 @@ class Animation(private val world: World) : IteratingSystem(ANIMATION_FAMILY), O
                 addAnimation(event.entity, WalkAnimation(event.oldPosition, event.newPosition))
             }
             is EntityDamaged -> {
-                if (event.damage > 0 && !event.victim.has(Animation.mapper) && event.victim.has(Position.mapper)) {
+                if (event.damage > 0 && !event.victim.has(AnimationComponent.mapper) && event.victim.has(Position.mapper)) {
                     addAnimation(event.victim, DamageAnimation(event.victim[Position.mapper]!!))
                 }
             }
@@ -122,6 +121,6 @@ class Animation(private val world: World) : IteratingSystem(ANIMATION_FAMILY), O
         arrayOf(EventType.ENTITY_DAMAGED, EventType.ENTITY_ATTACKED, EventType.ENTITY_MOVED)
 
     private fun addAnimation(entity: Entity, animationDescription: AnimationDescription) {
-            entity += Animation(animationDescription)
+            entity += AnimationComponent(animationDescription)
     }
 }

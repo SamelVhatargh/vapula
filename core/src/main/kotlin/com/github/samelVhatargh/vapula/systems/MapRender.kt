@@ -8,13 +8,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.FieldOfView
-import com.github.samelVhatargh.vapula.components.Graphics
+import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.components.VisibleIfExploredAndOutOfFieldOfView
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.setPosition
-import com.github.samelVhatargh.vapula.utility.SpriteCache
+import com.github.samelVhatargh.vapula.graphics.SpriteCache
 import ktx.ashley.allOf
 import ktx.ashley.get
 import ktx.graphics.use
@@ -57,7 +57,7 @@ class MapRender(
         super.addedToEngine(engine)
         terrainObjects = engine.getEntitiesFor(
             allOf(
-                Graphics::class,
+                GraphicsComponent::class,
                 Position::class,
                 VisibleIfExploredAndOutOfFieldOfView::class
             ).get()
@@ -94,7 +94,7 @@ class MapRender(
             terrainObjects.forEach { entity ->
                 val position = entity[Position.mapper]!!
                 if (position.z == world.storey.z && world.storey.isExplored(position) && !fov.isVisible(position)) {
-                    spriteCache.getSprite(entity[Graphics.mapper]!!).apply {
+                    spriteCache.getSprite(entity[GraphicsComponent.mapper]!!).apply {
                         setPosition(position.x.toFloat(), position.y.toFloat())
                         draw(batch)
                     }

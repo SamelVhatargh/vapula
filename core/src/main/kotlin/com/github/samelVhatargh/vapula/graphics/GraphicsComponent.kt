@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.components
+package com.github.samelVhatargh.vapula.graphics
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2
@@ -7,14 +7,10 @@ import com.github.samelVhatargh.vapula.map.Direction
 import ktx.ashley.mapperFor
 import ktx.math.vec2
 
-enum class Layer {
-    FLOOR, CORPSE, CREATURE
-}
-
 /**
  * Спрайт для отображения сущности
  */
-class Graphics : Component, Pool.Poolable, Comparable<Graphics> {
+class GraphicsComponent : Component, Pool.Poolable, Comparable<GraphicsComponent> {
 
     var spriteName = ""
     var layer = Layer.CREATURE
@@ -33,8 +29,8 @@ class Graphics : Component, Pool.Poolable, Comparable<Graphics> {
     }
 
     companion object {
-        val mapper = mapperFor<Graphics>()
+        val mapper = mapperFor<GraphicsComponent>()
     }
 
-    override fun compareTo(other: Graphics): Int = layer.compareTo(other.layer)
+    override fun compareTo(other: GraphicsComponent): Int = layer.compareTo(other.layer)
 }

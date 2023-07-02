@@ -1,10 +1,9 @@
-package com.github.samelVhatargh.vapula.utility
+package com.github.samelVhatargh.vapula.graphics
 
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.github.samelVhatargh.vapula.assets.TextureAtlasAsset
 import com.github.samelVhatargh.vapula.assets.get
-import com.github.samelVhatargh.vapula.components.Graphics
 import ktx.log.debug
 import ktx.log.logger
 
@@ -35,5 +34,5 @@ class SpriteCache(private val assets: AssetManager) {
         return sprite
     }
 
-    fun getSprite(graphics: Graphics) : Sprite = getSprite(graphics.spriteName)
+    fun getSprite(graphics: GraphicsComponent) : Sprite = getSprite(graphics.spriteName)
 }

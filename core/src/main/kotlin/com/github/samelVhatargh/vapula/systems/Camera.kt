@@ -7,7 +7,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector3
-import com.github.samelVhatargh.vapula.components.Animation
+import com.github.samelVhatargh.vapula.graphics.AnimationComponent
 import com.github.samelVhatargh.vapula.components.Player
 import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.map.Direction
@@ -72,7 +72,7 @@ class Camera(private val camera: OrthographicCamera, private val inputMultiplexe
         var x = position.x.toFloat()
         var y = position.y.toFloat()
 
-        val animation = player[Animation.mapper]
+        val animation = player[AnimationComponent.mapper]
         if (animation != null && animation.description.moveCamera) {
             x = animation.animatedVector.x
             y = animation.animatedVector.y

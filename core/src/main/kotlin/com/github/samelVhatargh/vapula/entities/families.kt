@@ -2,18 +2,20 @@ package com.github.samelVhatargh.vapula.entities
 
 import com.badlogic.ashley.core.Family
 import com.github.samelVhatargh.vapula.components.*
+import com.github.samelVhatargh.vapula.graphics.AnimationComponent
+import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import ktx.ashley.allOf
 import ktx.ashley.exclude
 
 /**
  * Entities which must be rendered on screen
  */
-val RENDERABLE_FAMILY: Family by lazy { allOf(Position::class, Graphics::class).get() }
+val RENDERABLE_FAMILY: Family by lazy { allOf(Position::class, GraphicsComponent::class).get() }
 
 /**
  * Entities which can be animated
  */
-val ANIMATION_FAMILY: Family by lazy { allOf(Position::class, Graphics::class, Animation::class).get() }
+val ANIMATION_FAMILY: Family by lazy { allOf(Position::class, GraphicsComponent::class, AnimationComponent::class).get() }
 
 /**
  * Entities which can be moved onto

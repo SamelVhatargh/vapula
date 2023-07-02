@@ -1,10 +1,11 @@
-package com.github.samelVhatargh.vapula.components
+package com.github.samelVhatargh.vapula.graphics
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils.floor
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
+import com.github.samelVhatargh.vapula.components.Position
 import ktx.ashley.mapperFor
 import ktx.math.vec2
 
@@ -80,7 +81,7 @@ class DamageAnimation(position: Position) : AnimationDescription() {
     override val speed = .1f
 }
 
-class Animation(var description: AnimationDescription) : Component, Pool.Poolable {
+class AnimationComponent(var description: AnimationDescription) : Component, Pool.Poolable {
 
     var startVector = description.start
     var animatedVector = startVector
@@ -96,6 +97,6 @@ class Animation(var description: AnimationDescription) : Component, Pool.Poolabl
     }
 
     companion object {
-        val mapper = mapperFor<Animation>()
+        val mapper = mapperFor<AnimationComponent>()
     }
 }
