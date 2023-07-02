@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector3
 import com.github.samelVhatargh.vapula.graphics.AnimationComponent
 import com.github.samelVhatargh.vapula.components.Player
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.ui.HUD_WIDTH
 import ktx.app.KtxInputAdapter
@@ -45,7 +45,7 @@ class Camera(private val camera: OrthographicCamera, private val inputMultiplexe
 
     override fun addedToEngine(engine: Engine) {
         super.addedToEngine(engine)
-        player = engine.getEntitiesFor(allOf(Player::class, Position::class).get()).first()
+        player = engine.getEntitiesFor(allOf(Player::class, PositionComponent::class).get()).first()
     }
 
     override fun update(deltaTime: Float) {
@@ -68,7 +68,7 @@ class Camera(private val camera: OrthographicCamera, private val inputMultiplexe
     }
 
     private fun centerCameraOnPlayer() {
-        val position = player[Position.mapper]!!
+        val position = player[PositionComponent.mapper]!!
         var x = position.x.toFloat()
         var y = position.y.toFloat()
 
@@ -114,6 +114,6 @@ class Camera(private val camera: OrthographicCamera, private val inputMultiplexe
     }
 }
 
-private fun Vector3.set(position: Position) {
+private fun Vector3.set(position: PositionComponent) {
     set(position.x.toFloat(), position.y.toFloat(), 0f)
 }

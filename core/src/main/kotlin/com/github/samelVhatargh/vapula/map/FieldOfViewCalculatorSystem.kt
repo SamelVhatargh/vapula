@@ -1,25 +1,23 @@
-package com.github.samelVhatargh.vapula.systems
+package com.github.samelVhatargh.vapula.map
 
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.math.Bresenham2
 import com.badlogic.gdx.math.Vector2
 import com.github.samelVhatargh.vapula.World
-import com.github.samelVhatargh.vapula.components.FieldOfView
-import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.components.Stats
 import ktx.ashley.get
 
-class FieldOfViewCalculator(private val world: World) : EntitySystem() {
+class FieldOfViewCalculatorSystem(private val world: World) : EntitySystem() {
     private val player = world.player
 
     override fun update(deltaTime: Float) {
-        player[FieldOfView.mapper]?.let { fov ->
+        player[FieldOfViewComponent.mapper]?.let { fov ->
             if (!fov.shouldUpdate) return
             fov.reset()
 
             val visionRadius = player[Stats.mapper]!!.sightRange
 
-            val origin = player[Position.mapper]!!
+            val origin = player[PositionComponent.mapper]!!
             val edges = mutableListOf<Vector2>()
 
             //Находим крайние клетки
@@ -43,7 +41,7 @@ class FieldOfViewCalculator(private val world: World) : EntitySystem() {
                 val line = Bresenham2().line(origin.x, origin.y, edge.x.toInt(), edge.y.toInt())
                 for (i in 0 until line.size) {
                     val point = line[i]
-                    fov.visibleTiles.add(Position(point.x, point.y, world.storey.z))
+                    fov.visibleTiles.add(PositionComponent(point.x, point.y, world.storey.z))
                     if (world.storey.blockSight(point.x, point.y)) {
                         break
                     }

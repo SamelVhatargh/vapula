@@ -8,12 +8,11 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
-import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.entities.OCCUPY_SPACE_FAMILY
 import com.github.samelVhatargh.vapula.getEntityAtPosition
 
 
-private data class Node(val position: Position, val index: Int)
+private data class Node(val position: PositionComponent, val index: Int)
 
 private class NodeConnection(val start: Node, val end: Node, val direction: Direction, val engine: Engine) :
     Connection<Node> {
@@ -47,7 +46,7 @@ private class PositionHeuristic : Heuristic<Node> {
 private class StoreyGraph(val storey: Storey, val engine: Engine) : IndexedGraph<Node> {
 
     val nodes = mutableMapOf<Int, Node>()
-    val indexes = mutableMapOf<Position, Int>()
+    val indexes = mutableMapOf<PositionComponent, Int>()
 
     init {
         var i = 0
@@ -91,7 +90,7 @@ class PathFinder(val storey: Storey, engine: Engine) {
 
     private val apiPathFinder = IndexedAStarPathFinder(graph)
 
-    fun findPath(start: Position, end: Position): Path {
+    fun findPath(start: PositionComponent, end: PositionComponent): Path {
         val path = DefaultGraphPath<Node>()
         val startNode = graph.nodes[graph.indexes[start]]
         val endNode = graph.nodes[graph.indexes[end]]
@@ -106,11 +105,11 @@ class PathFinder(val storey: Storey, engine: Engine) {
     }
 }
 
-class Path(private val positions: List<Position> = listOf()) {
+class Path(private val positions: List<PositionComponent> = listOf()) {
 
     fun isEmpty(): Boolean = positions.isEmpty()
 
-    fun getNextPosition(currentPosition: Position): Position {
+    fun getNextPosition(currentPosition: PositionComponent): PositionComponent {
         var i = 0
         positions.forEach {
             if (it == currentPosition) {
@@ -126,7 +125,7 @@ class Path(private val positions: List<Position> = listOf()) {
         return positions[0]
     }
 
-    fun getLastPosition(): Position {
+    fun getLastPosition(): PositionComponent {
         return positions.last()
     }
 
@@ -140,8 +139,6 @@ class Path(private val positions: List<Position> = listOf()) {
 
         other as Path
 
-        if (positions != other.positions) return false
-
-        return true
+        return positions == other.positions
     }
 }

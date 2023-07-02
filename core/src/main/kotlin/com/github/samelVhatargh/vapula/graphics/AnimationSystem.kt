@@ -9,6 +9,8 @@ import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.entities.ANIMATION_FAMILY
 import com.github.samelVhatargh.vapula.events.*
 import com.github.samelVhatargh.vapula.map.Direction
+import com.github.samelVhatargh.vapula.map.FieldOfViewComponent
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.notifier
 import ktx.ashley.get
 import ktx.ashley.has
@@ -24,14 +26,14 @@ class AnimationSystem(private val world: World) : IteratingSystem(ANIMATION_FAMI
     private val player = world.player
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val position = entity[Position.mapper]!!
+        val position = entity[PositionComponent.mapper]!!
         val graphics = entity[GraphicsComponent.mapper]!!
         if (position.z != world.storey.z) {
             removeAnimation(entity)
             return
         }
 
-        val fov = player[FieldOfView.mapper]!!
+        val fov = player[FieldOfViewComponent.mapper]!!
         if (!fov.isVisible(position)) {
             removeAnimation(entity)
             return
@@ -89,21 +91,21 @@ class AnimationSystem(private val world: World) : IteratingSystem(ANIMATION_FAMI
                 addAnimation(event.entity, WalkAnimation(event.oldPosition, event.newPosition))
             }
             is EntityDamaged -> {
-                if (event.damage > 0 && !event.victim.has(AnimationComponent.mapper) && event.victim.has(Position.mapper)) {
-                    addAnimation(event.victim, DamageAnimation(event.victim[Position.mapper]!!))
+                if (event.damage > 0 && !event.victim.has(AnimationComponent.mapper) && event.victim.has(PositionComponent.mapper)) {
+                    addAnimation(event.victim, DamageAnimation(event.victim[PositionComponent.mapper]!!))
                 }
             }
             is EntityAttacked -> {
                 val attacker = event.attacker
-                val attackerPosition = attacker[Position.mapper]
-                val defenderPosition = event.defender[Position.mapper]
+                val attackerPosition = attacker[PositionComponent.mapper]
+                val defenderPosition = event.defender[PositionComponent.mapper]
                 val attackerStats = attacker[Stats.mapper]
 
                 if (attackerPosition != null && defenderPosition != null && attackerStats != null) {
                     addAnimation(attacker, AttackAnimation(attackerPosition, defenderPosition))
 
                     if (attackerStats.ranged) {
-                        var targetPosition = Position(defenderPosition.x, defenderPosition.y, defenderPosition.z)
+                        var targetPosition = PositionComponent(defenderPosition.x, defenderPosition.y, defenderPosition.z)
                         if (event.miss) {
                             targetPosition += Direction.values().random()
                         }

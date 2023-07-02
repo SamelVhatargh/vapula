@@ -1,6 +1,6 @@
 package com.github.samelVhatargh.vapula.tests
 
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.map.Path
 import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.map.Terrain
@@ -13,14 +13,14 @@ import com.github.samelVhatargh.vapula.map.generators.Map
 class DescribedMap(val map: Map, private val description: Array<String>) {
 
     /**
-     * Returns [Position] of first occurrence of [symbol] in [map]
+     * Returns [PositionComponent] of first occurrence of [symbol] in [map]
      */
-    fun getPosition(symbol: Char): Position? {
+    fun getPosition(symbol: Char): PositionComponent? {
 
         description.forEachIndexed { y, column ->
             column.forEachIndexed { x, char ->
                 if (char == symbol) {
-                    return Position(x, y)
+                    return PositionComponent(x, y)
                 }
             }
         }
@@ -31,13 +31,13 @@ class DescribedMap(val map: Map, private val description: Array<String>) {
     /**
      * Returns positions of every occurrences of [symbol] in [map]
      */
-    fun getPositions(symbol: Char): List<Position> {
-        val result = mutableListOf<Position>()
+    fun getPositions(symbol: Char): List<PositionComponent> {
+        val result = mutableListOf<PositionComponent>()
 
         description.forEachIndexed { y, column ->
             column.forEachIndexed { x, char ->
                 if (char == symbol) {
-                    result.add(Position(x, y))
+                    result.add(PositionComponent(x, y))
                 }
             }
         }
@@ -55,12 +55,12 @@ open class MapBaseTest {
         val height = mapDescription.size
         val width = mapDescription.first().length
 
-        val tiles = Array(width) { Array(height) { Tile(Position(0, 0), Terrain.WALL) } }
+        val tiles = Array(width) { Array(height) { Tile(PositionComponent(0, 0), Terrain.WALL) } }
 
         mapDescription.forEachIndexed { y, column ->
             column.forEachIndexed { x, char ->
                 tiles[x][y] =
-                    if (char == '#') Tile(Position(x, y), Terrain.WALL) else Tile(Position(x, y), Terrain.FLOOR)
+                    if (char == '#') Tile(PositionComponent(x, y), Terrain.WALL) else Tile(PositionComponent(x, y), Terrain.FLOOR)
             }
         }
         return Map(tiles, listOf(), listOf())
@@ -79,7 +79,7 @@ open class MapBaseTest {
      * Creates path from string map description
      */
     protected fun path(vararg pathDescription: String): Path {
-        val path = mutableMapOf<Int, Position>()
+        val path = mutableMapOf<Int, PositionComponent>()
         var dec = 0
         pathDescription.forEachIndexed { y, column ->
             column.forEachIndexed { x, char ->
@@ -89,7 +89,7 @@ open class MapBaseTest {
                         dec += 10
                     }
 
-                    path[index + dec] = Position(x, y)
+                    path[index + dec] = PositionComponent(x, y)
                     dec = 0
                 }
             }

@@ -1,7 +1,7 @@
 package com.github.samelVhatargh.vapula
 
 import com.badlogic.ashley.core.Engine
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.entities.Factory
 import com.github.samelVhatargh.vapula.entities.GoblinType
 import com.github.samelVhatargh.vapula.entities.OCCUPY_SPACE_FAMILY
@@ -9,9 +9,8 @@ import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.map.generators.BSPDungeon
 import com.github.samelVhatargh.vapula.map.generators.Map
-import com.github.samelVhatargh.vapula.systems.MapRender
+import com.github.samelVhatargh.vapula.map.MapRenderSystem
 import com.github.samelVhatargh.vapula.utility.random
-import ktx.ashley.get
 import ktx.ashley.getSystem
 
 private const val MAP_WIDTH = 16 * 2
@@ -52,16 +51,16 @@ class World(private val engine: Engine) {
 
     fun changeStory(z: Int) {
         storey = stories[z]
-        engine.getSystem<MapRender>().shouldComputeTileGraphics = true
+        engine.getSystem<MapRenderSystem>().shouldComputeTileGraphics = true
     }
 
     private fun fillMap(map: Map, z: Int) {
         val rooms = map.rooms
         val tunnels = map.tunnels
-        val tunnelPositions = mutableSetOf<Position>()
+        val tunnelPositions = mutableSetOf<PositionComponent>()
         tunnels.forEach {
             tunnelPositions.addAll(it.tiles.map { position ->
-                Position(position.x, position.y, z)
+                PositionComponent(position.x, position.y, z)
             })
         }
 

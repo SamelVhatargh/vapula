@@ -6,8 +6,8 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.math.MathUtils
 import com.github.samelVhatargh.vapula.World
-import com.github.samelVhatargh.vapula.components.FieldOfView
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.FieldOfViewComponent
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.events.*
 import com.github.samelVhatargh.vapula.notifier
 import com.github.samelVhatargh.vapula.sounds.queue.Queue
@@ -25,8 +25,8 @@ class SoundSystem(
     world: World
 ) : IteratingSystem(allOf(SoundEffectComponent::class).get()), Observer {
 
-    private val playerFov = world.player[FieldOfView.mapper]!!
-    private val playerPosition = world.player[Position.mapper]!!
+    private val playerFov = world.player[FieldOfViewComponent.mapper]!!
+    private val playerPosition = world.player[PositionComponent.mapper]!!
     private val queue = Queue(assets)
 
     override fun update(deltaTime: Float) {
@@ -69,17 +69,17 @@ class SoundSystem(
         when (event) {
             is EntityAttacked -> {
                 event.attacker[SoundSetComponent.mapper]?.attack?.let {
-                    addSound(it, event.attacker[Position.mapper])
+                    addSound(it, event.attacker[PositionComponent.mapper])
                 }
             }
             is EntityDamaged -> {
                 event.attacker[SoundSetComponent.mapper]?.hit?.let {
-                    addSound(it, event.victim[Position.mapper])
+                    addSound(it, event.victim[PositionComponent.mapper])
                 }
             }
             is EntityDied -> {
                 event.victim[SoundSetComponent.mapper]?.death?.let {
-                    addSound(it, event.victim[Position.mapper])
+                    addSound(it, event.victim[PositionComponent.mapper])
                 }
             }
             is EntityMoved -> {
@@ -90,7 +90,7 @@ class SoundSystem(
         }
     }
 
-    private fun addSound(soundEffectType: SoundEffectType, soundPosition: Position?) {
+    private fun addSound(soundEffectType: SoundEffectType, soundPosition: PositionComponent?) {
         if (soundPosition != null) {
             engine.entity {
                 with<SoundEffectComponent> {

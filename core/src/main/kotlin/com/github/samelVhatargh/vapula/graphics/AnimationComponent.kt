@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils.floor
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import ktx.ashley.mapperFor
 import ktx.math.vec2
 
@@ -43,7 +43,7 @@ class NoAnimation : AnimationDescription() {
     override val speed = 0f
 }
 
-open class WalkAnimation(start: Position, end: Position) : AnimationDescription() {
+open class WalkAnimation(start: PositionComponent, end: PositionComponent) : AnimationDescription() {
     override val start = start.toVec2()
     override val transitions = arrayOf(Transition(end.toVec2()))
     override val moveCamera = true
@@ -51,13 +51,13 @@ open class WalkAnimation(start: Position, end: Position) : AnimationDescription(
     override val interpolation: Interpolation = Interpolation.sine
 }
 
-class ProjectileAnimation(start: Position, end: Position) : WalkAnimation(start, end) {
+class ProjectileAnimation(start: PositionComponent, end: PositionComponent) : WalkAnimation(start, end) {
     override val speed = .2f
     override val moveCamera = false
     override val destroyEntityOnComplete = true
 }
 
-class AttackAnimation(attacker: Position, target: Position) : AnimationDescription() {
+class AttackAnimation(attacker: PositionComponent, target: PositionComponent) : AnimationDescription() {
     override val start = attacker.toVec2()
     override val transitions by lazy {
         val a = attacker.toVec2()
@@ -71,7 +71,7 @@ class AttackAnimation(attacker: Position, target: Position) : AnimationDescripti
     override val speed = .1f
 }
 
-class DamageAnimation(position: Position) : AnimationDescription() {
+class DamageAnimation(position: PositionComponent) : AnimationDescription() {
     override val start = position.toVec2()
     override val transitions = arrayOf(
         Transition(vec2(position.x + .1f, position.y.toFloat())),

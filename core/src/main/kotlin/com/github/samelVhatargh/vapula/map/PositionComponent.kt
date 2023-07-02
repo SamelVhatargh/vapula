@@ -1,9 +1,8 @@
-package com.github.samelVhatargh.vapula.components
+package com.github.samelVhatargh.vapula.map
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
-import com.github.samelVhatargh.vapula.map.Direction
 import ktx.ashley.mapperFor
 import ktx.math.vec2
 import kotlin.math.abs
@@ -12,7 +11,7 @@ import kotlin.math.sqrt
 /**
  * Позиция сущности на карте
  */
-class Position(var x: Int = 0, var y: Int = 0, var z: Int = 0) : Component, Pool.Poolable {
+class PositionComponent(var x: Int = 0, var y: Int = 0, var z: Int = 0) : Component, Pool.Poolable {
 
     override fun reset() {
         x = 0
@@ -25,16 +24,16 @@ class Position(var x: Int = 0, var y: Int = 0, var z: Int = 0) : Component, Pool
     }
 
     companion object {
-        val mapper = mapperFor<Position>()
+        val mapper = mapperFor<PositionComponent>()
     }
 
-    fun isNeighbourTo(position: Position): Boolean =
+    fun isNeighbourTo(position: PositionComponent): Boolean =
         abs(position.x - x) <= 1 && abs(position.y - y) <= 1 && position.z == z
 
     /**
      * Returns distance to another position, ignoring storeys
      */
-    fun distanceTo(target: Position): Float {
+    fun distanceTo(target: PositionComponent): Float {
         val dx = (target.x - x).toDouble()
         val dy = (target.y - y).toDouble()
         return sqrt(dx * dx + dy * dy).toFloat()
@@ -51,20 +50,19 @@ class Position(var x: Int = 0, var y: Int = 0, var z: Int = 0) : Component, Pool
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Position
+        other as PositionComponent
 
         if (x != other.x) return false
         if (y != other.y) return false
-        if (z != other.z) return false
 
-        return true
+        return z == other.z
     }
 
-    operator fun plus(direction: Direction): Position {
-        return Position(x + direction.x, y + direction.y, z)
+    operator fun plus(direction: Direction): PositionComponent {
+        return PositionComponent(x + direction.x, y + direction.y, z)
     }
 
     fun toVec2(): Vector2 = vec2(x.toFloat(), y.toFloat())
 
-    fun clone(): Position = Position(x, y, z)
+    fun clone(): PositionComponent = PositionComponent(x, y, z)
 }

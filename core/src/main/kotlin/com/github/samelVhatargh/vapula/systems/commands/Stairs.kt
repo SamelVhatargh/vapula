@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.Family
 import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.GoDown
 import com.github.samelVhatargh.vapula.components.GoUp
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import ktx.ashley.allOf
 import ktx.ashley.get
 
@@ -14,10 +14,10 @@ abstract class UseStairs(private val engine: Engine, private val world: World, p
     fun useStairs(zDelta: Int, endpointFamily: Family) {
         val newZ = world.storey.z + zDelta
         val stairs = engine.getEntitiesFor(endpointFamily).find {
-            it[Position.mapper]!!.z == newZ
+            it[PositionComponent.mapper]!!.z == newZ
         }
         if (stairs != null) {
-            val stairsPosition = stairs[Position.mapper]!!
+            val stairsPosition = stairs[PositionComponent.mapper]!!
             ChangePosition(entity, stairsPosition).execute()
             world.changeStory(newZ)
         }

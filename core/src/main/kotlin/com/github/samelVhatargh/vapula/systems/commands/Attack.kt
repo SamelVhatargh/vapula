@@ -3,7 +3,7 @@ package com.github.samelVhatargh.vapula.systems.commands
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.components.Stats
 import com.github.samelVhatargh.vapula.events.EntityAttacked
 import com.github.samelVhatargh.vapula.map.Direction
@@ -44,8 +44,8 @@ class Attack(
 
     private fun changeDirection(attacker: Entity, defender: Entity) {
         val attackerGraphics = attacker[GraphicsComponent.mapper]
-        val attackerPosition = attacker[Position.mapper]
-        val defenderPosition = defender[Position.mapper]
+        val attackerPosition = attacker[PositionComponent.mapper]
+        val defenderPosition = defender[PositionComponent.mapper]
 
         if (attackerGraphics != null && attackerPosition != null && defenderPosition != null) {
             if (attackerPosition.x < defenderPosition.x) {

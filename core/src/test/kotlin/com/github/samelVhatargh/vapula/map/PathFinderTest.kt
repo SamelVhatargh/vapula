@@ -2,7 +2,6 @@ package com.github.samelVhatargh.vapula.map
 
 import com.badlogic.ashley.core.Engine
 import com.github.samelVhatargh.vapula.components.OccupySpace
-import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.tests.DescribedMap
 import com.github.samelVhatargh.vapula.tests.MapBaseTest
 import ktx.ashley.entity
@@ -182,18 +181,18 @@ internal class PathFinderTest : MapBaseTest() {
         fun nullEdgesDataProvider(): Stream<Arguments> = Stream.of(
             Arguments.of(
                 "destination is not present on map",
-                Position(0, 0),
-                Position(100, 100)
+                PositionComponent(0, 0),
+                PositionComponent(100, 100)
             ),
             Arguments.of(
                 "start is not present on map",
-                Position(-100, -100),
-                Position(0, 0)
+                PositionComponent(-100, -100),
+                PositionComponent(0, 0)
             ),
             Arguments.of(
                 "start and destination are not present on map",
-                Position(-100, -100),
-                Position(100, 100)
+                PositionComponent(-100, -100),
+                PositionComponent(100, 100)
             ),
         )
 
@@ -312,7 +311,7 @@ internal class PathFinderTest : MapBaseTest() {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("nullEdgesDataProvider")
-    fun `should return empty path if`(testDescription: String, startPosition: Position, endPosition: Position) {
+    fun `should return empty path if`(testDescription: String, startPosition: PositionComponent, endPosition: PositionComponent) {
         val describedMap = describedMap(
             ".....",
             ".....",
@@ -339,8 +338,8 @@ internal class PathFinderTest : MapBaseTest() {
         val storey = Storey(map)
 
         val pathFinder = PathFinder(storey, Engine())
-        val startPosition = Position(0, 0)
-        val endPosition = Position(4, 1)
+        val startPosition = PositionComponent(0, 0)
+        val endPosition = PositionComponent(4, 1)
 
         val path = pathFinder.findPath(startPosition, endPosition)
 
@@ -361,7 +360,7 @@ internal class PathFinderTest : MapBaseTest() {
         val engine = Engine()
         monsters.forEach { position ->
             engine.entity {
-                with<Position> {
+                with<PositionComponent> {
                     x = position.x
                     y = position.y
                 }

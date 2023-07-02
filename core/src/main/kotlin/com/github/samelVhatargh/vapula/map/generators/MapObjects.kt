@@ -1,34 +1,34 @@
 package com.github.samelVhatargh.vapula.map.generators
 
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.utility.random
 import kotlin.math.min
 
 interface MapObject {
-    fun getRandomPosition(): Position
-    fun getCenter(): Position
+    fun getRandomPosition(): PositionComponent
+    fun getCenter(): PositionComponent
 }
 
-class Room(val position: Position, val width: Int, val height: Int) : MapObject {
-    override fun getRandomPosition(): Position {
-        return Position(
+class Room(val position: PositionComponent, val width: Int, val height: Int) : MapObject {
+    override fun getRandomPosition(): PositionComponent {
+        return PositionComponent(
             position.x + random.range(1 until width),
             position.y + random.range(1 until height)
         )
     }
 
-    override fun getCenter(): Position {
-        return Position(
+    override fun getCenter(): PositionComponent {
+        return PositionComponent(
             position.x + width / 2,
             position.y + height / 2
         )
     }
 
-    fun getRandomCorner(): Position {
+    fun getRandomCorner(): PositionComponent {
         val x = if (random.range(0..1) == 0) position.x else position.x + width - 1
         val y = if (random.range(0..1) == 0) position.y else position.y + height - 1
 
-        return Position(x, y)
+        return PositionComponent(x, y)
     }
 
     override fun toString(): String {
@@ -65,16 +65,16 @@ fun createRoom(x1: Int, y1: Int, x2: Int, y2: Int, minSize: Int, maxSize: Int): 
         y += random.range(0..maxY)
     }
 
-    return Room(Position(x, y), width, height)
+    return Room(PositionComponent(x, y), width, height)
 }
 
-class Tunnel(private val start: Position, private val end: Position, val tiles: Collection<Position>) : MapObject {
-    override fun getRandomPosition(): Position {
+class Tunnel(private val start: PositionComponent, private val end: PositionComponent, val tiles: Collection<PositionComponent>) : MapObject {
+    override fun getRandomPosition(): PositionComponent {
         return random.collection(tiles)
     }
 
-    override fun getCenter(): Position {
-        return Position(
+    override fun getCenter(): PositionComponent {
+        return PositionComponent(
             start.x + (end.x - start.x) / 2,
             start.y + (end.y - start.y) / 2
         )

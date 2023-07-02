@@ -9,16 +9,17 @@ import com.github.samelVhatargh.vapula.events.EntityMoved
 import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Path
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.notifier
 import ktx.ashley.*
 
 abstract class BaseMove : Command {
-    fun changePosition(engine: Engine, storey: Storey, entity: Entity, newPosition: Position): Boolean {
+    fun changePosition(engine: Engine, storey: Storey, entity: Entity, newPosition: PositionComponent): Boolean {
         val obstacle = engine.getEntityAtPosition(newPosition, OCCUPY_SPACE_FAMILY)
 
         if (obstacle == null && storey.isWalkable(newPosition.x, newPosition.y)) {
-            val oldPosition = entity[Position.mapper]!!.clone()
+            val oldPosition = entity[PositionComponent.mapper]!!.clone()
             engine.notifier.notify(EntityMoved(entity, oldPosition, newPosition))
             return ChangePosition(entity, newPosition).execute()
         }
@@ -35,12 +36,12 @@ class MoveInDirection(
 ) : BaseMove() {
 
     override fun execute(): Boolean {
-        val position = entity[Position.mapper]!!
+        val position = entity[PositionComponent.mapper]!!
 
         val newX = position.x + direction.x
         val newY = position.y + direction.y
 
-        changePosition(engine, storey, entity, Position(newX, newY, position.z))
+        changePosition(engine, storey, entity, PositionComponent(newX, newY, position.z))
 
         return false
     }
@@ -54,7 +55,7 @@ class MoveInPath(
     private val continueToMoveInNextTurn: Boolean = false
 ) : BaseMove() {
     override fun execute(): Boolean {
-        val currentPosition = entity[Position.mapper]!!
+        val currentPosition = entity[PositionComponent.mapper]!!
         val destination = path.getNextPosition(currentPosition)
 
         changePosition(engine, storey, entity, destination)
@@ -74,8 +75,8 @@ class AggressiveMove(
     private val world: World
 ) : BaseMove() {
     override fun execute(): Boolean {
-        val entityPosition = entity[Position.mapper]!!
-        val targetPosition = Position(entityPosition.x + direction.x, entityPosition.y + direction.y, entityPosition.z)
+        val entityPosition = entity[PositionComponent.mapper]!!
+        val targetPosition = PositionComponent(entityPosition.x + direction.x, entityPosition.y + direction.y, entityPosition.z)
         val target = engine.getEntityAtPosition(targetPosition, allOf(Stats::class).exclude(Dead::class).get())
             ?: return MoveInDirection(engine, entity, direction, world.storey).execute()
 

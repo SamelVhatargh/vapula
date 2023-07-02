@@ -1,6 +1,5 @@
 package com.github.samelVhatargh.vapula.map
 
-import com.github.samelVhatargh.vapula.components.Position
 import com.github.samelVhatargh.vapula.map.generators.Map
 
 /**
@@ -27,7 +26,7 @@ class Storey(map: Map, val z: Int = 0) {
 
     fun isWalkable(x: Int, y: Int): Boolean = tiles[x][y].terrain == Terrain.FLOOR
 
-    fun isExplored(position: Position): Boolean = tiles[position.x][position.y].explored
+    fun isExplored(position: PositionComponent): Boolean = tiles[position.x][position.y].explored
 
     fun blockSight(x: Int, y: Int): Boolean {
         return try {
@@ -37,15 +36,15 @@ class Storey(map: Map, val z: Int = 0) {
         }
     }
 
-    fun markAsExplored(position: Position) {
+    fun markAsExplored(position: PositionComponent) {
         tiles[position.x][position.y].explored = true
     }
 
-    fun getNeighbor(position: Position, direction: Direction): Tile {
+    fun getNeighbor(position: PositionComponent, direction: Direction): Tile {
         return try {
             tiles[position.x + direction.x][position.y + direction.y]
         } catch (e: ArrayIndexOutOfBoundsException) {
-            Tile(Position(position.x + direction.x, position.y + direction.y), Terrain.WALL)
+            Tile(PositionComponent(position.x + direction.x, position.y + direction.y), Terrain.WALL)
         }
     }
 

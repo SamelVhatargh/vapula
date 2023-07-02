@@ -3,7 +3,7 @@ package com.github.samelVhatargh.vapula.systems.commands
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.components.OccupySpace
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.tests.DescribedMap
@@ -18,7 +18,7 @@ class TestBaseMove(
     private val engine: Engine,
     private val storey: Storey,
     val entity: Entity,
-    private val newPosition: Position
+    private val newPosition: PositionComponent
 ) : BaseMove() {
     override fun execute(): Boolean {
         return changePosition(engine, storey, entity, newPosition)
@@ -41,7 +41,7 @@ internal class BaseMoveTest : MapBaseTest() {
         val move = getMoveToEastCommand(describedMap)
 
         move.execute()
-        Assertions.assertEquals(describedMap.getPosition('e')!! + Direction.EAST, move.entity[Position.mapper]!!)
+        Assertions.assertEquals(describedMap.getPosition('e')!! + Direction.EAST, move.entity[PositionComponent.mapper]!!)
     }
 
     @Test
@@ -55,7 +55,7 @@ internal class BaseMoveTest : MapBaseTest() {
         )
         val move = getMoveToEastCommand(describedMap)
 
-        Assertions.assertEquals(describedMap.getPosition('e')!!, move.entity[Position.mapper]!!)
+        Assertions.assertEquals(describedMap.getPosition('e')!!, move.entity[PositionComponent.mapper]!!)
     }
 
     @Test
@@ -73,7 +73,7 @@ internal class BaseMoveTest : MapBaseTest() {
         }
         val move = getMoveToEastCommand(describedMap)
 
-        Assertions.assertEquals(describedMap.getPosition('e')!!, move.entity[Position.mapper]!!)
+        Assertions.assertEquals(describedMap.getPosition('e')!!, move.entity[PositionComponent.mapper]!!)
     }
 
     private fun getMoveToEastCommand(describedMap: DescribedMap): TestBaseMove {

@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.systems
+package com.github.samelVhatargh.vapula.map
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
@@ -7,18 +7,12 @@ import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.samelVhatargh.vapula.World
-import com.github.samelVhatargh.vapula.components.FieldOfView
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
-import com.github.samelVhatargh.vapula.components.Position
-import com.github.samelVhatargh.vapula.components.VisibleIfExploredAndOutOfFieldOfView
-import com.github.samelVhatargh.vapula.map.Direction
-import com.github.samelVhatargh.vapula.map.Terrain
-import com.github.samelVhatargh.vapula.setPosition
 import com.github.samelVhatargh.vapula.graphics.SpriteCache
+import com.github.samelVhatargh.vapula.setPosition
 import ktx.ashley.allOf
 import ktx.ashley.get
 import ktx.graphics.use
-
 
 private const val FLOOR = "Tile"
 private const val EMPTY = ""
@@ -28,9 +22,9 @@ private const val SOUTH_EAST_CORNER = "WallCorner3"
 private const val SOUTH_WEST_CORNER = "WallCorner4"
 private const val WALL = "Wall"
 
-private data class TileGraphic(val position: Position, val spriteName: String, val priority: Int = 0)
+private data class TileGraphic(val position: PositionComponent, val spriteName: String, val priority: Int = 0)
 
-class MapRender(
+class MapRenderSystem(
     private val spriteCache: SpriteCache,
     private val batch: SpriteBatch,
     viewport: Viewport,
@@ -58,8 +52,8 @@ class MapRender(
         terrainObjects = engine.getEntitiesFor(
             allOf(
                 GraphicsComponent::class,
-                Position::class,
-                VisibleIfExploredAndOutOfFieldOfView::class
+                PositionComponent::class,
+                VisibleIfExploredAndOutOfFieldOfViewComponent::class
             ).get()
         )
     }
@@ -71,8 +65,8 @@ class MapRender(
     }
 
     private fun renderMap() {
-        val fogOfWar = mutableSetOf<Position>()
-        val fov = player[FieldOfView.mapper]!!
+        val fogOfWar = mutableSetOf<PositionComponent>()
+        val fov = player[FieldOfViewComponent.mapper]!!
 
         batch.use(camera.combined) {
             tileGraphics.forEach { tile ->
@@ -92,7 +86,7 @@ class MapRender(
             }
 
             terrainObjects.forEach { entity ->
-                val position = entity[Position.mapper]!!
+                val position = entity[PositionComponent.mapper]!!
                 if (position.z == world.storey.z && world.storey.isExplored(position) && !fov.isVisible(position)) {
                     spriteCache.getSprite(entity[GraphicsComponent.mapper]!!).apply {
                         setPosition(position.x.toFloat(), position.y.toFloat())
@@ -143,4 +137,3 @@ class MapRender(
         tileGraphics.sortBy { it.priority }
     }
 }
-

@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.map.Storey
-import com.github.samelVhatargh.vapula.systems.MapRender
+import com.github.samelVhatargh.vapula.map.MapRenderSystem
 import ktx.app.KtxInputAdapter
 import ktx.ashley.getSystem
 import ktx.math.vec3
@@ -38,7 +38,7 @@ class MapDrawingMode(
 
         if (button == Input.Buttons.LEFT) {
             storey.switchTile(position.x.toInt(), position.y.toInt())
-            engine.getSystem<MapRender>().shouldComputeTileGraphics = true
+            engine.getSystem<MapRenderSystem>().shouldComputeTileGraphics = true
         }
 
         return true

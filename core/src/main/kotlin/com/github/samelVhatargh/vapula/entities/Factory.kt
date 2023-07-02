@@ -6,8 +6,7 @@ import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import com.github.samelVhatargh.vapula.graphics.IdleAnimationComponent
 import com.github.samelVhatargh.vapula.graphics.Layer
-import com.github.samelVhatargh.vapula.map.Storey
-import com.github.samelVhatargh.vapula.map.Terrain
+import com.github.samelVhatargh.vapula.map.*
 import com.github.samelVhatargh.vapula.sounds.SoundSetComponent
 import com.github.samelVhatargh.vapula.sounds.soundEffects.*
 import com.github.samelVhatargh.vapula.utility.random
@@ -28,14 +27,14 @@ class Factory(private val engine: Engine, var storey: Storey) {
         val log = logger<Factory>()
     }
 
-    fun createPlayer(position: Position = getRandomEmptyPosition()): Entity {
+    fun createPlayer(position: PositionComponent = getRandomEmptyPosition()): Entity {
         val player = engine.entity {
             with<GraphicsComponent> {
                 spriteName = "character"
             }
             with<Player>()
             with<OccupySpace>()
-            with<FieldOfView>()
+            with<FieldOfViewComponent>()
             with<IdleAnimationComponent>()
             with<Name> {
                 name = "player"
@@ -72,7 +71,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
 
     private var goblinCount = 0
 
-    fun createGoblin(position: Position = getRandomEmptyPosition(), type: GoblinType = GoblinType.FIGHTER): Entity {
+    fun createGoblin(position: PositionComponent = getRandomEmptyPosition(), type: GoblinType = GoblinType.FIGHTER): Entity {
         goblinCount++
         val monster = engine.entity {
             with<GraphicsComponent> {
@@ -137,7 +136,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
         return monster
     }
 
-    private fun getRandomEmptyPosition(): Position {
+    private fun getRandomEmptyPosition(): PositionComponent {
         val objects = engine.getEntitiesFor(OCCUPY_SPACE_FAMILY)
 
         var i = 1
@@ -146,20 +145,20 @@ class Factory(private val engine: Engine, var storey: Storey) {
             val y = random.range(0 until storey.height)
 
             if (storey.tiles[x][y].terrain == Terrain.FLOOR) {
-                val position = Position(x, y, storey.z)
+                val position = PositionComponent(x, y, storey.z)
 
                 if (objects.find {
-                        it[Position.mapper]!! == position
+                        it[PositionComponent.mapper]!! == position
                     } === null) return position
             }
 
             i++
         }
 
-        return Position(5, 5)
+        return PositionComponent(5, 5)
     }
 
-    fun createBarrel(position: Position = getRandomEmptyPosition()): Entity? {
+    fun createBarrel(position: PositionComponent = getRandomEmptyPosition()): Entity? {
         try {
             if (storey.tiles[position.x][position.y].terrain == Terrain.WALL) {
                 return null
@@ -180,25 +179,25 @@ class Factory(private val engine: Engine, var storey: Storey) {
         return barrel
     }
 
-    fun createTunnel(position: Position, sprite: String = "Railroad16") {
+    fun createTunnel(position: PositionComponent, sprite: String = "Railroad16") {
         val tunnel = engine.entity {
             with<GraphicsComponent> {
                 spriteName = sprite
                 layer = Layer.FLOOR
             }
-            with<VisibleIfExploredAndOutOfFieldOfView>()
+            with<VisibleIfExploredAndOutOfFieldOfViewComponent>()
         }
         position.z = storey.z
         tunnel.add(position)
     }
 
-    fun createStairs(up: Boolean, position: Position = getRandomEmptyPosition()) {
+    fun createStairs(up: Boolean, position: PositionComponent = getRandomEmptyPosition()) {
         val stairs = engine.entity {
             with<GraphicsComponent> {
                 spriteName = if (up) "StairsUp" else "StairsDown"
                 layer = Layer.FLOOR
             }
-            with<VisibleIfExploredAndOutOfFieldOfView>()
+            with<VisibleIfExploredAndOutOfFieldOfViewComponent>()
         }
         position.z = storey.z
         stairs.add(position)
@@ -208,7 +207,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
     /**
      * Creates [projectile][Entity] with specified [type] facing from [start] to [end]
      */
-    fun createProjectile(start: Position, end: Position, type: ProjectileType): Entity {
+    fun createProjectile(start: PositionComponent, end: PositionComponent, type: ProjectileType): Entity {
         val arrow = engine.entity {
             with<GraphicsComponent> {
                 spriteName = type.spriteName
@@ -217,7 +216,7 @@ class Factory(private val engine: Engine, var storey: Storey) {
             }
         }
 
-        arrow.add(Position(start.x, start.y, start.z))
+        arrow.add(PositionComponent(start.x, start.y, start.z))
         return arrow
     }
 }

@@ -16,9 +16,7 @@ data class Map(val tiles: Array<Array<Tile>>, val rooms: Collection<Room>, val t
 
         other as Map
 
-        if (!tiles.contentDeepEquals(other.tiles)) return false
-
-        return true
+        return tiles.contentDeepEquals(other.tiles)
     }
 
     override fun hashCode(): Int {

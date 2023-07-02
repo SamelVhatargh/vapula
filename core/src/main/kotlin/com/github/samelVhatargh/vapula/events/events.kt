@@ -1,7 +1,7 @@
 package com.github.samelVhatargh.vapula.events
 
 import com.badlogic.ashley.core.Entity
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.PositionComponent
 
 interface Event {
     val type: EventType
@@ -49,7 +49,7 @@ data class EntityDied(val victim: Entity) : Event {
 /**
  * When [entity] moves to from [old position][oldPosition] to [new position][newPosition]
  */
-data class EntityMoved(val entity: Entity, val oldPosition: Position, val newPosition: Position) : Event {
+data class EntityMoved(val entity: Entity, val oldPosition: PositionComponent, val newPosition: PositionComponent) : Event {
     override val type: EventType
         get() = EventType.ENTITY_MOVED
 

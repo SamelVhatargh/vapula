@@ -12,6 +12,7 @@ import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Path
 import com.github.samelVhatargh.vapula.map.PathFinder
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.systems.commands.*
 import ktx.app.KtxInputAdapter
 import ktx.ashley.get
@@ -43,8 +44,8 @@ class PlayerInputSystem(
         }
 
         val coordinates = camera.unproject(vec3(screenX.toFloat(), screenY.toFloat()))
-        val playerPosition = playerEntity[Position.mapper]!!
-        val targetPosition = Position(coordinates.x.toInt(), coordinates.y.toInt(), world.storey.z)
+        val playerPosition = playerEntity[PositionComponent.mapper]!!
+        val targetPosition = PositionComponent(coordinates.x.toInt(), coordinates.y.toInt(), world.storey.z)
         val direction = Direction.fromVector(targetPosition.toVec2().sub(playerPosition.toVec2()))
 
         if (direction === Direction.NONE) {
@@ -85,7 +86,7 @@ class PlayerInputSystem(
 
     private fun useStairs() {
         val entity =
-            engine.getEntityAtPosition(playerEntity[Position.mapper]!!, oneOf(GoUp::class, GoDown::class).get())
+            engine.getEntityAtPosition(playerEntity[PositionComponent.mapper]!!, oneOf(GoUp::class, GoDown::class).get())
 
         if (entity !== null) {
             if (entity.has(GoUp.mapper)) {

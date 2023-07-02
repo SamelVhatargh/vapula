@@ -3,7 +3,7 @@ package com.github.samelVhatargh.vapula.systems.commands
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.github.samelVhatargh.vapula.World
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.map.Direction
 import ktx.ashley.get
 
@@ -20,7 +20,7 @@ private val directions = listOf(
 
 class Wander(private val engine: Engine, private val entity: Entity, private val world: World) : Command {
     override fun execute(): Boolean {
-        val z = entity[Position.mapper]!!.z
+        val z = entity[PositionComponent.mapper]!!.z
         MoveInDirection(engine, entity, directions.random(), world.stories[z]).execute()
 
         return false

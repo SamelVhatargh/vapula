@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.components
+package com.github.samelVhatargh.vapula.map
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
@@ -7,19 +7,19 @@ import ktx.ashley.mapperFor
 /**
  * Тайлы которые видны игроку
  */
-class FieldOfView : Component, Pool.Poolable {
+class FieldOfViewComponent : Component, Pool.Poolable {
 
-    val visibleTiles = mutableListOf<Position>()
+    val visibleTiles = mutableListOf<PositionComponent>()
 
     var seeEverything = false
     var shouldUpdate = true
 
-    fun isVisible(position: Position): Boolean {
+    fun isVisible(position: PositionComponent): Boolean {
         return seeEverything || visibleTiles.contains(position)
     }
 
     companion object {
-        val mapper = mapperFor<FieldOfView>()
+        val mapper = mapperFor<FieldOfViewComponent>()
     }
 
     override fun reset() {

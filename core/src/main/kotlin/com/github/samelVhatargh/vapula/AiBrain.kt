@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Bresenham2
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.map.PathFinder
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.systems.commands.*
 import ktx.ashley.*
 
@@ -18,8 +19,8 @@ class AiBrain(private val engine: Engine, private val world: World) {
     }
 
     fun getCommand(entity: Entity): Command {
-        val playerPosition = player[Position.mapper]!!
-        val monsterPosition = entity[Position.mapper]!!
+        val playerPosition = player[PositionComponent.mapper]!!
+        val monsterPosition = entity[PositionComponent.mapper]!!
         val monsterStats = entity[Stats.mapper]!!
         val ai = entity[Ai.mapper]!!
 
@@ -41,7 +42,7 @@ class AiBrain(private val engine: Engine, private val world: World) {
         // try to heal if possible and needed
         if (monsterStats.healDice > 0) {
             // find all injured hostiles
-            val allMonsters = allOf(Stats::class, Ai::class, Position::class).exclude(Player::class, Dead::class).get()
+            val allMonsters = allOf(Stats::class, Ai::class, PositionComponent::class).exclude(Player::class, Dead::class).get()
             val injuredMonster = engine.getEntitiesFor(allMonsters).find {
                 it[Stats.mapper]!!.hp > 0 && it[Stats.mapper]!!.hp < it[Stats.mapper]!!.maxHp
                         && isInLineOfSight(entity, it)
@@ -77,7 +78,7 @@ class AiBrain(private val engine: Engine, private val world: World) {
         return Wander(engine, entity, world)
     }
 
-    private fun moveToPlayer(monsterPosition: Position, playerPosition: Position, entity: Entity): Command {
+    private fun moveToPlayer(monsterPosition: PositionComponent, playerPosition: PositionComponent, entity: Entity): Command {
         if (monsterPosition.z != playerPosition.z) {
             return Wander(engine, entity, world)
         }
@@ -94,9 +95,9 @@ class AiBrain(private val engine: Engine, private val world: World) {
      * Check if Entity can see another Entity
      */
     private fun isInLineOfSight(entity: Entity, target: Entity): Boolean {
-        val start = entity[Position.mapper]!!
+        val start = entity[PositionComponent.mapper]!!
         val sightRange = entity[Stats.mapper]!!.sightRange
-        val targetPosition = target[Position.mapper]!!
+        val targetPosition = target[PositionComponent.mapper]!!
 
         if (start.z != targetPosition.z) {
             return false

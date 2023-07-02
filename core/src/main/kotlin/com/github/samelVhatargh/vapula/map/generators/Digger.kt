@@ -1,6 +1,6 @@
 package com.github.samelVhatargh.vapula.map.generators
 
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
 import com.github.samelVhatargh.vapula.utility.random
@@ -20,34 +20,34 @@ class Digger(private val tiles: Array<Array<Tile>>) {
         return dig(start.getRandomPosition(), end.getRandomPosition())
     }
 
-    private fun dig(start: Position, end: Position): Tunnel {
+    private fun dig(start: PositionComponent, end: PositionComponent): Tunnel {
         log.debug { "tunnel - $start; $end" }
 
         val xRange = if (start.x < end.x) start.x..end.x else start.x downTo end.x
         val yRange = if (start.y < end.y) start.y..end.y else start.y downTo end.y
 
-        val tunnelTiles = mutableListOf<Position>()
+        val tunnelTiles = mutableListOf<PositionComponent>()
 
         if (random.range(1..2) == 1) {
             for (x in xRange) {
-                addTile(Position(x, start.y), tunnelTiles)
+                addTile(PositionComponent(x, start.y), tunnelTiles)
             }
             for (y in yRange) {
-                addTile(Position(end.x, y), tunnelTiles)
+                addTile(PositionComponent(end.x, y), tunnelTiles)
             }
         } else {
             for (y in yRange) {
-                addTile(Position(start.x, y), tunnelTiles)
+                addTile(PositionComponent(start.x, y), tunnelTiles)
             }
             for (x in xRange) {
-                addTile(Position(x, end.y), tunnelTiles)
+                addTile(PositionComponent(x, end.y), tunnelTiles)
             }
         }
 
         return Tunnel(start, end, tunnelTiles)
     }
 
-    private fun addTile(position: Position, tunnelTiles: MutableList<Position>) {
+    private fun addTile(position: PositionComponent, tunnelTiles: MutableList<PositionComponent>) {
         tunnelTiles.add(position)
         tiles[position.x][position.y] = Tile(position, Terrain.FLOOR)
     }
@@ -64,7 +64,7 @@ class Digger(private val tiles: Array<Array<Tile>>) {
                     continue
                 }
 
-                tiles[x][y] = Tile(Position(x, y), Terrain.FLOOR)
+                tiles[x][y] = Tile(PositionComponent(x, y), Terrain.FLOOR)
             }
         }
     }

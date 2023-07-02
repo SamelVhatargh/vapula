@@ -8,6 +8,8 @@ import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.entities.RENDERABLE_FAMILY
 import com.github.samelVhatargh.vapula.map.Direction
+import com.github.samelVhatargh.vapula.map.FieldOfViewComponent
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import ktx.ashley.get
 import ktx.ashley.has
 import ktx.graphics.use
@@ -31,13 +33,13 @@ class RenderSystem(
     }
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val position = entity[Position.mapper]!!
+        val position = entity[PositionComponent.mapper]!!
         val graphics = entity[GraphicsComponent.mapper]!!
         val dead = entity.has(Dead.mapper)
 
         if (position.z != world.storey.z) return
 
-        val fov = player[FieldOfView.mapper]!!
+        val fov = player[FieldOfViewComponent.mapper]!!
         if (!fov.isVisible(position)) return
 
         val vector = graphics.position ?: position.toVec2()

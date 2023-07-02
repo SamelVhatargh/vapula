@@ -1,6 +1,6 @@
 package com.github.samelVhatargh.vapula.map.generators
 
-import com.github.samelVhatargh.vapula.components.Position
+import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Terrain
 import com.github.samelVhatargh.vapula.map.Tile
@@ -18,7 +18,7 @@ class DrunkardWalkDungeon(private val percentage: Float = 0.25f) : MapGenerator 
 
         var currentTile = Pair((1 until (width - 1)).random(), (1 until (height - 1)).random())
         tiles[currentTile.first][currentTile.second] =
-            Tile(Position(currentTile.first, currentTile.second), Terrain.FLOOR)
+            Tile(PositionComponent(currentTile.first, currentTile.second), Terrain.FLOOR)
         var floorTilesCount = 1
 
         var directions = listOf(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST)
@@ -44,12 +44,12 @@ class DrunkardWalkDungeon(private val percentage: Float = 0.25f) : MapGenerator 
             }
 
             val oldTile = tiles[newTile.first][newTile.second]
-            tiles[newTile.first][newTile.second] = Tile(Position(newTile.first, newTile.second), Terrain.FLOOR)
+            tiles[newTile.first][newTile.second] = Tile(PositionComponent(newTile.first, newTile.second), Terrain.FLOOR)
             currentTile = newTile
 
             if (oldTile.terrain == Terrain.WALL) floorTilesCount++
         }
 
-        return Map(tiles, listOf(Room(Position(0, 0), width, height)), listOf())
+        return Map(tiles, listOf(Room(PositionComponent(0, 0), width, height)), listOf())
     }
 }
