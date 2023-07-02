@@ -2,7 +2,6 @@ package com.github.samelVhatargh.vapula.events
 
 import ktx.collections.GdxArray
 import ktx.collections.contains
-import ktx.log.info
 import ktx.log.logger
 import kotlin.collections.set
 

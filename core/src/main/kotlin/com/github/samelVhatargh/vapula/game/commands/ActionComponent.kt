@@ -2,7 +2,6 @@ package com.github.samelVhatargh.vapula.game.commands
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool
-import com.github.samelVhatargh.vapula.game.commands.Command
 import ktx.ashley.mapperFor
 
 /**
