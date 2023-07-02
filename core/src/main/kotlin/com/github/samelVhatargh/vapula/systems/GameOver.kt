@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.Gdx
 import com.github.samelVhatargh.vapula.addModalDialogWindow
-import com.github.samelVhatargh.vapula.components.CustomDialogButton
+import com.github.samelVhatargh.vapula.ui.CustomDialogButton
 import com.github.samelVhatargh.vapula.components.Dead
 import com.github.samelVhatargh.vapula.components.Player
 import ktx.ashley.allOf

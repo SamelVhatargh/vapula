@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.systems
+package com.github.samelVhatargh.vapula.ui
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.EntitySystem
@@ -13,7 +13,6 @@ import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Path
 import com.github.samelVhatargh.vapula.map.PathFinder
 import com.github.samelVhatargh.vapula.systems.commands.*
-import com.github.samelVhatargh.vapula.ui.HUD_WIDTH
 import ktx.app.KtxInputAdapter
 import ktx.ashley.get
 import ktx.ashley.has
@@ -21,7 +20,7 @@ import ktx.ashley.oneOf
 import ktx.ashley.plusAssign
 import ktx.math.vec3
 
-class PlayerInput(
+class PlayerInputSystem(
     private val inputMultiplexer: InputMultiplexer,
     private val camera: Camera,
     private val world: World

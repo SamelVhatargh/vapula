@@ -6,8 +6,6 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.FitViewport
-import com.github.samelVhatargh.vapula.components.ModalDialog
-import com.github.samelVhatargh.vapula.components.ModalDialogButton
 import ktx.actors.onClick
 import ktx.app.KtxInputAdapter
 import ktx.ashley.allOf
@@ -17,7 +15,7 @@ import ktx.scene2d.*
 /**
  * Manages dialog windows
  */
-class ModalDialogs(private val inputMultiplexer: InputMultiplexer) : IteratingSystem(allOf(ModalDialog::class).get()),
+class ModalDialogSystem(private val inputMultiplexer: InputMultiplexer) : IteratingSystem(allOf(ModalDialogComponent::class).get()),
     KtxInputAdapter {
 
     private var stage: Stage? = null
@@ -31,7 +29,7 @@ class ModalDialogs(private val inputMultiplexer: InputMultiplexer) : IteratingSy
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         if (stage == null) {
-            val modalDialog = entity[ModalDialog.mapper]!!
+            val modalDialog = entity[ModalDialogComponent.mapper]!!
             show(modalDialog.title, modalDialog.text, modalDialog.buttons)
             engine.removeEntity(entity)
         }

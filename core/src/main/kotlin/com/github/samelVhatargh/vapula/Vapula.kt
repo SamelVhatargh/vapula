@@ -18,8 +18,9 @@ import com.github.samelVhatargh.vapula.sounds.MusicSystem
 import com.github.samelVhatargh.vapula.sounds.SoundSystem
 import com.github.samelVhatargh.vapula.systems.*
 import com.github.samelVhatargh.vapula.ui.Hud
-import com.github.samelVhatargh.vapula.ui.ModalDialogs
+import com.github.samelVhatargh.vapula.ui.ModalDialogSystem
 import com.github.samelVhatargh.vapula.graphics.SpriteCache
+import com.github.samelVhatargh.vapula.ui.PlayerInputSystem
 import com.github.samelVhatargh.vapula.utility.random
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
@@ -48,7 +49,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
         val spriteCache = SpriteCache(assets)
         val hud = Hud(inputMultiplexer)
         engine.apply {
-            addSystem(PlayerInput(inputMultiplexer, camera, world))
+            addSystem(PlayerInputSystem(inputMultiplexer, camera, world))
             addSystem(AnimationSystem(world))
             addSystem(SoundSystem(assets, world))
             addSystem(Camera(camera, inputMultiplexer))
@@ -61,7 +62,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             addSystem(GameOver())
             addSystem(MusicSystem(assets))
             addSystem(hud)
-            addSystem(ModalDialogs(inputMultiplexer))
+            addSystem(ModalDialogSystem(inputMultiplexer))
             addSystem(DebugConsole(debugArguments, inputMultiplexer, viewport, world))
         }
 
