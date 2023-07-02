@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.github.samelVhatargh.vapula.World
+import com.github.samelVhatargh.vapula.game.World
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.entities.RENDERABLE_FAMILY
 import com.github.samelVhatargh.vapula.map.Direction

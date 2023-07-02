@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.github.samelVhatargh.vapula.World
+import com.github.samelVhatargh.vapula.game.World
 import com.github.samelVhatargh.vapula.graphics.GraphicsComponent
 import com.github.samelVhatargh.vapula.graphics.SpriteCache
 import com.github.samelVhatargh.vapula.setPosition

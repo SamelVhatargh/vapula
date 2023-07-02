@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Camera
-import com.github.samelVhatargh.vapula.World
+import com.github.samelVhatargh.vapula.game.World
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.game.commands.*
 import com.github.samelVhatargh.vapula.getEntityAtPosition

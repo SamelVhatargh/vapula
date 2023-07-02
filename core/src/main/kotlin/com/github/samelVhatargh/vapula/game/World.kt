@@ -1,10 +1,11 @@
-package com.github.samelVhatargh.vapula
+package com.github.samelVhatargh.vapula.game
 
 import com.badlogic.ashley.core.Engine
 import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.entities.Factory
 import com.github.samelVhatargh.vapula.entities.GoblinType
 import com.github.samelVhatargh.vapula.entities.OCCUPY_SPACE_FAMILY
+import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Storey
 import com.github.samelVhatargh.vapula.map.generators.BSPDungeon

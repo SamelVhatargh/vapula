@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.systems
+package com.github.samelVhatargh.vapula.game
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
@@ -10,7 +10,7 @@ import ktx.log.logger
 
 private const val AUTO_TURN_DELAY = .1f
 
-class TurnLoop(private val player: Entity) :
+class TurnLoopSystem(private val player: Entity) :
     IteratingSystem(
         allOf(ActionComponent::class).exclude(Dead::class).get()
     ) {
@@ -18,7 +18,7 @@ class TurnLoop(private val player: Entity) :
     private var delay = AUTO_TURN_DELAY
 
     companion object {
-        val log = logger<TurnLoop>()
+        val log = logger<TurnLoopSystem>()
     }
 
     override fun update(deltaTime: Float) {

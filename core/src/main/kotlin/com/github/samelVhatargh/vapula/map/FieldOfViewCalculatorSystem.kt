@@ -3,7 +3,7 @@ package com.github.samelVhatargh.vapula.map
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.math.Bresenham2
 import com.badlogic.gdx.math.Vector2
-import com.github.samelVhatargh.vapula.World
+import com.github.samelVhatargh.vapula.game.World
 import com.github.samelVhatargh.vapula.components.Stats
 import ktx.ashley.get
 

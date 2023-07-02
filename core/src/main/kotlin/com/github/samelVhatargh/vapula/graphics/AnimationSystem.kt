@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Vector2
-import com.github.samelVhatargh.vapula.World
+import com.github.samelVhatargh.vapula.game.World
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.entities.ANIMATION_FAMILY
 import com.github.samelVhatargh.vapula.events.*

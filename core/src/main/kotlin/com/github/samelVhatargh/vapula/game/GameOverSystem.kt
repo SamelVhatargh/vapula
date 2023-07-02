@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.systems
+package com.github.samelVhatargh.vapula.game
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
@@ -12,7 +12,7 @@ import ktx.ashley.allOf
 /**
  * Manages game over state and conditions
  */
-class GameOver: IteratingSystem(allOf(Player::class, Dead::class).get()) {
+class GameOverSystem: IteratingSystem(allOf(Player::class, Dead::class).get()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         engine.addModalDialogWindow("Game Over", "You are dead", arrayOf(

@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.math.MathUtils
-import com.github.samelVhatargh.vapula.World
+import com.github.samelVhatargh.vapula.game.World
 import com.github.samelVhatargh.vapula.map.FieldOfViewComponent
 import com.github.samelVhatargh.vapula.map.PositionComponent
 import com.github.samelVhatargh.vapula.events.*

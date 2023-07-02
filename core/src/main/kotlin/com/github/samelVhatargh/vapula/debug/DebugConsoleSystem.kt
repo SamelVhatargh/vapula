@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.github.samelVhatargh.vapula.World
+import com.github.samelVhatargh.vapula.game.World
 import com.strongjoshua.console.GUIConsole
 
 class DebugConsoleSystem(

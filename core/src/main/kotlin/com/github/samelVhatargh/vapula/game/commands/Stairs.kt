@@ -3,7 +3,7 @@ package com.github.samelVhatargh.vapula.game.commands
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
-import com.github.samelVhatargh.vapula.World
+import com.github.samelVhatargh.vapula.game.World
 import com.github.samelVhatargh.vapula.components.GoDown
 import com.github.samelVhatargh.vapula.components.GoUp
 import com.github.samelVhatargh.vapula.map.PositionComponent
