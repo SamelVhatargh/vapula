@@ -9,6 +9,10 @@ import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.game.World
 import com.github.samelVhatargh.vapula.components.*
 import com.github.samelVhatargh.vapula.game.commands.*
+import com.github.samelVhatargh.vapula.game.stairs.GoDown
+import com.github.samelVhatargh.vapula.game.stairs.GoDownstairs
+import com.github.samelVhatargh.vapula.game.stairs.GoUp
+import com.github.samelVhatargh.vapula.game.stairs.GoUpstairs
 import com.github.samelVhatargh.vapula.getEntityAtPosition
 import com.github.samelVhatargh.vapula.map.Direction
 import com.github.samelVhatargh.vapula.map.Path

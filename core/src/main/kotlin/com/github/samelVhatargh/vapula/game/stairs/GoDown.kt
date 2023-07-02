@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.components
+package com.github.samelVhatargh.vapula.game.stairs
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.utils.Pool

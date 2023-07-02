@@ -1,11 +1,11 @@
-package com.github.samelVhatargh.vapula.game.commands
+package com.github.samelVhatargh.vapula.game.stairs
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.github.samelVhatargh.vapula.game.World
-import com.github.samelVhatargh.vapula.components.GoDown
-import com.github.samelVhatargh.vapula.components.GoUp
+import com.github.samelVhatargh.vapula.game.commands.ChangePosition
+import com.github.samelVhatargh.vapula.game.commands.Command
 import com.github.samelVhatargh.vapula.map.PositionComponent
 import ktx.ashley.allOf
 import ktx.ashley.get
