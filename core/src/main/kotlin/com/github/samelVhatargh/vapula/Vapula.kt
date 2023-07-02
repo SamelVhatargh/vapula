@@ -7,8 +7,8 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FitViewport
-import com.github.samelVhatargh.vapula.console.DebugArguments
-import com.github.samelVhatargh.vapula.console.DebugConsole
+import com.github.samelVhatargh.vapula.debug.DebugArguments
+import com.github.samelVhatargh.vapula.debug.DebugConsoleSystem
 import com.github.samelVhatargh.vapula.graphics.AnimationSystem
 import com.github.samelVhatargh.vapula.graphics.IdleAnimationSystem
 import com.github.samelVhatargh.vapula.graphics.RenderSystem
@@ -63,7 +63,7 @@ class Vapula(private val debugArguments: DebugArguments) : KtxGame<KtxScreen>() 
             addSystem(MusicSystem(assets))
             addSystem(hud)
             addSystem(ModalDialogSystem(inputMultiplexer))
-            addSystem(DebugConsole(debugArguments, inputMultiplexer, viewport, world))
+            addSystem(DebugConsoleSystem(debugArguments, inputMultiplexer, viewport, world))
         }
 
         addScreen(GameScreen(engine, viewport))

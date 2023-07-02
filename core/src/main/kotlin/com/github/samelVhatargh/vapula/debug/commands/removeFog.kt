@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.console.commands
+package com.github.samelVhatargh.vapula.debug.commands
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity

@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.systems
+package com.github.samelVhatargh.vapula.debug
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.EntitySystem
@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Camera
 import ktx.app.KtxInputAdapter
 import ktx.math.vec3
 
-class ShowMapCoordinates(private val camera: Camera, private val inputMultiplexer: InputMultiplexer) :
+class ShowMapCoordinatesSystem(private val camera: Camera, private val inputMultiplexer: InputMultiplexer) :
     EntitySystem(), KtxInputAdapter {
 
     override fun addedToEngine(engine: Engine) {

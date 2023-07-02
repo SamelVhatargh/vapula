@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.console
+package com.github.samelVhatargh.vapula.debug
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.EntitySystem
@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.samelVhatargh.vapula.World
 import com.strongjoshua.console.GUIConsole
 
-class DebugConsole(
+class DebugConsoleSystem(
     private val debugArguments: DebugArguments,
     private val inputMultiplexer: InputMultiplexer,
     private val viewport: Viewport,

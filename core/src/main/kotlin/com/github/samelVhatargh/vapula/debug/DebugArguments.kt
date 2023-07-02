@@ -1,4 +1,4 @@
-package com.github.samelVhatargh.vapula.console
+package com.github.samelVhatargh.vapula.debug
 
 import com.badlogic.gdx.Application
 

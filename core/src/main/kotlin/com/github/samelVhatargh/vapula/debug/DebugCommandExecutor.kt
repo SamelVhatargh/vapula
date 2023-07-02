@@ -1,13 +1,12 @@
-package com.github.samelVhatargh.vapula.console
+package com.github.samelVhatargh.vapula.debug
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.graphics.Camera
 import com.github.samelVhatargh.vapula.World
 import com.github.samelVhatargh.vapula.components.Invulnerability
-import com.github.samelVhatargh.vapula.console.commands.MapDrawingMode
-import com.github.samelVhatargh.vapula.console.commands.removeFog
-import com.github.samelVhatargh.vapula.systems.ShowMapCoordinates
+import com.github.samelVhatargh.vapula.debug.commands.MapDrawingMode
+import com.github.samelVhatargh.vapula.debug.commands.removeFog
 import com.github.samelVhatargh.vapula.utility.random
 import com.strongjoshua.console.CommandExecutor
 import com.strongjoshua.console.annotation.ConsoleDoc
@@ -61,11 +60,11 @@ class DebugCommandExecutor(
     @ConsoleDoc(description = "Enables or disables map coordinate display")
     fun xy() {
         val enabledWord = try {
-            val system = engine.getSystem<ShowMapCoordinates>()
+            val system = engine.getSystem<ShowMapCoordinatesSystem>()
             engine.removeSystem(system)
             "disabled"
         } catch (e: MissingEntitySystemException) {
-            engine.addSystem(ShowMapCoordinates(camera, inputMultiplexer))
+            engine.addSystem(ShowMapCoordinatesSystem(camera, inputMultiplexer))
             "enabled"
         }
 
